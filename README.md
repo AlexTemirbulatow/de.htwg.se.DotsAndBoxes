@@ -12,10 +12,10 @@ Using fuctional programming as a paradigm for software development and agility b
 <table>
     <tr><th>Rules</th><th>Field</th></tr>
     <tr><td>You move by connecting two dots with a horizontal or <br>
-            vertical line. When you place the last 'wall' of a <br>
-            single box, the box and its contents are yours. The <br>
-            players move in turn but whenever a player takes a <br>
-            box they must move again. One finished box is one point. 
+            vertical line. When you place the last 'wall' of a single <br>
+            box, the box and its contents are yours. The players <br>
+            move in turn but whenever a player takes a box they <br>
+            must move again. One finished box is one point. 
             <br><br>
             The game ends when all the boxes have been taken.
             <br><br>
