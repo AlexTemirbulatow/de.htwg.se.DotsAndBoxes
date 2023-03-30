@@ -11,16 +11,17 @@ Using fuctional programming as a paradigm for software development and agility b
 
 <table>
     <tr><th>Rules</th><th>Field</th></tr>
-    <tr><td>You move by connecting two dots with a horizontal or vertical line. <br>
-            When you place the last 'wall' of a single box, the box and its <br>
-            contents are yours. The players move in turn but whenever a player <br>
+    <tr><td>You move by connecting two dots with a horizontal or 
+            vertical line. When you place the last 'wall' of a 
+            single box, the box and its
+            contents are yours. The players move in turn but whenever a player 
             takes a box they must move again. One finished box is one point. <br><br>
             The game ends when all the boxes have been taken.
             <br><br>
             You win if you got more points than Player 2. <br>
             It's a draw if both players got the same amount of points.
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/dotsandboexs.png" width="470" height="360"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/dotsandboexs.png" width="465" height="360"></a></td></tr>
 </table>
 
 ## Contributors
