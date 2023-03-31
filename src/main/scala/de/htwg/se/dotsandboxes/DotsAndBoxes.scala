@@ -1,5 +1,5 @@
 @main def dotsandboxes: Unit =
-  println("\nWelcome to Dots and Boxes!\n")
+  println("\nWelcome to Dots and Boxes\n")
   print(mesh())
 
 def bar(lenght: Int = 6, cellNum: Int = 6) =
