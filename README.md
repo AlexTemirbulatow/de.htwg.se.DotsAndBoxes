@@ -5,7 +5,7 @@ Using fuctional programming as a paradigm for software development and agility b
 
 
 
-<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/AlexTemirbulatow/de.htwg.se.DotsAndBoxes?style=social">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/AlexTemirbulatow/de.htwg.se.DotsAndBoxes?style=social">
 
 #
 
