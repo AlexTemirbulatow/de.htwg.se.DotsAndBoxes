@@ -11,12 +11,9 @@ import de.htwg.se.dotsandboxes.model.Player
   val field = new Field(5, 4, Filled.Empty)
   println(field.toString)
   println(field.matrix)
-  println(Player.list)
-  println(Player.next)
-  println(Player.next)
   print("\n")
 
-val a = Player.list
+
 
 /*
 val even = Vector.tabulate(5)(_ => false)
