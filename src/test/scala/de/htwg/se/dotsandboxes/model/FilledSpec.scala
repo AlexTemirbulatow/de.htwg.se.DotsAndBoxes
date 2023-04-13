@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package de.htwg.se.dotsandboxes.model
 
 import org.scalatest.wordspec.AnyWordSpec
@@ -18,25 +17,4 @@ class FilledSpec extends AnyWordSpec {
             } 
         }
     }
-=======
-package de.htwg.se.dotsandboxes.model
-
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.matchers.should.Matchers._
-import org.scalatest.Assertions._
-
-class FilledSpec extends AnyWordSpec {
-    "Filled" when {
-        "accessing" should {
-            "have the right string representation" in {
-                val empty = Filled.Empty
-                empty.toString should be("E")
-                val blue = Filled.Blue
-                blue.toString should be("B")
-                val red = Filled.Red
-                red.toString should be("R")
-            } 
-        }
-    }
->>>>>>> d9d1fb74d6cbf968da15f0fef726ca1c023e9c0b
 }
