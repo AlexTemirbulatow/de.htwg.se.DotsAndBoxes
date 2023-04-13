@@ -1,14 +1,37 @@
-@main def dotsandboxes: Unit =
-  println("\nWelcome to Dots and Boxes!\n")
-  print(mesh())
+package de.htwg.se.dotsandboxes
 
-def bar(lenght: Int = 6, cellNum: Int = 6) =
-  ("o" + "-" * lenght) * cellNum + "o" + "\n"
-
-def cells(lenght: Int = 6, cellNum: Int = 6, height: Int = 2) =
-  (("|" + " " * lenght) * cellNum + "|" + "\n") * height
-
-def mesh(lenght: Int = 6, cellNum: Int = 6, height: Int = 2) =
-  (bar(lenght, cellNum) + cells(lenght, cellNum, height)) * cellNum + bar(lenght, cellNum)
+import de.htwg.se.dotsandboxes.model.Filled
+import de.htwg.se.dotsandboxes.model.Matrix
+import de.htwg.se.dotsandboxes.model.Field
+import de.htwg.se.dotsandboxes.model.Player
 
 
+@main def run: Unit =
+  println("\nWelcome to Dots and Boxes\n")
+  val field = new Field(5, 4, Filled.Empty)
+  println(field.toString)
+  println(field.matrix)
+  println(Player.list)
+  println(Player.next)
+  println(Player.next)
+  print("\n")
+
+val a = Player.list
+
+/*
+val even = Vector.tabulate(5)(_ => false)
+val odd = Vector.tabulate(6)(_ => false)
+
+val vic = Vector(even, odd, even, odd)
+
+def line() = 
+  for (i <- 0 until vic(0).size)
+    if (vic(0)(i) == false)
+      println("=")
+  
+def startGame(): Unit =
+  val field = new Field(5, 4, Filled.Empty)
+  println(field.toString)
+  println(field.matrix)
+  print("\n")
+  */
