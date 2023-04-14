@@ -11,8 +11,8 @@ case class Field(matrix: Matrix[Filled]):
     def put(filling: Filled, x: Int, y: Int) = 
         copy(matrix.replaceCell(x, y, filling))
     override def toString = mesh()
-    val rowSize = matrix.rowSize
-    val colSize = matrix.colSizeEven
+    val rowSize = matrix.rowSizeVec1
+    val colSize = matrix.colSizeVec1
     /*
     val even = Vector.tabulate(5)(_ => false)
     val odd = Vector.tabulate(6)(_ => false)
