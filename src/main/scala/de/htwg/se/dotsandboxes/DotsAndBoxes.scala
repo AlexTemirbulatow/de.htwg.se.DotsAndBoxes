@@ -10,11 +10,12 @@ import scala.io.StdIn.readLine
 @main def run: Unit =
   println("\nWelcome to Dots and Boxes\n")
   
-  val field = new Field(2, 2, Filled.Red)
+  var field = new Field(2, 2, Filled.Red)
   println(field.toString)
   println(field.matrix)
   print("\n")
-  field.put(0, 0, 0, Filled.Blue)
+  field = field.put(0, 0, 0, Filled.Blue)
+  field = field.put(0, 1, 1, Filled.Blue)
   println(field.toString)
   println(field.matrix)
   print("\n")

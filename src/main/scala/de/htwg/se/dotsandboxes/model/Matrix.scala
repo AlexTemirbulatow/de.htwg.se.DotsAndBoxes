@@ -9,8 +9,7 @@ case class Matrix[T](vecFill: Vector[Vector[T]], vecX: Vector[Vector[Boolean]], 
   def cell(vecIndex: Int, row: Int, col: Int): T = this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]](row)(col)
   def row(vecIndex: Int, row: Int) = this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]](row)
   def replaceCell(vecIndex: Int, row: Int, col: Int, cell: T): Matrix[T] = 
-    //copy(vec1.updated(row, vec1(row).updated(col, cell)))
-    this.copy(this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]].updated(
+    copy(this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]].updated(
     row, this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]](row).updated(col, cell)))
   def rowSize(vecIndex: Int): Int = this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]].size
   def colSize(vecIndex: Int, row: Int) = this.productElement(vecIndex).asInstanceOf[Vector[Vector[T]]](row).size
