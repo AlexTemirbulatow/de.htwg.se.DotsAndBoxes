@@ -2,7 +2,6 @@ package de.htwg.se.dotsandboxes.model
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
-import org.scalatest.Assertions._
 
 class FilledSpec extends AnyWordSpec {
     "Filled" when {
