@@ -7,7 +7,11 @@ Using fuctional programming as a paradigm for software development and agility b
 
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/AlexTemirbulatow/de.htwg.se.DotsAndBoxes?style=social">
 
-#
+## Usage
+You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+
+You can run tests with `sbt clean coverage test` and get a coverage report with `sbt coverageReport` 
+<br><br>
 
 <table>
     <tr><th>Rules</th><th>Field</th></tr>
