@@ -7,43 +7,84 @@ class MatrixSpec extends AnyWordSpec {
     "A Matrix" when {
         "initialized" should {
             "have the correct size" in {
-                val matrix1 = new Matrix(Vector(Vector(Filled.Empty)))
-                matrix1.rowSize should be(1)
-                matrix1.colSizeEven should be(1)
+                val matrix1 = new Matrix(
+                Vector(Vector(Filled.Empty)),
+                Vector(Vector(false), Vector(false, true)), 
+                Vector(Vector(false, true)))
+
+                matrix1.rowSize(0) should be(1)
+                matrix1.colSize(0, 0) should be(1)
+
+                matrix1.rowSize(1) should be(2)
+                matrix1.colSize(1, 0) should be(1)
+                matrix1.colSize(1, 1) should be(2)
+
+                matrix1.rowSize(2) should be(1)
+                matrix1.colSize(2, 0) should be(2)
+
                 val matrix2 = new Matrix(3, 2, Filled.Empty)
-                matrix2.rowSize should be(2)
-                matrix2.colSizeEven should be(3)
-                val matrix3 = new Matrix[Boolean](2, 2, false)
-                matrix3.rowSize should be(2)
-                matrix3.colSizeEven should be(2)
-                val test = Vector.tabulate(2, 2) { (_, _) => false }
-                val matrix4 = new Matrix(test)
-                matrix4.rowSize should be(2)
-                matrix4.colSizeEven should be(2)
+                matrix2.rowSize(0) should be(2)
+                matrix2.colSize(0, 0) should be(3)
+                matrix2.colSize(0, 1) should be(3)
+
+                matrix2.rowSize(1) should be(3)
+                matrix2.colSize(1, 0) should be(3)
+                matrix2.colSize(1, 1) should be(3)
+                matrix2.colSize(1, 2) should be(3)
+
+                matrix2.rowSize(2) should be(2)
+                matrix2.colSize(2, 0) should be(4)
+                matrix2.colSize(2, 1) should be(4)
+                
             }
-            val test = Vector.tabulate(2, 2) { (_, _) => false }
-            val matrix = new Matrix(test)
+            val matrix = new Matrix(2, 2, Filled.Empty)
             "give access to its cells" in {
-                matrix.cell(0, 0) should be(false)
-                matrix.cell(1, 1) should be(false)
-                test(0)(0) should be(false)
+                matrix.cell(0, 0, 0) should be(Filled.Empty)
+                matrix.cell(0, 0, 1) should be(Filled.Empty)
+                matrix.cell(0, 1, 0) should be(Filled.Empty)
+                matrix.cell(0, 1, 1) should be(Filled.Empty)
+
+                matrix.cell(1, 0, 0) should === (false)
+                matrix.cell(1, 2, 1) should === (false)
+
+                matrix.cell(2, 0, 0) should === (false)
+                matrix.cell(2, 1, 2) should === (false)
             }
             "give access to its rows" in {
-                matrix.row(0) should be(Vector(false, false))
-                matrix.row(1) should be(Vector(false, false))
-                test(0) should be(Vector(false, false))
-            }
-            "be refillable" in {
-                val refillMatrix = matrix.fill(true)
-                matrix.cell(1, 1) should be(false)
-                refillMatrix.cell(1, 1) should be(true)
-                refillMatrix.row(1) should be(Vector(true, true))
+                matrix.row(0, 0) should be(Vector(Filled.Empty, Filled.Empty))
+                matrix.row(0, 1) should be(Vector(Filled.Empty, Filled.Empty))
+
+                matrix.row(1, 0) should be(Vector(false, false))
+                matrix.row(1, 2) should be(Vector(false, false))
+
+                matrix.row(2, 0) should be(Vector(false, false, false))
+                matrix.row(2, 1) should be(Vector(false, false, false))
             }
             "allow to replace cells" in {
-                val replCellMatrix = matrix.replaceCell(0, 0, false)
-                matrix.cell(0, 0) should be(false)
-                replCellMatrix.cell(0, 0) should be(false) 
-                replCellMatrix.row(0) should be(Vector(false, false))
+                val replCell0 = matrix.replaceCell(0, 0, 0, Filled.Blue)
+                val replCell1 = matrix.replaceCell(1, 0, 0, true)
+                val replCell2 = matrix.replaceCell(2, 0, 0, true)
+                val replCell3 = replCell2.replaceCell(3, 0, 0, true)
+
+                matrix.cell(0, 0, 0) should be(Filled.Empty)
+                replCell0.cell(0, 0, 0) should be(Filled.Blue)
+
+                matrix.cell(1, 0, 0) should === (false)
+                replCell1.cell(1, 0, 0) should === (true)
+
+                matrix.cell(2, 0, 0) should === (false)
+                replCell2.cell(2, 0, 0) should === (true)
+
+                replCell3 should equal(replCell2)
+            }
+            "should return correct Matrix[Vector]" in {
+                val vec0 = matrix.vector(0)
+                val vec1 = matrix.vector(1)
+                val vec2 = matrix.vector(2)
+
+                vec0 should be(Vector(Vector(Filled.Empty, Filled.Empty), Vector(Filled.Empty, Filled.Empty)))
+                vec1 should be(Vector(Vector(false, false), Vector(false, false), Vector(false, false)))
+                vec2 should be(Vector(Vector(false, false, false), Vector(false, false, false)))
             }
         }
     }
