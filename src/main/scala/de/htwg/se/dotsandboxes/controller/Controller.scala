@@ -10,4 +10,3 @@ case class Controller(var field: Field) extends Observable:
     field = field.put(vecIndex, x, y, filling)
     notifyObservers
   override def toString: String = field.toString
-  
