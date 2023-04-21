@@ -2,7 +2,7 @@ package de.htwg.se.dotsandboxes
 
 import scala.io.StdIn.readLine
 
-import de.htwg.se.dotsandboxes.model.Filled
+import de.htwg.se.dotsandboxes.model.Status
 import de.htwg.se.dotsandboxes.model.Matrix
 import de.htwg.se.dotsandboxes.model.Field
 import de.htwg.se.dotsandboxes.model.Player
@@ -19,7 +19,7 @@ def welcome() =
 
 @main def run: Unit =
   print(welcome())
-  var field = new Field(5, 4, Filled.Empty)
+  var field = new Field(5, 4, Status.Empty)
   println(field.toString)
   gameLoop(field, Player.next)
 
