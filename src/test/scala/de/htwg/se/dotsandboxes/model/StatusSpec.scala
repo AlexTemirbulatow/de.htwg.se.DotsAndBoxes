@@ -3,8 +3,8 @@ package de.htwg.se.dotsandboxes.model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
-class FilledSpec extends AnyWordSpec {
-    "Filled" when {
+class StatusSpec extends AnyWordSpec {
+    "Status" when {
         "accessing" should {
             "have the right string representation" in {
                 val empty = Status.Empty
