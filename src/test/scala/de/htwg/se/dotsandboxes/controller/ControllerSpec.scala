@@ -8,12 +8,22 @@ import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
 class ControllerSpec extends AnyWordSpec {
+    val controller = Controller(new Field(2, 2, Status.Empty))
     "The Controller" should {
-        val controller = Controller(new Field(2, 2, Status.Empty))
         "put a connected line on the field when a move is made" in {
             val fieldWithMove = controller.put(1, 0, 0, true)
             fieldWithMove.get(1, 0, 0) should === (true)
             fieldWithMove.get(1, 0, 1) should === (false)
+        }
+        "print the correct field" in {
+            controller.toString should be(
+                "O=======O-------O\n" +
+                "¦   E   ¦   E   ¦\n" +
+                "¦   E   ¦   E   ¦\n" +
+                "O-------O-------O\n" +
+                "¦   E   ¦   E   ¦\n" +
+                "¦   E   ¦   E   ¦\n" +
+                "O-------O-------O\n")
         }
         "notify its observers on change" in {
             class TestObserver(controller: Controller) extends Observer:

@@ -10,7 +10,9 @@ class FieldSpec extends AnyWordSpec {
             val field1 = new Field(1, 1, Status.Empty)
             val field2 = new Field(3, 2, Status.Empty)
             val field3 = new Field(3, 3, Status.Empty)
+            val field4 = new Field(5, 5, Status.Empty)
             "have a bar as String of form 'O-------O-------O-------O'" in {
+                field4.bar(rowIndex = 0) should be("O-------O-------O-------O-------O-------O\n")
                 field2.bar(cellNum = 3, rowIndex = 0) should be("O-------O-------O-------O\n")
             }
             "have a scalable bar" in {
@@ -21,7 +23,7 @@ class FieldSpec extends AnyWordSpec {
             "have cells as String of form " +
                 "¦   E   ¦   E   ¦   E   ¦" +
                 "¦   E   ¦   E   ¦   E   ¦" in {
-                field3.cells(0, 7, 2) should be(
+                field3.cells(0) should be(
                     "¦   E   ¦   E   ¦   E   ¦\n" +
                     "¦   E   ¦   E   ¦   E   ¦\n")
                 field3.cells(1, 7, 2) should be(
@@ -131,6 +133,9 @@ class FieldSpec extends AnyWordSpec {
                 square.filling(1, 1, 7) should be("   R   ")
             }
             "return correct size" in {
+                field.rowSize() should be(2)
+                field.colSize() should be(2)
+
                 field.rowSize(0) should be(2)
                 field.rowSize(1) should be(3)
                 field.rowSize(2) should be(2)
