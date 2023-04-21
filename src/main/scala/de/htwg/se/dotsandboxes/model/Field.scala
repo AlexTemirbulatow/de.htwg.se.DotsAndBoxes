@@ -1,7 +1,5 @@
 package de.htwg.se.dotsandboxes.model
 
-import de.htwg.se.dotsandboxes.model.Matrix
-
 case class Field(matrix: Matrix[Any]):
     def this(row: Int, col: Int, filling: Any) = this(new Matrix(row, col, filling))
     def bar(length: Int = 7, cellNum: Int = 5, rowIndex: Int) = 
