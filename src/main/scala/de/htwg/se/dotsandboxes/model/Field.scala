@@ -19,6 +19,7 @@ case class Field(matrix: Matrix[Any]):
         if(lineIndex < colSize()) space(length) + matrix.cell(0, rowIndex, lineIndex) + space(length) else Connectors.Empty.toString
     def put(vecIndex: Int, x: Int, y: Int, filling: Any) =
         copy(matrix.replaceCell(vecIndex, x, y, filling))
+    def get(vecIndex: Int, x: Int, y: Int) = matrix.cell(vecIndex, x, y)
     def rowSize(row: Int = 0) = matrix.rowSize(row)
     def colSize(row: Int = 0, col: Int = 0) = matrix.colSize(row, col)
     def space(length: Int) = " " * ((length - 1) / 2)

@@ -7,18 +7,18 @@ import model.Status
 import util.Observer
 
 class TUI(controller: Controller) extends Observer:
+    def welcome() =
+    "\n" +
+    "---------------------------------" + "\n" +
+    "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
+    "---------------------------------" + "\n" +
+    "\n"
+
     controller.add(this)
     def run =
         println(welcome())
         println(controller.field.toString)
         gameLoop()
-
-    def welcome() =
-        "\n" +
-        "---------------------------------" + "\n" +
-        "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
-        "---------------------------------" + "\n" +
-        "\n"
 
     def gameLoop(): Unit =
         println("Blue" + "s turn")
@@ -34,7 +34,6 @@ class TUI(controller: Controller) extends Observer:
                 val x = chars(1).toString.toInt
                 val y = chars(2).toString.toInt
                 controller.put(line, x, y, true)
-                println(controller.toString)
                 gameLoop()
 
-    override def update: Unit = ???
+    override def update: Unit = println("\n" + controller.field.toString)
