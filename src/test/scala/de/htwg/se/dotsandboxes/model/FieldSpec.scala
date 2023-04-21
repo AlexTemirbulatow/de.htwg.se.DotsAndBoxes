@@ -7,9 +7,9 @@ class FieldSpec extends AnyWordSpec {
 
     "A Dots and Boxes Field" when {
         "initialized empty" should {
-            val field1 = new Field(1, 1, Filled.Empty)
-            val field2 = new Field(3, 2, Filled.Empty)
-            val field3 = new Field(3, 3, Filled.Empty)
+            val field1 = new Field(1, 1, Status.Empty)
+            val field2 = new Field(3, 2, Status.Empty)
+            val field3 = new Field(3, 3, Status.Empty)
             "have a bar as String of form 'O-------O-------O-------O'" in {
                 field2.bar(cellNum = 3, rowIndex = 0) should be("O-------O-------O-------O\n")
             }
@@ -71,7 +71,7 @@ class FieldSpec extends AnyWordSpec {
             }
         }
         "initialized blue" should {
-            val field4 = new Field(2, 2, Filled.Blue)
+            val field4 = new Field(2, 2, Status.Blue)
             "have a mesh with Blue fillings" in {
                 field4.mesh() should be(
                     "O-------O-------O\n" +
@@ -84,7 +84,7 @@ class FieldSpec extends AnyWordSpec {
             }
         }
         "initialized empty" should {
-            val field = new Field(2, 2, Filled.Empty)
+            val field = new Field(2, 2, Status.Empty)
             "be empty initially" in {
                 field.toString should be(
                     "O-------O-------O\n" +
@@ -96,7 +96,7 @@ class FieldSpec extends AnyWordSpec {
                     "O-------O-------O\n")
             }
             "have Blue and Red after put()" in {
-                field.put(0, 0, 0, Filled.Blue).put(0, 1, 1, Filled.Red).toString should be(
+                field.put(0, 0, 0, Status.Blue).put(0, 1, 1, Status.Red).toString should be(
                     "O-------O-------O\n" +
                     "¦   B   ¦   E   ¦\n" +
                     "¦   B   ¦   E   ¦\n" +
@@ -125,7 +125,7 @@ class FieldSpec extends AnyWordSpec {
                 cells.yline(0, 0, 7) should be("‖   E   ")
                 cells.yline(1, 2, 7) should be("¦")
                 
-                val square = field.put(0, 0, 0, Filled.Blue).put(0, 1, 1, Filled.Red)
+                val square = field.put(0, 0, 0, Status.Blue).put(0, 1, 1, Status.Red)
                 square.filling(1, 0, 7) should be("   E   ")
                 square.filling(0, 0, 7) should be("   B   ")
                 square.filling(1, 1, 7) should be("   R   ")
