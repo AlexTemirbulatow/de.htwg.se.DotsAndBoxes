@@ -128,9 +128,9 @@ class FieldSpec extends AnyWordSpec {
                 cells.yline(1, 2, 7) should be("¦")
                 
                 val square = field.put(0, 0, 0, Status.Blue).put(0, 1, 1, Status.Red)
-                square.filling(1, 0, 7) should be("   E   ")
-                square.filling(0, 0, 7) should be("   B   ")
-                square.filling(1, 1, 7) should be("   R   ")
+                square.status(1, 0, 7) should be("   E   ")
+                square.status(0, 0, 7) should be("   B   ")
+                square.status(1, 1, 7) should be("   R   ")
             }
             "return correct size" in {
                 field.rowSize() should be(2)
