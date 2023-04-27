@@ -87,5 +87,76 @@ class MatrixSpec extends AnyWordSpec {
                 vec2 should be(Vector(Vector(false, false, false), Vector(false, false, false)))
             }
         }
+        "checking for squares" should {
+            val matrix = new Matrix(2, 2, Status.Empty)
+            val matrix2 = matrix.replaceCell(1, 0, 0, true).replaceCell(1, 1, 0, true).replaceCell(2, 0, 0, true).replaceCell(2, 0, 1, true)
+            "return same matrix" in {
+                matrix.checkSquare(2, 1, 0) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(false, false), Vector(false, false), Vector(false, false)), 
+                Vector(Vector(false, false, false), Vector(false, false, false))))
+
+                matrix.checkSquare(4, 0, 0) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(false, false), Vector(false, false), Vector(false, false)), 
+                Vector(Vector(false, false, false), Vector(false, false, false))))
+
+                matrix.checkSquare(5, 0, 1) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(false, false), Vector(false, false), Vector(false, false)), 
+                Vector(Vector(false, false, false), Vector(false, false, false))))
+            }
+            "return correct matrix on edge case" in {
+
+                matrix2.checkSquare(1, 0, 0) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkSquare(2, 1, 0) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+
+                matrix2.checkSquare(4, 0, 0) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkSquare(5, 0, 1) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+            }
+            "return correct matrix on mid case" in {
+
+                matrix2.checkSquare(3, 1, 0) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkSquare(6, 0, 1) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+            }
+        }
+        "checking a move" should {
+            "return correct matrix" in {
+                val matrix = new Matrix(2, 2, Status.Empty)
+                val matrix2 = matrix.replaceCell(1, 0, 0, true).replaceCell(1, 1, 0, true).replaceCell(2, 0, 0, true).replaceCell(2, 0, 1, true)
+
+                matrix2.checkMove(1, 0, 0) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkMove(1, 2, 0) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+            }
+        }
     }
 }
