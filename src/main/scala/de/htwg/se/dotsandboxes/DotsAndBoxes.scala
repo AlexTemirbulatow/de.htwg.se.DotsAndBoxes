@@ -3,7 +3,6 @@ package de.htwg.se.dotsandboxes
 import aview.TUI
 import controller.Controller
 import model.Field
-import model.Matrix
 import model.Status
 
 @main def main: Unit =
