@@ -156,6 +156,30 @@ class MatrixSpec extends AnyWordSpec {
                 Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
                 Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
                 Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkMove(1, 3, 0) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+
+                matrix2.checkMove(2, 0, 0) should be(
+                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkMove(2, 0, 3) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+                matrix2.checkMove(2, 1, 1) should be(
+                Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
+                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
+                Vector(Vector(true, true, false), Vector(false, false, false))))
+
+
+                matrix.checkMove(3, 0, 0) should be(matrix)
             }
         }
     }
