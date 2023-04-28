@@ -19,9 +19,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'sbt'
-    - name: Run tests and Generate coverage report
-      run: sbt clean coverage test coverageReport
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Project and export Coverage
+        env:
+          COVERALLS_REPO_TOKEN: rSCfq6qucGeH0cflWLTmSB3V5ZUaHEthEZiR
+        run: |
+          export CI_BRANCH="${GITHUB_REF#refs/heads/}"
+          sbt clean jacoco jacocoCoveralls
