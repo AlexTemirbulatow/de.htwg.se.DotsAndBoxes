@@ -2,10 +2,9 @@ package de.htwg.se.dotsandboxes.model
 
 case class Matrix[T](vecStatus: Vector[Vector[Any]], vecX: Vector[Vector[Any]], vecY: Vector[Vector[Any]]):
   def this(row: Int, col: Int, status: Any) = 
-    this(Vector.tabulate(col, row) { (_, _) => status}, 
-    Vector.tabulate (col + 1, row) { (_, _) => false}, 
-    Vector.tabulate (col, row + 1) { (_, _) => false})
-
+    this(Vector.tabulate(col, row) { (_, _) => status},
+    Vector.tabulate (col + 1, row) { (_, _) =>  false},
+    Vector.tabulate (col, row + 1) { (_, _) =>  false})
   def cell(vecIndex: Int, row: Int, col: Int): Any = vector(vecIndex)(row)(col)
   def row(vecIndex: Int, row: Int) = vector(vecIndex)(row)
   def replaceCell(vecIndex: Int, row: Int, col: Int, cell: Any): Matrix[Any] = vecIndex match
@@ -41,6 +40,21 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecX: Vector[Vector[Any]], 
         //checkSquare(3, x, y)
         checkSquare(4, x, y)
     case _ => copy()
+
+/*
+  def checkMove(vecIndex: Int, x: Int, y: Int): Matrix[Any] = (vecIndex, x, y) match
+    case (1, 0, y) => checkSquare(1, x, y)       // CASE   1: only down
+    case (1, 4, y) => checkSquare(2, x, y)       // CASE   2: only up           BUG
+    case (1, x, y) =>                            // CASE 1/2: both
+      checkSquare(1, x, y)
+      checkSquare(2, x, y)
+    case (2, x, 0) => checkSquare(3, x, y)       // CASE   3: only right
+    case (2, x, 5) => checkSquare(4, x, y)       // CASE   4: only left         BUG
+    case (2, x, y) =>                            // CASE 3/4: both
+      checkSquare(3, x, y)
+      checkSquare(4, x, y)
+    case (_, x, y) => copy()
+*/
 
   def checkSquare(caseNumber: Int, x: Int, y: Int): Matrix[Any] = caseNumber match
     case 1 => // check down
