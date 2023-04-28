@@ -23,22 +23,17 @@ class TUI(controller: Controller) extends Observer:
         println(controller.field.toString)
         gameLoop()
 
-    def gameLoop(): Unit =
-        println("Blue" + "s turn")
-        print("Enter your move (<line><x><y>, eg. 101, q to quit):\n")
+    def gameLoop(): Unit = 
         analyseInput(readLine) match
             case None       => sys.exit()
             case Some(move) => controller.doAndPublish(controller.put, move)
         gameLoop()
 
-    def analyseInput(input: String): Option[Move] =
-        input match
-            case "q" => None
-            case _   => 
-                val chars = input.toCharArray
-                val line = chars(0) match
-                    case '1' => 1
-                    case '2' => 2
-                val x = chars(1).toString.toInt
-                val y = chars(2).toString.toInt
-                Some(Move(line, x, y, true))
+    def analyseInput(input: String): Option[Move] = input match
+        case "q" => None
+        case _   =>
+            val chars = input.toCharArray
+            val line = chars(0).toString.toInt
+            val x = chars(1).toString.toInt
+            val y = chars(2).toString.toInt
+            Some(Move(line, x, y, true))
