@@ -6,7 +6,7 @@ Using fuctional programming as a paradigm for software development and agility b
 
 [![Scala CI](https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/actions/workflows/scala.yml/badge.svg?branch=developer)](https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/actions/workflows/scala.yml)
 [![codecov](https://codecov.io/gh/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/branch/developer/graph/badge.svg?token=ZBBnZJAtI2)](https://codecov.io/gh/AlexTemirbulatow/de.htwg.se.DotsAndBoxes)
-<br><br>
+<br>
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/AlexTemirbulatow/de.htwg.se.DotsAndBoxes"> <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/AlexTemirbulatow/de.htwg.se.DotsAndBoxes?style=social">
 
 ## Usage
