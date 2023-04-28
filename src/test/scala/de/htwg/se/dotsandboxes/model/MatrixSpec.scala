@@ -96,18 +96,17 @@ class MatrixSpec extends AnyWordSpec {
                 Vector(Vector(false, false), Vector(false, false), Vector(false, false)), 
                 Vector(Vector(false, false, false), Vector(false, false, false))))
 
-                matrix.checkSquare(4, 0, 0) should be(
+                matrix.checkSquare(3, 0, 0) should be(
                 Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
                 Vector(Vector(false, false), Vector(false, false), Vector(false, false)), 
                 Vector(Vector(false, false, false), Vector(false, false, false))))
 
-                matrix.checkSquare(5, 0, 1) should be(
+                matrix.checkSquare(4, 0, 1) should be(
                 Matrix(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)), 
                 Vector(Vector(false, false), Vector(false, false), Vector(false, false)), 
                 Vector(Vector(false, false, false), Vector(false, false, false))))
             }
             "return correct matrix on edge case" in {
-
                 matrix2.checkSquare(1, 0, 0) should be(
                 Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
                 Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
@@ -119,24 +118,12 @@ class MatrixSpec extends AnyWordSpec {
                 Vector(Vector(true, true, false), Vector(false, false, false))))
 
 
-                matrix2.checkSquare(4, 0, 0) should be(
+                matrix2.checkSquare(3, 0, 0) should be(
                 Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
                 Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
                 Vector(Vector(true, true, false), Vector(false, false, false))))
 
-                matrix2.checkSquare(5, 0, 1) should be(
-                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
-                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
-                Vector(Vector(true, true, false), Vector(false, false, false))))
-            }
-            "return correct matrix on mid case" in {
-
-                matrix2.checkSquare(3, 1, 0) should be(
-                Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
-                Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
-                Vector(Vector(true, true, false), Vector(false, false, false))))
-
-                matrix2.checkSquare(6, 0, 1) should be(
+                matrix2.checkSquare(4, 0, 1) should be(
                 Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)), 
                 Vector(Vector(true, false), Vector(true, false), Vector(false, false)), 
                 Vector(Vector(true, true, false), Vector(false, false, false))))

@@ -31,33 +31,32 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecX: Vector[Vector[Any]], 
   def checkMove(vecIndex: Int, x: Int, y: Int): Matrix[Any] =
     vecIndex match
       case 1 =>
-        //(For edge: only down(y = 0) OR up(y = max. size) check | For mid: down AND up check)
-        if(x == 0) checkSquare(1, x, y)                 	  // CASE 1: only down
+        //(Edge case: only down(x = 0) OR up(x = max. size) check | Mid case: down AND up check)
+        if(x == 0) checkSquare(1, x, y)                     // CASE 1: only down
         else if(x == rowSize(1)) checkSquare(2, x, y)       // CASE 2: only up
-        else checkSquare(3, x, y)                           // CASE 3: both
+        else                                                // CASE 3: both
+          //checkSquare(1, x, y)
+          checkSquare(2, x, y)
       case 2 =>
-        //(For edge: only right(x = 0) OR left(x = max. size) check | For mid: right AND left check)
-        if(y == 0) checkSquare(4, x, y)                     // CASE 4: only right
-        else if(y == colSize(2, 0)) checkSquare(5, x, y)    // CASE 5: only left
-        else checkSquare(6, x, y)                           // CASE 6: both
+        //(Edge case: only right(y = 0) OR left(y = max. size) check | Mid case: right AND left check)
+        if(y == 0) checkSquare(3, x, y)                     // CASE 4: only right
+        else if(y == colSize(2, 0)) checkSquare(4, x, y)    // CASE 5: only left
+        else                                                // CASE 6: both
+          //checkSquare(3, x, y)
+          checkSquare(4, x, y)
       case _ => copy()
+
   def checkSquare(caseNumber: Int, x: Int, y: Int): Matrix[Any] =
     caseNumber match
-      case 1 => // only down
+      case 1 => // check down
         if(cell(1, x + 1, y).equals(true) && cell(2, x, y).equals(true) && cell(2, x, y + 1).equals(true))
           replaceCell(0, x, y, Status.Blue) else copy()
-      case 2 => // only up
+      case 2 => // check up
         if(cell(1, x - 1, y).equals(true) && cell(2, x - 1, y).equals(true) && cell(2, x - 1, y + 1).equals(true))
           replaceCell(0, x -1 , y, Status.Blue) else copy()
-      case 3 => // both
-        //checkSquare(1, x, y)
-        checkSquare(2, x, y)
-      case 4 => // only right
+      case 3 => // check right
         if(cell(2, x, y + 1).equals(true) && cell(1, x, y).equals(true) && cell(1, x + 1, y).equals(true))
           replaceCell(0, x, y, Status.Blue) else copy()
-      case 5 => // only left
+      case 4 => // check left
         if(cell(2, x, y - 1).equals(true) && cell(1, x, y - 1).equals(true) && cell(1, x + 1, y - 1).equals(true))
           replaceCell(0, x, y - 1, Status.Blue) else copy()
-      case 6 => // both
-        //checkSquare(4, x, y)
-        checkSquare(5, x, y)
