@@ -15,9 +15,9 @@ class TUI(controller: Controller) extends Observer:
     "---------------------------------" + "\n" +
     "\n"
 
+    controller.add(this)
     override def update: Unit = println("\n" + controller.field.toString)
 
-    controller.add(this)
     def run =
         println(welcome())
         println(controller.field.toString)
