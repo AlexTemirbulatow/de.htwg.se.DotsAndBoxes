@@ -2,9 +2,9 @@ name: Scala CI
 
 on:
   push:
-    branches: [ developer ]
+    branches: [ "developer" ]
   pull_request:
-    branches: [ developer ]
+    branches: [ "developer", "main" ]
 
 jobs:
   build:
@@ -12,21 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
       with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: compile
-      run: sbt compile
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build Project and export Coverage
-        env:
-          COVERALLS_REPO_TOKEN: rSCfq6qucGeH0cflWLTmSB3V5ZUaHEthEZiR
-        run: |
-          export CI_BRANCH="${GITHUB_REF#refs/heads/}"
-          sbt clean jacoco jacocoCoveralls
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'sbt'
+  - name: Run tests and Generate coverage report
+      run: sbt clean coverage test coverageReport
+  - name: Upload coverage reports to Codecov
+    uses: codecov/codecov-action@v3
+    with:
+        token: ${{ secrets.CODECOV_TOKEN }}
