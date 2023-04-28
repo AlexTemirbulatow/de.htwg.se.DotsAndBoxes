@@ -1,7 +1,7 @@
 package de.htwg.se.dotsandboxes.model
 
 case class Matrix[T](vecStatus: Vector[Vector[Any]], vecX: Vector[Vector[Any]], vecY: Vector[Vector[Any]]):
-  def this(row: Int, col: Int, status: T) = 
+  def this(row: Int, col: Int, status: Any) = 
     this(Vector.tabulate(col, row) { (_, _) => status}, 
     Vector.tabulate (col + 1, row) { (_, _) => false}, 
     Vector.tabulate (col, row + 1) { (_, _) => false})
@@ -17,7 +17,7 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecX: Vector[Vector[Any]], 
   def colSize(vecIndex: Int, row: Int) = vector(vecIndex)(row).size
   def vector(vecIndex: Int) = this.productElement(vecIndex).asInstanceOf[Vector[Vector[Any]]]
 
-  
+
   /*
 
   TODO:
