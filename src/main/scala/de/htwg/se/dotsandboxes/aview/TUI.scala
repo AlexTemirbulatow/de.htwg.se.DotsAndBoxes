@@ -9,11 +9,11 @@ import util.Observer
 
 class TUI(controller: Controller) extends Observer:
     def welcome() =
-    "\n" +
-    "---------------------------------" + "\n" +
-    "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
-    "---------------------------------" + "\n" +
-    "\n"
+        "\n" +
+        "---------------------------------" + "\n" +
+        "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
+        "---------------------------------" + "\n" +
+        "\n"
 
     controller.add(this)
     override def update: Unit = println("\n" + controller.field.toString)
@@ -31,9 +31,8 @@ class TUI(controller: Controller) extends Observer:
 
     def analyseInput(input: String): Option[Move] = input match
         case "q" => None
-        case _   =>
-            val chars = input.toCharArray
+        case _   => val chars = input.toCharArray
             val line = chars(0).toString.toInt
-            val x = chars(1).toString.toInt
-            val y = chars(2).toString.toInt
+            val x    = chars(1).toString.toInt
+            val y    = chars(2).toString.toInt
             Some(Move(line, x, y, true))
