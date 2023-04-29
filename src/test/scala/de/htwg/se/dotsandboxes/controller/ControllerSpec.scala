@@ -23,7 +23,7 @@ class ControllerSpec extends AnyWordSpec {
                 def update = bing = true
             val testObserver = TestObserver(controller)
             testObserver.bing should be(false)
-            controller.doAndPublish(controller.put, Move(1, 0, 0, true))
+            controller.publish(controller.put, Move(1, 0, 0, true))
             testObserver.bing should be(true)
             controller.toString should be(
                 "O=======O-------O\n" +
