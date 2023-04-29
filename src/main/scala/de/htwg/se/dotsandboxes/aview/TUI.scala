@@ -8,26 +8,26 @@ import model.Move
 import util.Observer
 
 class TUI(controller: Controller) extends Observer:
-    def welcome() =
+    controller.add(this)
+    override def update: Unit = println("\n" + controller.field.toString)
+
+    def welcome =
         "\n" +
         "---------------------------------" + "\n" +
         "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
         "---------------------------------" + "\n" +
         "\n"
 
-    controller.add(this)
-    override def update: Unit = println("\n" + controller.field.toString)
-
     def run =
-        println(welcome())
+        println(welcome)
         println(controller.field.toString)
-        gameLoop()
+        gameLoop
 
-    def gameLoop(): Unit = 
+    def gameLoop: Unit = 
         analyseInput(readLine) match
             case None       => sys.exit()
             case Some(move) => controller.publish(controller.put, move)
-        gameLoop()
+        gameLoop
 
     def analyseInput(input: String): Option[Move] = input match
         case "q" => None

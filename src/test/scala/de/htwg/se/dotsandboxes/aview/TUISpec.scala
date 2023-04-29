@@ -18,7 +18,7 @@ class TuiSpec extends AnyWordSpec {
             tui.analyseInput("q") should be(None)
         }
         "print the correct form of String" in {
-            tui.welcome() should be(
+            tui.welcome should be(
                 "\n" +
                 "---------------------------------" + "\n" +
                 "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
