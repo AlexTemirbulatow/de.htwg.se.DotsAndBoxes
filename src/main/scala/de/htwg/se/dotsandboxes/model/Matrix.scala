@@ -18,13 +18,13 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecX: Vector[Vector[Any]], 
   val maxPosX = rowSize(1) - 1
   val maxPosY = colSize(2, 0) - 1
   def checkMove(vecIndex: Int, x: Int, y: Int): Matrix[Any] = (vecIndex, x, y) match
-    case (1, 0, _)                 => checkSquare(1, x, y)                       // CASE   1: only down
-    case (1, x, _) if x == maxPosX => checkSquare(2, x, y)                       // CASE   2: only up
-    case (1, _, _)                 => (1 to 2).map(checkSquare(_, x, y)).last    // CASE 1/2: both         unfinished
-    case (2, _, 0)                 => checkSquare(3, x, y)                       // CASE   3: only right
-    case (2, _, y) if y == maxPosY => checkSquare(4, x, y)                       // CASE   4: only left
-    case (2, _, _)                 => (3 to 4).map(checkSquare(_, x, y)).last    // CASE 3/4: both         unfinished
-    case (_, _, _)                 => copy()
+    case (1, 0, _) => checkSquare(1, x, y)                       // CASE   1: only down
+    case (1, x, _) if x == maxPosX => checkSquare(2, x, y)       // CASE   2: only up
+    case (1, _, _) => (1 to 2).map(checkSquare(_, x, y)).last    // CASE 1/2: both         unfinished
+    case (2, _, 0) => checkSquare(3, x, y)                       // CASE   3: only right
+    case (2, _, y) if y == maxPosY => checkSquare(4, x, y)       // CASE   4: only left
+    case (2, _, _) => (3 to 4).map(checkSquare(_, x, y)).last    // CASE 3/4: both         unfinished
+    case (_, _, _) => copy()
   def checkSquare(caseNumber: Int, x: Int, y: Int): Matrix[Any] = caseNumber match
     case 1 => if((cell(1, x + 1, y), cell(2, x, y), cell(2, x, y + 1)).toList.forall(_ == true))
       replaceCell(0, x, y, Status.Blue) else copy()
