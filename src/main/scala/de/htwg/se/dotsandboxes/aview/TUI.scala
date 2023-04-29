@@ -26,7 +26,7 @@ class TUI(controller: Controller) extends Observer:
     def gameLoop(): Unit = 
         analyseInput(readLine) match
             case None       => sys.exit()
-            case Some(move) => controller.doAndPublish(controller.put, move)
+            case Some(move) => controller.publish(controller.put, move)
         gameLoop()
 
     def analyseInput(input: String): Option[Move] = input match
