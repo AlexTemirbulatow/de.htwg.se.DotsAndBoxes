@@ -63,8 +63,8 @@ class MatrixSpec extends AnyWordSpec {
             "allow to replace cells" in {
                 val replCell0 = matrix.replaceCell(0, 0, 0, Status.Blue)
                 val replCell1 = matrix.replaceCell(1, 0, 0, true)
-                val replCell2 = matrix.replaceCell(2, 0, 0, true)
-                val replCell3 = replCell2.replaceCell(3, 0, 0, true)
+                val replCell2 = matrix.replaceCell(2, 1, 0, true)
+                val replCell3 = replCell2.replaceCell(2, 1, 0, true)
 
                 matrix.cell(0, 0, 0) should be(Status.Empty)
                 replCell0.cell(0, 0, 0) should be(Status.Blue)
@@ -72,8 +72,8 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.cell(1, 0, 0) should === (false)
                 replCell1.cell(1, 0, 0) should === (true)
 
-                matrix.cell(2, 0, 0) should === (false)
-                replCell2.cell(2, 0, 0) should === (true)
+                matrix.cell(2, 1, 0) should === (false)
+                replCell2.cell(2, 1, 0) should === (true)
 
                 replCell3 should equal(replCell2)
             }
@@ -129,13 +129,24 @@ class MatrixSpec extends AnyWordSpec {
 
                 matrix2.checkMove(1, 0, 0) should be(matrixVector2)
                 matrix2.checkMove(1, matrix2.maxPosX, 0) should be(matrixVector)
-                matrix2.checkMove(1, 1, 1) should be(matrixVector)
 
                 matrix2.checkMove(2, 0, 0) should be(matrixVector2)
                 matrix2.checkMove(2, 0, matrix2.maxPosY) should be(matrixVector)
-                matrix2.checkMove(2, 1, 1) should be(matrixVector)
+            }
+        }
+        "checking for edge case" should {
+            "return correct boolean for a move" in {
+                val matrix = new Matrix(3, 3, Status.Empty)
+                val move1 = new Move(1, 0, 0, true)
+                val move2 = new Move(1, 1, 1, true)
+                val move3 = new Move(2, 0, 0, true)
+                val move4 = new Move(2, 1, 1, true)
 
-                matrix.checkMove(3, 0, 0) should be(matrix)
+                matrix.isEdge(move1) should === (true)
+                matrix.isEdge(move2) should === (false)
+                
+                matrix.isEdge(move3) should === (true)
+                matrix.isEdge(move4) should === (false)
             }
         }
     }

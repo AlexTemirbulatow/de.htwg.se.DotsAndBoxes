@@ -155,6 +155,54 @@ class FieldSpec extends AnyWordSpec {
                 field.space(5) should be("  ")
                 field.space(7) should be("   ")
             }
+            "give access to its cells" in {
+                field.get(0, 0, 0) should be(Status.Empty)
+                field.get(1, 0, 0) should === (false)
+                field.get(2, 0, 0) should === (false)
+
+                field.put(1, 0, 0, true).get(1, 0, 0) should === (true)
+                field.put(2, 0, 0, true).get(2, 0, 0) should === (true)
+            }
+            "check if a move is a edge case" in {
+                val move1 = new Move(1, 0, 0, true)
+                val move2 = new Move(1, 1, 1, true)
+                val move3 = new Move(2, 0, 0, true)
+                val move4 = new Move(2, 1, 1, true)
+
+                field.checkEdge(move1) should === (true)
+                field.checkEdge(move2) should === (false)
+                
+                field.checkEdge(move3) should === (true)
+                field.checkEdge(move4) should === (false)
+            }
+            "do a move in edge case" in {
+                field.doEdge(1, 0, 0) should be(field)
+
+                field.put(1, 0, 0, true).put(1, 1, 0, true).put(2, 0, 0, true).put(2, 0, 1, true).doEdge(1, 0, 0).toString should be(
+                    "O=======O-------O\n" +
+                    "‖   B   ‖   E   ¦\n" +
+                    "‖   B   ‖   E   ¦\n" +
+                    "O=======O-------O\n" +
+                    "¦   E   ¦   E   ¦\n" +
+                    "¦   E   ¦   E   ¦\n" +
+                    "O-------O-------O\n")
+            }
+            "do a move in mud case" in {
+                val field = new Field(3, 3, Status.Empty)
+                field.doMid(1, 1, 1) should be(field)
+
+                field.put(1, 1, 1, true).put(1, 2, 1, true).put(2, 1, 1, true).put(2, 1, 2, true).doMid(1, 1, 1).toString should be(
+                    "O-------O-------O-------O\n" +
+                    "¦   E   ¦   E   ¦   E   ¦\n" +
+                    "¦   E   ¦   E   ¦   E   ¦\n" +
+                    "O-------O=======O-------O\n" +
+                    "¦   E   ‖   B   ‖   E   ¦\n" +
+                    "¦   E   ‖   B   ‖   E   ¦\n" +
+                    "O-------O=======O-------O\n" +
+                    "¦   E   ¦   E   ¦   E   ¦\n" +
+                    "¦   E   ¦   E   ¦   E   ¦\n" +
+                    "O-------O-------O-------O\n")
+            }
         }
     }
 }
