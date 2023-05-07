@@ -11,7 +11,7 @@ import org.scalatest.wordspec.AnyWordSpec
 class TuiSpec extends AnyWordSpec {
 
     "The TUI" should {
-        val tui = TUI(Controller(new Field(3, 3, Status.Empty)))
+        val tui = TUI(Controller(new Field(3, 3, Status.Empty, 2)))
         "recognize the input as move of line connector" in {
             tui.analyseInput("100") should be(Some(Move(1, 0, 0, true)))
             tui.analyseInput("210") should be(Some(Move(2, 1, 0, true)))
@@ -24,6 +24,18 @@ class TuiSpec extends AnyWordSpec {
                 "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
                 "---------------------------------" + "\n" +
                 "\n")
+            tui.finished should be(
+                "\n" +
+                "-----------------" + "\n" +
+                "| Game finished |" + "\n" +
+                "-----------------" + "\n" +
+                "\n")
+            tui.finalStats should be(
+                "Player Blue [points: 0]\n" +
+                "Player Red [points: 0]\n\n" +
+                "_________________________\n\n" +
+                "It's a draw!\n")
+            tui.update.toString should be("()")
         }
     }
 }
