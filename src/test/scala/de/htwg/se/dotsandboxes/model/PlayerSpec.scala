@@ -10,6 +10,8 @@ class PlayerSpex extends AnyWordSpec {
                 Player.list.head should be(Player("Blue", 0, Status.Blue))
                 Player.list.last should be(Player("Yellow", 0, Status.Yellow))
 
+                Player.list should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red), Player("Green", 0, Status.Green), Player("Yellow", 0, Status.Yellow)))
+
                 Player.players(0) should be(Player("Blue", 0, Status.Blue))
                 Player.players(1) should be(Player("Red", 0, Status.Red))
                 Player.players(2) should be(Player("Green", 0, Status.Green))
