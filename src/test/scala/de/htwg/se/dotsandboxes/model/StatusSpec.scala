@@ -8,11 +8,15 @@ class StatusSpec extends AnyWordSpec {
         "accessing" should {
             "have the right string representation" in {
                 val empty = Status.Empty
-                empty.toString should be("E")
+                empty.toString should be("-")
                 val blue = Status.Blue
                 blue.toString should be("B")
                 val red = Status.Red
                 red.toString should be("R")
+                val green = Status.Green
+                green.toString should be("G")
+                val yellow = Status.Yellow
+                yellow.toString should be("Y")
             } 
         }
     }

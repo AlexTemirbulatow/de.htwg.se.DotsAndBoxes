@@ -9,13 +9,13 @@ class ConnectorsSpec extends AnyWordSpec {
             "have the right string representation" in {
                 val dot = Connectors.Dot
                 dot.toString should be("O")
-                val xLineEmpty = Connectors.EmptyX
+                val xLineEmpty = Connectors.EmptyRow
                 xLineEmpty.toString should be("-")
-                val xLineConnected = Connectors.ConnectedX
+                val xLineConnected = Connectors.ConnectedRow
                 xLineConnected.toString should be("=")
-                val yLineEmpty = Connectors.EmptyY
+                val yLineEmpty = Connectors.EmptyColumn
                 yLineEmpty.toString should be("¦")
-                val yLineConnected = Connectors.ConnectedY
+                val yLineConnected = Connectors.ConnectedColumn
                 yLineConnected.toString should be("‖")
                 val empty = Connectors.Empty
                 empty.toString should be("")
