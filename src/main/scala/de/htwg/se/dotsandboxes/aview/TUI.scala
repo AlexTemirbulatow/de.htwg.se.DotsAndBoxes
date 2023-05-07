@@ -3,13 +3,12 @@ package aview
 
 import scala.io.StdIn.readLine
 import controller.Controller
-import model.Status
-import model.Move
 import util.Observer
+import model.Move
 
 class TUI(controller: Controller) extends Observer:
     controller.add(this)
-    override def update: Unit = println("\n" + controller.field.toString)
+    override def update: Unit = println("\n" + controller.toString)
 
     def welcome =
         "\n" +
@@ -18,12 +17,26 @@ class TUI(controller: Controller) extends Observer:
         "---------------------------------" + "\n" +
         "\n"
 
+    def finished =
+        "\n" +
+        "-----------------" + "\n" +
+        "| Game finished |" + "\n" +
+        "-----------------" + "\n" +
+        "\n"
+
+    def finalStats =
+        controller.stats + "\n\n" +
+        "_________________________" + "\n\n" +
+        controller.winner +
+        "\n"
+
     def run =
         println(welcome)
-        println(controller.field.toString)
+        println(controller.toString)
         gameLoop
 
-    def gameLoop: Unit = 
+    def gameLoop: Unit =
+        if(controller.gameEnd) println(finished + finalStats)
         analyseInput(readLine) match
             case None       => sys.exit()
             case Some(move) => controller.publish(controller.put, move)
