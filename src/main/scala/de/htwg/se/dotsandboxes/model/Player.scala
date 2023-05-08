@@ -7,7 +7,6 @@ val playerGreen = Player("Green", 0, Status.Green)
 val playerYellow = Player("Yellow", 0, Status.Yellow)
 object Player:
     val list = Vector(playerBlue, playerRed, playerGreen, playerYellow)
-    def players(index: Int) = list(index)
 
 case class PlayerList(playerList: Vector[Player]):
-    def this(playerSize: Int = 2) = this(Vector.tabulate(playerSize)(x => Player.players(x)))
+    def this(playerSize: Int = 2) = this(Vector.tabulate(playerSize)(x => Player.list(x)))

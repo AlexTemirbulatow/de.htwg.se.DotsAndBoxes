@@ -15,10 +15,10 @@ class PlayerSpex extends AnyWordSpec {
                 player.list.head should be(Player("Blue", 0, Status.Blue))
                 player.list.last should be(Player("Yellow", 0, Status.Yellow))
 
-                player.players(0) should be(Player("Blue", 0, Status.Blue))
-                player.players(1) should be(Player("Red", 0, Status.Red))
-                player.players(2) should be(Player("Green", 0, Status.Green))
-                player.players(3) should be(Player("Yellow", 0, Status.Yellow))
+                player.list(0) should be(Player("Blue", 0, Status.Blue))
+                player.list(1) should be(Player("Red", 0, Status.Red))
+                player.list(2) should be(Player("Green", 0, Status.Green))
+                player.list(3) should be(Player("Yellow", 0, Status.Yellow))
 
                 val player1 = new Player("Player1", 10, Status.Empty)
                 val player2 = Player(playerId = "Player2", status = Status.Empty)
@@ -31,6 +31,7 @@ class PlayerSpex extends AnyWordSpec {
 
                 list.size should be(4)
                 list shouldBe a[Vector[Player]]
+                list(0) should be(Player("Blue", 0, Status.Blue))
             }
         }
         "creating a player list" should {
