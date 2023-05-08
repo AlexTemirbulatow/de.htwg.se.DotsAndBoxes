@@ -8,9 +8,9 @@ class PlayerSpex extends AnyWordSpec {
         "accessing list" should {
             "return the correct player and list" in {
                 val player = Player
-                player.list should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red),
+                player.list should be(List(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red),
                     Player("Green", 0, Status.Green), Player("Yellow", 0, Status.Yellow)))
-                player.list shouldBe a[Vector[Player]]
+                player.list shouldBe a[List[Player]]
                 player.list.size should be(4)
 
                 player.list.head should be(Player("Blue", 0, Status.Blue))
