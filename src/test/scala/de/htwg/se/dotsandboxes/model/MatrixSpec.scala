@@ -40,7 +40,7 @@ class MatrixSpec extends AnyWordSpec {
                 matrix2.colSize(2, 1) should be(4)
 
             }
-            val matrix = new Matrix(2, 2, Status.Empty)
+            val matrix = new Matrix(2, 2, Status.Empty, 2)
             "give access to its cells" in {
                 matrix.cell(0, 0, 0) should be(Status.Empty)
                 matrix.cell(0, 0, 1) should be(Status.Empty)
@@ -77,14 +77,18 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.cell(2, 1, 0) should === (false)
                 replCell2.cell(2, 1, 0) should === (true)
             }
-            "return correct Matrix[Vector]" in {
+            "return correct Matrix" in {
                 val vec0 = matrix.vector(0)
                 val vec1 = matrix.vector(1)
                 val vec2 = matrix.vector(2)
+                val vec3 = matrix.vector(3)
+                val vec4 = matrix.productElement(4).asInstanceOf[Player]
 
                 vec0 should be(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)))
                 vec1 should be(Vector(Vector(false, false), Vector(false, false), Vector(false, false)))
                 vec2 should be(Vector(Vector(false, false, false), Vector(false, false, false)))
+                vec3 should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
+                vec4 should be(Player("Blue", 0, Status.Blue))
             }
         }
         "checking for squares" should {
@@ -201,6 +205,8 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 1, Status.Red)),
                     Player("Red", 1, Status.Red)))
+
+                matrix.list should not be(Player.list)
 
 
                 val matrix0 = new Matrix(1, 1, Status.Empty)

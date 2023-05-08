@@ -25,6 +25,12 @@ class PlayerSpex extends AnyWordSpec {
 
                 player1.points should be(10)
                 player2.points should be(0)
+
+
+                val list = Player.list
+
+                list.size should be(4)
+                list shouldBe a[Vector[Player]]
             }
         }
         "creating a player list" should {
@@ -41,6 +47,7 @@ class PlayerSpex extends AnyWordSpec {
                 list3.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
                 list4.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red), Player("Green", 0, Status.Green)))
                 list5.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red), Player("Green", 0, Status.Green), Player("Yellow", 0, Status.Yellow)))
+                list5.playerList should be(Player.list)
                 listDefault.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
             }
         }
