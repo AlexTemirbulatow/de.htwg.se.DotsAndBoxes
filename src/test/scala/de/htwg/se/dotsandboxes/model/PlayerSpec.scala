@@ -7,19 +7,18 @@ class PlayerSpex extends AnyWordSpec {
     "Player" when {
         "accessing list" should {
             "return the correct player and list" in {
-                val player = Player
-                player.list should be(List(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red),
+                list should be(List(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red),
                     Player("Green", 0, Status.Green), Player("Yellow", 0, Status.Yellow)))
-                player.list shouldBe a[List[Player]]
-                player.list.size should be(4)
+                list shouldBe a[List[Player]]
+                list.size should be(4)
 
-                player.list.head should be(Player("Blue", 0, Status.Blue))
-                player.list.last should be(Player("Yellow", 0, Status.Yellow))
+                list.head should be(Player("Blue", 0, Status.Blue))
+                list.last should be(Player("Yellow", 0, Status.Yellow))
 
-                player.list(0) should be(Player("Blue", 0, Status.Blue))
-                player.list(1) should be(Player("Red", 0, Status.Red))
-                player.list(2) should be(Player("Green", 0, Status.Green))
-                player.list(3) should be(Player("Yellow", 0, Status.Yellow))
+                list(0) should be(Player("Blue", 0, Status.Blue))
+                list(1) should be(Player("Red", 0, Status.Red))
+                list(2) should be(Player("Green", 0, Status.Green))
+                list(3) should be(Player("Yellow", 0, Status.Yellow))
             }
             "return the correct player initials" in {
                 val player1 = Player("Player1", 10, Status.Blue)
@@ -38,7 +37,6 @@ class PlayerSpex extends AnyWordSpec {
                 player3.points should be(5)
                 player3.status should be(Status.Green)
 
-                val list = Player.list
 
                 list(0).playerId should be("Blue")
                 list(0).points should be(0)
@@ -71,7 +69,7 @@ class PlayerSpex extends AnyWordSpec {
                 list3.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
                 list4.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red), Player("Green", 0, Status.Green)))
                 list5.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red), Player("Green", 0, Status.Green), Player("Yellow", 0, Status.Yellow)))
-                list5.playerList should be(Player.list)
+                list5.playerList should be(list)
                 listDefault.playerList should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
             }
         }

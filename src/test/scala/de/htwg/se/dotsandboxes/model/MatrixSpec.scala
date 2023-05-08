@@ -13,7 +13,7 @@ class MatrixSpec extends AnyWordSpec {
                 Vector(Vector(false, true)),
                 Vector(Player("Blue", 0, Status.Blue),
                 Player("Red", 0, Status.Red)),
-                Player.list.head)
+                list.head)
 
                 matrix1.rowSize(0) should be(1)
                 matrix1.colSize(0, 0) should be(1)
@@ -100,7 +100,7 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(false, false), Vector(false, false), Vector(false, false)),
                     Vector(Vector(false, false, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 matrix.checkSquare("upcase", 1, 0) should be(matrixVector)
                 matrix.checkSquare("rightcase", 0, 0) should be(matrixVector)
@@ -112,7 +112,7 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(true, false), Vector(true, false), Vector(false, false)),
                     Vector(Vector(true, true, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 matrix2.checkSquare("downcase", 0, 0) should be(matrixVector)
                 matrix2.checkSquare("upcase", 1, 0) should be(matrixVector)
@@ -130,14 +130,14 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(true, false), Vector(true, false), Vector(false, false)),
                     Vector(Vector(true, true, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 val matrixVector2 =
                     Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)),
                     Vector(Vector(true, false), Vector(true, false), Vector(false, false)),
                     Vector(Vector(true, true, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 matrix2.checkEdge(1, 0, 0) should be(matrixVector2)
                 matrix2.checkEdge(1, matrix2.maxPosX, 0) should be(matrixVector)
@@ -212,7 +212,7 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 1, Status.Red)),
                     Player("Red", 1, Status.Red)))
 
-                matrix.list should not be(Player.list)
+                matrix.list should not be(list)
 
 
                 val matrix0 = new Matrix(1, 1, Status.Empty)
