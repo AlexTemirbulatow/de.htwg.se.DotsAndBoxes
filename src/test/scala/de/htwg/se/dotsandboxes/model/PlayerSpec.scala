@@ -55,24 +55,6 @@ class PlayerSpex extends AnyWordSpec {
                 list(3).playerId should be("Yellow")
                 list(3).points should be(0)
                 list(3).status should be(Status.Yellow)
-
-
-                playerBlue.playerId should be("Blue")
-                playerBlue.points should be(0)
-                playerBlue.status should be(Status.Blue)
-
-                playerRed.playerId should be("Red")
-                playerRed.points should be(0)
-                playerRed.status should be(Status.Red)
-
-                playerGreen.playerId should be("Green")
-                playerGreen.points should be(0)
-                playerGreen.status should be(Status.Green)
-
-                playerYellow.playerId should be("Yellow")
-                playerYellow.points should be(0)
-                playerYellow.status should be(Status.Yellow)
-
             }
         }
         "creating a player list" should {

@@ -38,7 +38,6 @@ class MatrixSpec extends AnyWordSpec {
                 matrix2.rowSize(2) should be(2)
                 matrix2.colSize(2, 0) should be(4)
                 matrix2.colSize(2, 1) should be(4)
-
             }
             val matrix = new Matrix(2, 2, Status.Empty, 2)
             "give access to its cells" in {
@@ -193,12 +192,19 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.changePlayer.changePlayer should be(matrixVector2)
                 matrix.updatePlayer should be(matrixVector2)
 
+                matrix.list should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
+                matrix.addPoint.updatePlayer.list should be(Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)))
+
                 matrix.addPoint.updatePlayer should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),
                     Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)),
                     Player("Blue", 1, Status.Blue)))
+                
+                matrix.currentPlayer should be(Player("Blue", 0, Status.Blue))
+                matrix.changePlayer.addPoint.updatePlayer.currentPlayer should be(Player("Red", 1, Status.Red))
+
                 matrix.changePlayer.addPoint.updatePlayer should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
