@@ -57,8 +57,22 @@ class FieldSpec extends AnyWordSpec {
                     "¦ - ¦ - ¦ - ¦\n" +
                     "¦ - ¦ - ¦ - ¦\n" +
                     "O---O---O---O\n")
+                field2.mesh(3, 1) should be(
+                    "O---O---O---O\n" +
+                    "¦ - ¦ - ¦ - ¦\n" +
+                    "O---O---O---O\n" +
+                    "¦ - ¦ - ¦ - ¦\n" +
+                    "O---O---O---O\n")
                 field1.mesh() should be("O-------O\n" + "¦   -   ¦\n" + "¦   -   ¦\n" + "O-------O\n")
                 field1.mesh(1) should be("O-O\n" + "¦-¦\n" + "¦-¦\n" + "O-O\n")
+                field3.mesh(height = 1) should be(
+                    "O-------O-------O-------O\n" +
+                    "¦   -   ¦   -   ¦   -   ¦\n" +
+                    "O-------O-------O-------O\n" +
+                    "¦   -   ¦   -   ¦   -   ¦\n" +
+                    "O-------O-------O-------O\n" +
+                    "¦   -   ¦   -   ¦   -   ¦\n" +
+                    "O-------O-------O-------O\n")
                 field3.mesh() should be(
                     "O-------O-------O-------O\n" +
                     "¦   -   ¦   -   ¦   -   ¦\n" +
