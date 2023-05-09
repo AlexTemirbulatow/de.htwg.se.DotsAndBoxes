@@ -8,7 +8,7 @@ import model.Move
 
 class TUI(controller: Controller) extends Observer:
     controller.add(this)
-    override def update: Unit = println("\n" + controller.toString)
+    override def update = println("\n" + controller.toString)
 
     def welcome =
         "\n" +
@@ -42,7 +42,7 @@ class TUI(controller: Controller) extends Observer:
             case Some(move) => controller.publish(controller.put, move)
         gameLoop
 
-    def analyseInput(input: String): Option[Move] = input match
+    def analyseInput(input: String) = input match
         case "q" => None
         case _   => val chars = input.toCharArray
             val line = chars(0).toString.toInt
