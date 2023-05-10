@@ -11,8 +11,8 @@ class ConnectorsSpec extends AnyWordSpec {
                 dot.toString should be("O")
                 val emptyRow = Connectors.EmptyRow
                 emptyRow.toString should be("-")
-                val connecntedRow = Connectors.ConnectedRow
-                connecntedRow.toString should be("=")
+                val connectedRow = Connectors.ConnectedRow
+                connectedRow.toString should be("=")
                 val emptyColumn = Connectors.EmptyColumn
                 emptyColumn.toString should be("¦")
                 val connectedColumn = Connectors.ConnectedColumn
