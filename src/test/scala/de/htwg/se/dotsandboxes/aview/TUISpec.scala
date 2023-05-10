@@ -8,6 +8,8 @@ import model.Move
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import java.io.ByteArrayInputStream
+import java.io.{ByteArrayOutputStream, StringReader}
+import java.lang.ModuleLayer
 
 class TuiSpec extends AnyWordSpec {
 
@@ -40,12 +42,28 @@ class TuiSpec extends AnyWordSpec {
         "idle test" in {
             tui.update.toString should be("()")
             val input = new ByteArrayInputStream(("").getBytes)
+
             Console.withIn(input) {
                 assertThrows[NullPointerException] {
                     tui.run
                 }
             }
+
             Console.withIn(input) {
+                    assertThrows[NullPointerException] {
+                    tui.gameLoop
+                }
+            }
+
+            val input2 = new ByteArrayInputStream(("idle").getBytes)
+            Console.withIn(input2) {
+                    assertThrows[NumberFormatException] {
+                    tui.gameLoop
+                }
+            }
+
+            val input3 = new ByteArrayInputStream(("111").getBytes)
+            Console.withIn(input3) {
                     assertThrows[NullPointerException] {
                     tui.gameLoop
                 }
