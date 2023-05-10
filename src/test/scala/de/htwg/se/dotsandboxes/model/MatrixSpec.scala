@@ -46,11 +46,11 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.cell(0, 1, 0) should be(Status.Empty)
                 matrix.cell(0, 1, 1) should be(Status.Empty)
 
-                matrix.cell(1, 0, 0) should === (false)
-                matrix.cell(1, 2, 1) should === (false)
+                matrix.cell(1, 0, 0) shouldBe false
+                matrix.cell(1, 2, 1) shouldBe false
 
-                matrix.cell(2, 0, 0) should === (false)
-                matrix.cell(2, 1, 2) should === (false)
+                matrix.cell(2, 0, 0) shouldBe false
+                matrix.cell(2, 1, 2) shouldBe false
             }
             "give access to its rows" in {
                 matrix.row(0, 0) should be(Vector(Status.Empty, Status.Empty))
@@ -70,11 +70,11 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.cell(0, 0, 0) should be(Status.Empty)
                 replCell0.cell(0, 0, 0) should be(Status.Blue)
 
-                matrix.cell(1, 0, 0) should === (false)
-                replCell1.cell(1, 0, 0) should === (true)
+                matrix.cell(1, 0, 0) shouldBe false
+                replCell1.cell(1, 0, 0) shouldBe true
 
-                matrix.cell(2, 1, 0) should === (false)
-                replCell2.cell(2, 1, 0) should === (true)
+                matrix.cell(2, 1, 0) shouldBe false
+                replCell2.cell(2, 1, 0) shouldBe true
             }
             "return correct Matrix" in {
                 val vec0 = matrix.vector(0)
@@ -154,11 +154,11 @@ class MatrixSpec extends AnyWordSpec {
                 val move3 = new Move(2, 0, 0, true)
                 val move4 = new Move(2, 1, 1, true)
 
-                matrix.isEdge(move1) should === (true)
-                matrix.isEdge(move2) should === (false)
+                matrix.isEdge(move1) shouldBe true
+                matrix.isEdge(move2) shouldBe false
 
-                matrix.isEdge(move3) should === (true)
-                matrix.isEdge(move4) should === (false)
+                matrix.isEdge(move3) shouldBe true
+                matrix.isEdge(move4) shouldBe false
             }
         }
         "manipulating a player" should {

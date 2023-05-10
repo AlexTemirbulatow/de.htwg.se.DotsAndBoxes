@@ -13,8 +13,8 @@ class ControllerSpec extends AnyWordSpec {
     "The Controller" should {
         "put a connected line on the field when a move is made" in {
             val fieldWithMove = controller.put(Move(1, 0, 0, true))
-            fieldWithMove.getCell(1, 0, 0) should === (true)
-            fieldWithMove.getCell(1, 0, 1) should === (false)
+            fieldWithMove.getCell(1, 0, 0) shouldBe true
+            fieldWithMove.getCell(1, 0, 1) shouldBe false
         }
         "notify its observers on change" in {
             class TestObserver(controller: Controller) extends Observer:
@@ -22,10 +22,10 @@ class ControllerSpec extends AnyWordSpec {
                 var bing = false
                 def update = bing = true
             val testObserver = TestObserver(controller)
-            testObserver.bing should be(false)
+            testObserver.bing shouldBe false
             controller.publish(controller.put, Move(1, 0, 0, true))
-            controller.gameEnd should === (false)
-            testObserver.bing should be(true)
+            controller.gameEnd shouldBe false
+            testObserver.bing shouldBe true
             controller.toString should be(
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -131,7 +131,7 @@ class ControllerSpec extends AnyWordSpec {
                 "Reds turn\n" +
                 "[points: 6]\n")
 
-            controller.gameEnd should === (true)
+            controller.gameEnd shouldBe true
             controller.winner should be("Player Red wins!")
             controller.stats should be(
                 "Player Blue [points: 0]\n" +
