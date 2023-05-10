@@ -36,11 +36,18 @@ class TuiSpec extends AnyWordSpec {
                 "Player Red [points: 0]\n\n" +
                 "_________________________\n\n" +
                 "It's a draw!\n")
+        }
+        "idle test" in {
             tui.update.toString should be("()")
             val input = new ByteArrayInputStream(("").getBytes)
             Console.withIn(input) {
                 assertThrows[NullPointerException] {
                     tui.run
+                }
+            }
+            Console.withIn(input) {
+                    assertThrows[NullPointerException] {
+                    tui.gameLoop
                 }
             }
         }
