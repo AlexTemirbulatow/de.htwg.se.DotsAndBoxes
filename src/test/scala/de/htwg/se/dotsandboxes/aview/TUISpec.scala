@@ -7,6 +7,7 @@ import model.Status
 import model.Move
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+import java.io.ByteArrayInputStream
 
 class TuiSpec extends AnyWordSpec {
 
@@ -36,6 +37,12 @@ class TuiSpec extends AnyWordSpec {
                 "_________________________\n\n" +
                 "It's a draw!\n")
             tui.update.toString should be("()")
+            val input = new ByteArrayInputStream(("").getBytes)
+            Console.withIn(input) {
+                assertThrows[NullPointerException] {
+                    tui.run
+                }
+            }
         }
     }
 }

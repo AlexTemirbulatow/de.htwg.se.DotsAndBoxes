@@ -33,14 +33,15 @@ class TUI(controller: Controller) extends Observer:
     def run =
         println(welcome)
         println(controller.toString)
-        gameLoop
-        
+
         def gameLoop: Unit =
             if(controller.gameEnd) println(finished + finalStats)
             analyseInput(readLine) match
-                case None       => sys.exit()
+                case None => print(finished)
                 case Some(move) => controller.publish(controller.put, move)
             gameLoop
+        gameLoop
+        "end"
 
     def analyseInput(input: String) = input match
         case "q" => None
