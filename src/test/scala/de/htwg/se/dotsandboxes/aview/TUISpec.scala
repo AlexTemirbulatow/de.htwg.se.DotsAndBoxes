@@ -56,8 +56,14 @@ class TuiSpec extends AnyWordSpec {
                     tui.gameLoop
                 }
             }
-            val input3 = new ByteArrayInputStream(("111").getBytes)
+            val input3 = new ByteArrayInputStream(("q").getBytes)
             Console.withIn(input3) {
+                    assertThrows[NullPointerException] {
+                    tui.gameLoop
+                }
+            }
+            val input4 = new ByteArrayInputStream(("111").getBytes)
+            Console.withIn(input4) {
                     assertThrows[NullPointerException] {
                     tui.gameLoop
                 }
