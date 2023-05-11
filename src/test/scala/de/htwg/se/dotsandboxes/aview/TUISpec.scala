@@ -68,6 +68,12 @@ class TuiSpec extends AnyWordSpec {
                     tui.gameLoop
                 }
             }
+            val tui2 = TUI(Controller(new Field(1, 1, Status.Empty, 2).putCell(1, 0, 0, true).putCell(1, 1, 0, true).putCell(2, 0, 0, true).putCell(2, 0, 1, true)))
+            Console.withIn(input4) {
+                    assertThrows[NullPointerException] {
+                    tui2.gameLoop
+                }
+            }
         }
     }
 }
