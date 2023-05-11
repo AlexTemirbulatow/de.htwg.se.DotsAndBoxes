@@ -6,8 +6,8 @@ case class Field(matrix: Matrix[Any]):
         Connectors.Dot.toString, Connectors.Dot.toString, Connectors.Dot.toString) + "\n"
     def cells(rowSize: Int, length: Int = 7, height: Int = 2) =
         ((0 to colSize()).map(columns(rowSize, _, length)).mkString + "\n") * height
-    def mesh(length: Int = 7) =
-        ((0 until rowSize()).map(x => bar(length, colSize(), x) + cells(x, length))).mkString + bar(length, colSize(), rowSize())
+    def mesh(length: Int = 7, height: Int = 2) =
+        ((0 until rowSize()).map(x => bar(length, colSize(), x) + cells(x, length, height))).mkString + bar(length, colSize(), rowSize())
     def rows(rowIndex: Int, colIndex: Int, length: Int) = getCell(1, rowIndex, colIndex) match
         case false => Connectors.EmptyRow.toString * length
         case true  => Connectors.ConnectedRow.toString * length

@@ -5,7 +5,7 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]]
     this(Vector.tabulate(colSize, rowSize) {(_, _) => status},
     Vector.tabulate (colSize + 1, rowSize) {(_, _) =>  false},
     Vector.tabulate (colSize, rowSize + 1) {(_, _) =>  false},
-    new PlayerList(playerSize).playerList, Player.list.head)
+    new PlayerList(playerSize).playerList, list.head)
   val maxPosX = rowSize(1) - 1
   val maxPosY = colSize(2, 0) - 1
   def cell(vecIndex: Int, row: Int, col: Int): Any = vector(vecIndex)(row)(col)

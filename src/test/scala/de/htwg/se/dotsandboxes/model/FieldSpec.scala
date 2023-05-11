@@ -57,8 +57,22 @@ class FieldSpec extends AnyWordSpec {
                     "¦ - ¦ - ¦ - ¦\n" +
                     "¦ - ¦ - ¦ - ¦\n" +
                     "O---O---O---O\n")
+                field2.mesh(3, 1) should be(
+                    "O---O---O---O\n" +
+                    "¦ - ¦ - ¦ - ¦\n" +
+                    "O---O---O---O\n" +
+                    "¦ - ¦ - ¦ - ¦\n" +
+                    "O---O---O---O\n")
                 field1.mesh() should be("O-------O\n" + "¦   -   ¦\n" + "¦   -   ¦\n" + "O-------O\n")
                 field1.mesh(1) should be("O-O\n" + "¦-¦\n" + "¦-¦\n" + "O-O\n")
+                field3.mesh(height = 1) should be(
+                    "O-------O-------O-------O\n" +
+                    "¦   -   ¦   -   ¦   -   ¦\n" +
+                    "O-------O-------O-------O\n" +
+                    "¦   -   ¦   -   ¦   -   ¦\n" +
+                    "O-------O-------O-------O\n" +
+                    "¦   -   ¦   -   ¦   -   ¦\n" +
+                    "O-------O-------O-------O\n")
                 field3.mesh() should be(
                     "O-------O-------O-------O\n" +
                     "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -157,11 +171,11 @@ class FieldSpec extends AnyWordSpec {
             }
             "give access to its cells" in {
                 field.getCell(0, 0, 0) should be(Status.Empty)
-                field.getCell(1, 0, 0) should === (false)
-                field.getCell(2, 0, 0) should === (false)
+                field.getCell(1, 0, 0) shouldBe false
+                field.getCell(2, 0, 0) shouldBe false
 
-                field.putCell(1, 0, 0, true).getCell(1, 0, 0) should === (true)
-                field.putCell(2, 0, 0, true).getCell(2, 0, 0) should === (true)
+                field.putCell(1, 0, 0, true).getCell(1, 0, 0) shouldBe true
+                field.putCell(2, 0, 0, true).getCell(2, 0, 0) shouldBe true
             }
             "check if a move is a edge case" in {
                 val move1 = new Move(1, 0, 0, true)
@@ -169,11 +183,11 @@ class FieldSpec extends AnyWordSpec {
                 val move3 = new Move(2, 0, 0, true)
                 val move4 = new Move(2, 1, 1, true)
 
-                field.isEdge(move1) should === (true)
-                field.isEdge(move2) should === (false)
+                field.isEdge(move1) shouldBe true
+                field.isEdge(move2) shouldBe false
 
-                field.isEdge(move3) should === (true)
-                field.isEdge(move4) should === (false)
+                field.isEdge(move3) shouldBe true
+                field.isEdge(move4) shouldBe false
             }
             "do a move in edge case" in {
                 field.doEdge(1, 0, 0) should be(field)
@@ -231,7 +245,7 @@ class FieldSpec extends AnyWordSpec {
                 field.currentStatus should be(Vector(Vector(Status.Empty)))
                 field.currentPoints should be(0)
 
-                field.isFinished should === (false)
+                field.isFinished shouldBe false
 
                 field.nextPlayer.getMatrix should be(matrixVector2)
                 field.nextPlayer.nextPlayer.getMatrix should be(matrixVector1)
@@ -244,7 +258,7 @@ class FieldSpec extends AnyWordSpec {
                 field.getMatrix should be(matrixVector3)
                 field.currentPoints should be(1)
 
-                field.isFinished should === (true)
+                field.isFinished shouldBe true
 
                 field.winner should be("Player Blue wins!")
 

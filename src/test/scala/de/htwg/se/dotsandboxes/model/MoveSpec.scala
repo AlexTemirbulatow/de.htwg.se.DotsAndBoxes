@@ -10,7 +10,7 @@ class MoveSpec extends AnyWordSpec {
             move.vec should be(1)
             move.x should be(1)
             move.y should be(0)
-            move.status should === (true)
+            move.status shouldBe true
         }
     }
 }

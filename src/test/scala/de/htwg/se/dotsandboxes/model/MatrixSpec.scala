@@ -13,7 +13,7 @@ class MatrixSpec extends AnyWordSpec {
                 Vector(Vector(false, true)),
                 Vector(Player("Blue", 0, Status.Blue),
                 Player("Red", 0, Status.Red)),
-                Player.list.head)
+                list.head)
 
                 matrix1.rowSize(0) should be(1)
                 matrix1.colSize(0, 0) should be(1)
@@ -38,20 +38,19 @@ class MatrixSpec extends AnyWordSpec {
                 matrix2.rowSize(2) should be(2)
                 matrix2.colSize(2, 0) should be(4)
                 matrix2.colSize(2, 1) should be(4)
-
             }
-            val matrix = new Matrix(2, 2, Status.Empty)
+            val matrix = new Matrix(2, 2, Status.Empty, 2)
             "give access to its cells" in {
                 matrix.cell(0, 0, 0) should be(Status.Empty)
                 matrix.cell(0, 0, 1) should be(Status.Empty)
                 matrix.cell(0, 1, 0) should be(Status.Empty)
                 matrix.cell(0, 1, 1) should be(Status.Empty)
 
-                matrix.cell(1, 0, 0) should === (false)
-                matrix.cell(1, 2, 1) should === (false)
+                matrix.cell(1, 0, 0) shouldBe false
+                matrix.cell(1, 2, 1) shouldBe false
 
-                matrix.cell(2, 0, 0) should === (false)
-                matrix.cell(2, 1, 2) should === (false)
+                matrix.cell(2, 0, 0) shouldBe false
+                matrix.cell(2, 1, 2) shouldBe false
             }
             "give access to its rows" in {
                 matrix.row(0, 0) should be(Vector(Status.Empty, Status.Empty))
@@ -71,20 +70,24 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.cell(0, 0, 0) should be(Status.Empty)
                 replCell0.cell(0, 0, 0) should be(Status.Blue)
 
-                matrix.cell(1, 0, 0) should === (false)
-                replCell1.cell(1, 0, 0) should === (true)
+                matrix.cell(1, 0, 0) shouldBe false
+                replCell1.cell(1, 0, 0) shouldBe true
 
-                matrix.cell(2, 1, 0) should === (false)
-                replCell2.cell(2, 1, 0) should === (true)
+                matrix.cell(2, 1, 0) shouldBe false
+                replCell2.cell(2, 1, 0) shouldBe true
             }
-            "return correct Matrix[Vector]" in {
+            "return correct Matrix" in {
                 val vec0 = matrix.vector(0)
                 val vec1 = matrix.vector(1)
                 val vec2 = matrix.vector(2)
+                val vec3 = matrix.vector(3)
+                val vec4 = matrix.productElement(4).asInstanceOf[Player]
 
                 vec0 should be(Vector(Vector(Status.Empty, Status.Empty), Vector(Status.Empty, Status.Empty)))
                 vec1 should be(Vector(Vector(false, false), Vector(false, false), Vector(false, false)))
                 vec2 should be(Vector(Vector(false, false, false), Vector(false, false, false)))
+                vec3 should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
+                vec4 should be(Player("Blue", 0, Status.Blue))
             }
         }
         "checking for squares" should {
@@ -97,7 +100,7 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(false, false), Vector(false, false), Vector(false, false)),
                     Vector(Vector(false, false, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 matrix.checkSquare("upcase", 1, 0) should be(matrixVector)
                 matrix.checkSquare("rightcase", 0, 0) should be(matrixVector)
@@ -109,7 +112,7 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(true, false), Vector(true, false), Vector(false, false)),
                     Vector(Vector(true, true, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 matrix2.checkSquare("downcase", 0, 0) should be(matrixVector)
                 matrix2.checkSquare("upcase", 1, 0) should be(matrixVector)
@@ -127,14 +130,14 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Vector(true, false), Vector(true, false), Vector(false, false)),
                     Vector(Vector(true, true, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 val matrixVector2 =
                     Matrix(Vector(Vector(Status.Blue, Status.Empty), Vector(Status.Empty, Status.Empty)),
                     Vector(Vector(true, false), Vector(true, false), Vector(false, false)),
                     Vector(Vector(true, true, false), Vector(false, false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
-                    Player.list.head)
+                    list.head)
 
                 matrix2.checkEdge(1, 0, 0) should be(matrixVector2)
                 matrix2.checkEdge(1, matrix2.maxPosX, 0) should be(matrixVector)
@@ -151,11 +154,11 @@ class MatrixSpec extends AnyWordSpec {
                 val move3 = new Move(2, 0, 0, true)
                 val move4 = new Move(2, 1, 1, true)
 
-                matrix.isEdge(move1) should === (true)
-                matrix.isEdge(move2) should === (false)
+                matrix.isEdge(move1) shouldBe true
+                matrix.isEdge(move2) shouldBe false
 
-                matrix.isEdge(move3) should === (true)
-                matrix.isEdge(move4) should === (false)
+                matrix.isEdge(move3) shouldBe true
+                matrix.isEdge(move4) shouldBe false
             }
         }
         "manipulating a player" should {
@@ -189,18 +192,27 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.changePlayer.changePlayer should be(matrixVector2)
                 matrix.updatePlayer should be(matrixVector2)
 
+                matrix.list should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
+                matrix.addPoint.updatePlayer.list should be(Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)))
+
                 matrix.addPoint.updatePlayer should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),
                     Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)),
                     Player("Blue", 1, Status.Blue)))
+                
+                matrix.currentPlayer should be(Player("Blue", 0, Status.Blue))
+                matrix.changePlayer.addPoint.updatePlayer.currentPlayer should be(Player("Red", 1, Status.Red))
+
                 matrix.changePlayer.addPoint.updatePlayer should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 1, Status.Red)),
                     Player("Red", 1, Status.Red)))
+
+                matrix.list should not be(list)
 
 
                 val matrix0 = new Matrix(1, 1, Status.Empty)
