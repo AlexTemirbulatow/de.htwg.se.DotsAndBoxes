@@ -40,8 +40,6 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
 
 
 
-
-
 ## LICENSE
 <img alt="GitHub" src="https://img.shields.io/github/license/AlexTemirbulatow/de.htwg.se.dotsandboxes">
 
