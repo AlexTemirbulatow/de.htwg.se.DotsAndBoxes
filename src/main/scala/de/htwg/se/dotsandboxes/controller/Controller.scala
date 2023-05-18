@@ -1,11 +1,7 @@
 package de.htwg.se.dotsandboxes
 package controller
 
-import model.Field
-import model.Status
-import model.Move
-import model.Matrix
-import model.Player
+import model._
 import util.Observable
 
 case class Controller(var field: Field) extends Observable:
@@ -18,15 +14,45 @@ case class Controller(var field: Field) extends Observable:
   def publish(doThis: Move => Field, move: Move): Unit =
     field = doThis(move)
     val preStatus = field.currentStatus
-    field.isEdge(move) match
-      case true  => field = field.doEdge(move.vec, move.x, move.y)
-      case false => move.vec match
-        case 1 => field = field.doMid("downcase", move.x, move.y).doMid("upcase", move.x, move.y)
-        case 2 => field = field.doMid("rightcase", move.x, move.y).doMid("leftcase", move.x, move.y)
+    field = StrategyMove.decideMove(move)
     val postStatus = field.currentStatus
-    val difference = preStatus.indices.map(x => preStatus(x).zip(postStatus(x)).count(x => x._1 != x._2)).sum
-    field = difference match
-      case 0 => field.nextPlayer
-      case 1 => field.addPoint.updatePlayer
-      case 2 => field.addPoint.addPoint.updatePlayer
+    field = StrategyPlayer.updatePlayer(preStatus, postStatus)
     notifyObservers
+
+
+  object StrategyMove:
+    def decideMove(move: Move) = if(field.isEdge(move)) doEdge(move) else doMid(move)
+    def doEdge(move: Move) = EdgeState.handle(move)
+    def doMid(move: Move) = MidState.handle(move)
+
+  object StrategyPlayer:
+    def updatePlayer(preStatus: Vector[Vector[Any]], postStatus: Vector[Vector[Any]]) =
+      val difference = preStatus.indices.map(x => preStatus(x).zip(postStatus(x)).count(x => x._1 != x._2)).sum
+      if(difference.equals(1)) addOnePoint else if(difference.equals(2)) addTwoPoints else nextPlayer
+    def nextPlayer = field.nextPlayer
+    def addOnePoint = field.addPoint.updatePlayer
+    def addTwoPoints = field.addPoint.addPoint.updatePlayer
+
+  object MidState:
+    var state = field
+    def handle(move: Move) =
+      state = move.vec match
+        case 1 => horizontalState(move)
+        case 2 => verticalState(move)
+      state
+    def horizontalState(move: Move) = field.checkSquare("downcase", move.x, move.y).checkSquare("upcase", move.x, move.y)
+    def verticalState(move: Move) = field.checkSquare("rightcase", move.x, move.y).checkSquare("leftcase", move.x, move.y)
+
+  object EdgeState:
+    var state = field
+    def handle(move: Move) =
+      state = (move.vec, move.x, move.y) match
+        case (1, 0, _) => downCase(move.x, move.y)
+        case (1, x, _) if x == field.maxPosX => upCase(move.x, move.y)
+        case (2, _, 0) => rightCase(move.x, move.y)
+        case (2, _, y) if y == field.maxPosY => leftCase(move.x, move.y)
+      state
+    def downCase(x: Int, y: Int) = field.checkSquare("downcase", x, y)
+    def upCase(x: Int, y: Int) = field.checkSquare("upcase", x, y)
+    def rightCase(x: Int, y: Int) = field.checkSquare("rightcase", x, y)
+    def leftCase(x: Int, y: Int) = field.checkSquare("leftcase", x, y) 
