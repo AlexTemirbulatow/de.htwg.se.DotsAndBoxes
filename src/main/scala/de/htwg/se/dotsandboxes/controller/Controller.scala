@@ -3,6 +3,7 @@ package controller
 
 import model._
 import util.Observable
+import util.GameState
 
 case class Controller(var field: Field) extends Observable:
   override def toString: String = field.toString + "\n" + field.currentPlayer + "s turn\n[points: " + field.currentPoints + "]\n"
@@ -17,8 +18,10 @@ case class Controller(var field: Field) extends Observable:
     field = StrategyMove.decideMove(move)
     val postStatus = field.currentStatus
     field = StrategyPlayer.updatePlayer(preStatus, postStatus)
-    notifyObservers
-
+  def handle(state: GameState) = state match
+    case GameState.Aborted | GameState.Finished => sys.exit
+    case GameState.Running => notifyObservers
+  
 
   object StrategyMove:
     def decideMove(move: Move) = if(field.isEdge(move)) doEdge(move) else doMid(move)
