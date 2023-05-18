@@ -19,10 +19,10 @@ case class Controller(var field: Field) extends Observable:
     val postStatus = field.currentStatus
     field = StrategyPlayer.updatePlayer(preStatus, postStatus)
     field
-  def handle(state: GameState) = state match
+  def stateHandler(state: GameState) = state match
     case GameState.Aborted | GameState.Finished => sys.exit
     case GameState.Running => notifyObservers
-  
+
 
   object StrategyMove:
     def decideMove(move: Move) = if(field.isEdge(move)) doEdge(move) else doMid(move)
@@ -59,4 +59,4 @@ case class Controller(var field: Field) extends Observable:
     def downCase(x: Int, y: Int) = field.checkSquare("downcase", x, y)
     def upCase(x: Int, y: Int) = field.checkSquare("upcase", x, y)
     def rightCase(x: Int, y: Int) = field.checkSquare("rightcase", x, y)
-    def leftCase(x: Int, y: Int) = field.checkSquare("leftcase", x, y) 
+    def leftCase(x: Int, y: Int) = field.checkSquare("leftcase", x, y)

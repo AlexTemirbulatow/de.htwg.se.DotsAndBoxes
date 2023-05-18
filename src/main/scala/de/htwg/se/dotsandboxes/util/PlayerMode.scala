@@ -18,4 +18,3 @@ object PlayerMode:
     def twoPlayers = new Field(5, 4, Status.Empty, 2)
     def threePlayers = new Field(8, 6, Status.Empty, 3)
     def fourPlayers = new Field(11, 9, Status.Empty, 4)
-        

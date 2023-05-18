@@ -30,7 +30,7 @@ class ControllerSpec extends AnyWordSpec {
             val testObserver = TestObserver(controller)
             testObserver.bing shouldBe false
             controller.publish(controller.put, Move(1, 0, 0, true))
-            controller.handle(GameState.Running)
+            controller.stateHandler(GameState.Running)
             controller.gameEnd shouldBe false
             testObserver.bing shouldBe true
             controller.toString should be(

@@ -11,7 +11,7 @@ class TUI(controller: Controller) extends Template(controller):
     override def update = println("\n" + controller.toString)
 
     override def gameLoop: Unit =
-        controller.handle(checkState.handle(controller.gameEnd))
+        controller.stateHandler(checkState.handle(controller.gameEnd))
         gameLoop
 
     override def finalStats =
@@ -30,7 +30,7 @@ class TUI(controller: Controller) extends Template(controller):
 
     object checkState:
         var state = GameState.Running
-        def handle(check: Boolean): GameState = 
+        def handle(check: Boolean): GameState =
             state = check match
                 case true  => finished
                 case false => analyseInput(readLine)
