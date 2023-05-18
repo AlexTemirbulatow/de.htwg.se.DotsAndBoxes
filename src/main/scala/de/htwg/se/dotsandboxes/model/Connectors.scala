@@ -1,10 +1,38 @@
 package de.htwg.se.dotsandboxes.model
 
-enum Connectors(StringRepresentation: String):
-  override def toString = StringRepresentation
-  case Dot extends Connectors("O")
-  case EmptyRow extends Connectors("-")
-  case ConnectedRow extends Connectors("=")
-  case EmptyColumn extends Connectors("¦")
-  case ConnectedColumn extends Connectors("‖")
-  case Empty extends Connectors("")
+trait Connectors:
+  val stringRepresentation: String
+  override def toString: String = stringRepresentation
+
+private class Empty extends Connectors:
+  val stringRepresentation = ""
+  override def toString: String = stringRepresentation
+
+private class Dot extends Connectors:
+  val stringRepresentation = "O"
+  override def toString: String = stringRepresentation
+
+private class EmptyRow extends Connectors:
+  val stringRepresentation = "-"
+  override def toString: String = stringRepresentation
+
+private class ConnectedRow extends Connectors:
+  val stringRepresentation = "="
+  override def toString: String = stringRepresentation
+
+private class EmptyColumn extends Connectors:
+  val stringRepresentation = "¦"
+  override def toString: String = stringRepresentation
+
+private class ConnectedColumn extends Connectors:
+  val stringRepresentation = "‖"
+  override def toString: String = stringRepresentation
+
+object Connectors:
+  def apply(stringRepresentation: String): String = stringRepresentation match
+    case "" => new Empty().toString
+    case "O" => new Dot().toString
+    case "-" => new EmptyRow().toString
+    case "=" => new ConnectedRow().toString
+    case "¦" => new EmptyColumn().toString
+    case "‖" => new ConnectedColumn().toString
