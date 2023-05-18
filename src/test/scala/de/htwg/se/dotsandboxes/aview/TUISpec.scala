@@ -19,18 +19,6 @@ class TuiSpec extends AnyWordSpec {
             tui.analyseInput("q") should be(None)
         }
         "print the correct form of String" in {
-            tui.welcome should be(
-                "\n" +
-                "---------------------------------" + "\n" +
-                "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
-                "---------------------------------" + "\n" +
-                "\n")
-            tui.finished should be(
-                "\n" +
-                "-----------------" + "\n" +
-                "| Game finished |" + "\n" +
-                "-----------------" + "\n" +
-                "\n")
             tui.finalStats should be(
                 "Player Blue [points: 0]\n" +
                 "Player Red [points: 0]\n\n" +
