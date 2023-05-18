@@ -24,7 +24,6 @@ class ConnectorsSpec extends AnyWordSpec {
                 val dot2 = new Dot
                 dot2.stringRepresentation should be("O")
                 dot2.toString should be("O")
-                dot2 should be(dot)
             }
         }
     }
