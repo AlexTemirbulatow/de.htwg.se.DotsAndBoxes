@@ -19,7 +19,7 @@ class TuiSpec extends AnyWordSpec {
                 "Player Red [points: 0]\n\n" +
                 "_________________________\n\n" +
                 "It's a draw!\n")
-            tui.aborted should be("\nAborted\n\n")
+            tui.aborted should be("\nAborted.\n\n")
         }
         "idle testing" in {
             tui.remove shouldBe false
