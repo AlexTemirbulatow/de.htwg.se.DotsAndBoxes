@@ -4,5 +4,6 @@ import aview.TUI
 import controller.Controller
 import model.Field
 import model.Status
+import util.PlayerMode
 
-@main def setup = TUI(Controller(new Field(5, 4, Status.Empty, 2))).run
+@main def setup = TUI(Controller(PlayerMode.selectPlayerMode)).run
