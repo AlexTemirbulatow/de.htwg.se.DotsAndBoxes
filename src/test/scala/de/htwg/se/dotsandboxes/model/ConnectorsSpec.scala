@@ -19,6 +19,7 @@ class ConnectorsSpec extends AnyWordSpec {
                 connectedColumn should be("‖")
                 val empty = Connectors("")
                 empty should be("")
+                Connectors.apply("O") should be("O")
             }
         }
     }
