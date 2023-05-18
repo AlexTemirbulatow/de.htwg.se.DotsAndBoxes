@@ -28,6 +28,8 @@ class TUI(controller: Controller) extends Template(controller):
         false
 
 
+
+
     object checkState:
         var state = GameState.Running
         def handle(check: Boolean): GameState =

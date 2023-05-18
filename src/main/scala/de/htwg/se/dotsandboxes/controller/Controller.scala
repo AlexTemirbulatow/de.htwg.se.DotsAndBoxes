@@ -24,6 +24,8 @@ case class Controller(var field: Field) extends Observable:
     case GameState.Running => notifyObservers
 
 
+
+
   object StrategyMove:
     def decideMove(move: Move) = if(field.isEdge(move)) doEdge(move) else doMid(move)
     def doEdge(move: Move) = EdgeState.handle(move)
