@@ -21,7 +21,7 @@ class TUI(controller: Controller) extends Template(controller):
         "\n"
 
     override def aborted =
-        "\nAborted.\n"
+        "\nAborted\n"
 
     override def remove = 
         controller.remove(this)
