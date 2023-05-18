@@ -12,5 +12,6 @@ abstract class Template(controller: Controller) extends Observer:
         update
         gameLoop
     def gameLoop: Unit
-    def analyseInput(input: String): Option[Move]
     def finalStats: String
+    def aborted: String
+    def remove: Boolean
