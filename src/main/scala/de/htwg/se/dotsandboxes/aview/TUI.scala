@@ -14,6 +14,20 @@ class TUI(controller: Controller) extends Template(controller):
         controller.handle(checkState.handle(controller.gameEnd))
         gameLoop
 
+    override def finalStats =
+        controller.stats + "\n\n" +
+        "_________________________" + "\n\n" +
+        controller.winner +
+        "\n"
+
+    override def aborted =
+        "\nAborted\n"
+
+    override def remove = 
+        controller.remove(this)
+        false
+
+
     object checkState:
         var state = GameState.Running
         def handle(check: Boolean): GameState = 
@@ -36,16 +50,3 @@ class TUI(controller: Controller) extends Template(controller):
                 val y    = chars(2).toString.toInt
                 controller.publish(controller.put, Move(line, x, y, true))
                 GameState.Running
-
-    override def finalStats =
-        controller.stats + "\n\n" +
-        "_________________________" + "\n\n" +
-        controller.winner +
-        "\n"
-
-    override def aborted =
-        "\nAborted\n"
-
-    override def remove = 
-        controller.remove(this)
-        false 
