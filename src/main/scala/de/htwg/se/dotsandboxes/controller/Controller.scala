@@ -12,12 +12,13 @@ case class Controller(var field: Field) extends Observable:
   def playerPoints = field.currentPoints
   def winner = field.winner
   def stats = field.stats
-  def publish(doThis: Move => Field, move: Move): Unit =
+  def publish(doThis: Move => Field, move: Move) =
     field = doThis(move)
     val preStatus = field.currentStatus
     field = StrategyMove.decideMove(move)
     val postStatus = field.currentStatus
     field = StrategyPlayer.updatePlayer(preStatus, postStatus)
+    field
   def handle(state: GameState) = state match
     case GameState.Aborted | GameState.Finished => sys.exit
     case GameState.Running => notifyObservers

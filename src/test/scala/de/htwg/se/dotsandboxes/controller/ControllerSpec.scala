@@ -5,6 +5,7 @@ import model.Field
 import model.Status
 import model.Move
 import util.Observer
+import util.GameState
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -16,6 +17,11 @@ class ControllerSpec extends AnyWordSpec {
             fieldWithMove.getCell(1, 0, 0) shouldBe true
             fieldWithMove.getCell(1, 0, 1) shouldBe false
         }
+        "return correct field" in {
+            val controller = Controller(new Field(1, 1, Status.Empty, 2))
+            val field = controller.publish(controller.put, Move(1, 0, 0, true))
+            field should be(new Field(1, 1, Status.Empty, 2).putCell(1, 0, 0, true).nextPlayer)
+        }
         "notify its observers on change" in {
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
@@ -24,6 +30,7 @@ class ControllerSpec extends AnyWordSpec {
             val testObserver = TestObserver(controller)
             testObserver.bing shouldBe false
             controller.publish(controller.put, Move(1, 0, 0, true))
+            controller.handle(GameState.Running)
             controller.gameEnd shouldBe false
             testObserver.bing shouldBe true
             controller.toString should be(
