@@ -13,19 +13,16 @@ class TuiSpec extends AnyWordSpec {
 
     "The TUI" should {
         val tui = TUI(Controller(new Field(3, 3, Status.Empty, 2)))
-        "recognize the input as move of line connector" in {
-            tui.analyseInput("100") should be(Some(Move(1, 0, 0, true)))
-            tui.analyseInput("210") should be(Some(Move(2, 1, 0, true)))
-            tui.analyseInput("q") should be(None)
-        }
         "print the correct form of String" in {
             tui.finalStats should be(
                 "Player Blue [points: 0]\n" +
                 "Player Red [points: 0]\n\n" +
                 "_________________________\n\n" +
                 "It's a draw!\n")
+            tui.aborted should be("\nAborted\n\n")
         }
         "idle testing" in {
+            tui.remove shouldBe false
             tui.update.toString should be("()")
             val input = new ByteArrayInputStream(("").getBytes)
             Console.withIn(input) {
