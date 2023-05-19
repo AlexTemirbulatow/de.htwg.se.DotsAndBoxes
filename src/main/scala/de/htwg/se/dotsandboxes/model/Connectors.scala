@@ -1,5 +1,7 @@
 package de.htwg.se.dotsandboxes.model
 
+
+/*Factory pattern*/
 trait Connectors:
   val stringRepresentation: String
   override def toString: String = stringRepresentation

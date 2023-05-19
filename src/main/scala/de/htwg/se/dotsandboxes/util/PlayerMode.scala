@@ -5,6 +5,7 @@ import controller.Controller
 import model.{Field, Status}
 import scala.io.StdIn.readLine
 
+/*Strategy pattern*/
 object PlayerMode:
     var selectPlayerMode = getInput
     def getInput: Field =
