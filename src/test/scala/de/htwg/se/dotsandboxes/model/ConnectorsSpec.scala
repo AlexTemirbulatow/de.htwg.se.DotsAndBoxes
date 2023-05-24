@@ -20,12 +20,12 @@ class ConnectorsSpec extends AnyWordSpec {
                 val empty = Connectors("")
                 empty should be("")
 
-                Connectors.apply("O") should be("O")
-                Connectors.apply("-") should be("-")
-                Connectors.apply("=") should be("=")
-                Connectors.apply("¦") should be("¦")
-                Connectors.apply("‖") should be("‖")
-                Connectors.apply("") should be("")
+                Connectors.apply("O") should be(new Dot().toString)
+                Connectors.apply("-") should be(new EmptyRow().toString)
+                Connectors.apply("=") should be(new ConnectedRow().toString)
+                Connectors.apply("¦") should be(new EmptyColumn().toString)
+                Connectors.apply("‖") should be(new ConnectedColumn().toString)
+                Connectors.apply("") should be(new Empty().toString)
             }
         }
     }
