@@ -4,25 +4,28 @@ package controller
 import model._
 import model.MoveState._
 import model.PlayerState._
-import util.{Observable, GameState}
+import util.{Observable, Command, UndoManager}
 
 case class Controller(var field: Field) extends Observable:
+  val undoManager = new UndoManager
   override def toString: String = field.toString + "\n" + field.currentPlayer + "s turn\n[points: " + field.currentPoints + "]\n"
-  def put(move: Move): Field = field.putCell(move.vec, move.x, move.y, move.status)
+  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move, field))
+  def undo: Field = undoManager.undoStep(field)
+  def redo: Field = undoManager.redoStep(field)
   def gameEnd: Boolean = field.isFinished
   def playerPoints: Int = field.currentPoints
   def winner: String = field.winner
   def stats: String = field.stats
-  def publish(doThis: Move => Field, move: Move): Field =
+  def publish(doThis: Move => Field, move: Move) =
     field = doThis(move)
     val preStatus = field.currentStatus
     field = StrategyMove.decideMove(move)
     val postStatus = field.currentStatus
     field = StrategyPlayer.updatePlayer(preStatus, postStatus)
-    field
-  def stateHandler(state: GameState): Unit = state match
-    case GameState.Aborted | GameState.Finished => sys.exit
-    case GameState.Running => notifyObservers
+    notifyObservers
+  def publish(doThis: => Field) =
+    field = doThis
+    notifyObservers
 
 
 /* strategy pattern */

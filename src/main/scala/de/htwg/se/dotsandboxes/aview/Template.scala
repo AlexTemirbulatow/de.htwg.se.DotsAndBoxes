@@ -1,7 +1,7 @@
 package de.htwg.se.dotsandboxes
 package aview
 
-import util.{Observer, GameState}
+import util.Observer
 import controller.Controller
 import model.Move
 
@@ -9,9 +9,10 @@ import model.Move
 abstract class Template(controller: Controller) extends Observer:
     controller.add(this)
     def run: Unit =
+        welcome
         update
         gameLoop
     def gameLoop: Unit
+    def analyseInput(input: String): Option[Move]
+    def welcome: String
     def finalStats: String
-    def aborted: String
-    def remove: Boolean
