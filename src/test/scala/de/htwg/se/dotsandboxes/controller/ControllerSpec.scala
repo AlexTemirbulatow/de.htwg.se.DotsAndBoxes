@@ -1,13 +1,14 @@
 package de.htwg.se.dotsandboxes
 package controller
 
-import model.Field
-import model.Status
-import model.Move
-import util.Observer
-import util.GameState
+import model.{Field, Status, Move}
+import util._
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+import java.io.StringReader
+import java.io.ByteArrayInputStream
+import scala.io.StdIn
+import java.util.logging.ConsoleHandler
 
 class ControllerSpec extends AnyWordSpec {
     val controller = Controller(new Field(3, 3, Status.Empty, 3))
@@ -146,6 +147,25 @@ class ControllerSpec extends AnyWordSpec {
                 "Player Green [points: 3]")
             
             controller.remove(testObserver)
+        }
+        "create different fields based on player size input" in {
+
+            Console.withIn(StringReader("Default")) {
+                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
+            }
+
+            Console.withIn(StringReader("2")) {
+                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
+            }
+
+            /*
+            Console.withIn(StringReader("3")) {
+                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(8, 6, Status.Empty, 3)))
+            }
+
+            Console.withIn(StringReader("4")) {
+                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(11, 9, Status.Empty, 4)))
+            }*/
         }
     }
 }

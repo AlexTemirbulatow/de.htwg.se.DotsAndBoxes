@@ -1,8 +1,6 @@
 package de.htwg.se.dotsandboxes.model
 package MoveState
 
-import de.htwg.se.dotsandboxes.model.Field
-
 object EdgeState extends MoveState:
     override def handle(move: Move, field: Field): Field =
         var state = field

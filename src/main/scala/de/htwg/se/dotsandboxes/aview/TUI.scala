@@ -4,8 +4,7 @@ package aview
 import scala.io.StdIn.readLine
 import controller.Controller
 import model.Move
-import util.Observer
-import util.GameState
+import util.{Observer, GameState}
 
 class TUI(controller: Controller) extends Template(controller):
     override def update = println("\n" + controller.toString)
