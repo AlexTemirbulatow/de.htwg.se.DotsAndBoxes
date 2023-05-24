@@ -19,11 +19,13 @@ class ConnectorsSpec extends AnyWordSpec {
                 connectedColumn should be("‖")
                 val empty = Connectors("")
                 empty should be("")
-                Connectors.apply("O") should be("O")
 
-                val dot2 = new Dot
-                dot2.stringRepresentation should be("O")
-                dot2.toString should be("O")
+                Connectors.apply("O") should be("O")
+                Connectors.apply("-") should be("-")
+                Connectors.apply("=") should be("=")
+                Connectors.apply("¦") should be("¦")
+                Connectors.apply("‖") should be("‖")
+                Connectors.apply("") should be("")
             }
         }
     }

@@ -150,6 +150,10 @@ class ControllerSpec extends AnyWordSpec {
         }
         "create different fields based on player size input" in {
 
+            Console.withIn(StringReader("2")) {
+                PlayerMode.getInput should be(new Field(5, 4, Status.Empty, 2))
+            }
+
             Console.withIn(StringReader("Default")) {
                 Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
             }
