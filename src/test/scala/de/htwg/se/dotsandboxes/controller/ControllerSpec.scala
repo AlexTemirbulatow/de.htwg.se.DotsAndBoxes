@@ -159,13 +159,13 @@ class ControllerSpec extends AnyWordSpec {
             controller2.field.getCell(0, 0, 0) should be(Status.Red)
             controller2.field.getCell(2, 0, 1) shouldBe true
 
-            val undo = controller2.undo
-            undo.getCell(0, 0, 0) should be(Status.Empty)
-            undo.getCell(2, 0, 1) shouldBe false
+            controller2.publish(controller2.undo)
+            controller2.field.getCell(0, 0, 0) should be(Status.Empty)
+            controller2.field.getCell(2, 0, 1) shouldBe false
 
-            val redo = controller2.redo
-            redo.getCell(0, 0, 0) should be(Status.Red)
-            redo.getCell(2, 0, 1) shouldBe true
+            controller2.publish(controller2.redo)
+            controller2.field.getCell(0, 0, 0) should be(Status.Red)
+            controller2.field.getCell(2, 0, 1) shouldBe true
         } 
         "create different fields based on player size input" in {
             Console.withIn(StringReader("2")) {
