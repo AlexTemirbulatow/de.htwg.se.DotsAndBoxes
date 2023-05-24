@@ -4,8 +4,7 @@ package controller
 import model._
 import model.MoveState._
 import model.PlayerState._
-import util.Observable
-import util.GameState
+import util.{Observable, GameState}
 
 case class Controller(var field: Field) extends Observable:
   override def toString: String = field.toString + "\n" + field.currentPlayer + "s turn\n[points: " + field.currentPoints + "]\n"
@@ -26,6 +25,7 @@ case class Controller(var field: Field) extends Observable:
     case GameState.Running => notifyObservers
 
 
+/* strategy pattern */
   object StrategyMove:
     def decideMove(move: Move): Field =
       if(field.isEdge(move)) EdgeState.handle(move, field) else MidState.handle(move, field)
