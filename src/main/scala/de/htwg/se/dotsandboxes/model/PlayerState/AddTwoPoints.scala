@@ -3,5 +3,5 @@ package PlayerState
 
 object AddTwoPoints extends PlayerState:
     override def handle(field: Field): Field =
-        var state = field.addPoint.addPoint.updatePlayer
-        field
+        val state = field.addPoint.addPoint.updatePlayer
+        state
