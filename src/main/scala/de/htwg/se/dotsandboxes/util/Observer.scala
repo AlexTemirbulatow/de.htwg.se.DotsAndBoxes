@@ -1,8 +1,7 @@
 package de.htwg.se.dotsandboxes
 package util
 
-trait Observer:
-  def update: Unit
+trait Observer { def update: Unit }
 
 trait Observable:
   var subscribers: Vector[Observer] = Vector()
