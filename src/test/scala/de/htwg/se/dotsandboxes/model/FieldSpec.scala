@@ -190,9 +190,17 @@ class FieldSpec extends AnyWordSpec {
                 field.isEdge(move4) shouldBe false
             }
             "do a move in edge case" in {
-                field.doEdge(1, 0, 0) should be(field)
+                field.putCell(1, 0, 0, true).putCell(1, 2, 0, true).putCell(1, 0, 1, true).putCell(1, 2, 1, true).putCell(
+                    2, 0, 0, true).putCell(2, 0, 2, true).putCell(2, 1, 0, true).putCell(2, 1, 2, true).toString should be(
+                        "O=======O=======O\n" +
+                        "‖   -   ¦   -   ‖\n" +
+                        "‖   -   ¦   -   ‖\n" +
+                        "O-------O-------O\n" +
+                        "‖   -   ¦   -   ‖\n" +
+                        "‖   -   ¦   -   ‖\n" +
+                        "O=======O=======O\n")
 
-                field.putCell(1, 0, 0, true).putCell(1, 1, 0, true).putCell(2, 0, 0, true).putCell(2, 0, 1, true).doEdge(1, 0, 0).toString should be(
+                field.putCell(1, 0, 0, true).putCell(1, 1, 0, true).putCell(2, 0, 0, true).putCell(2, 0, 1, true).checkSquare("rightcase", 0, 0).toString should be(
                     "O=======O-------O\n" +
                     "‖   B   ‖   -   ¦\n" +
                     "‖   B   ‖   -   ¦\n" +
@@ -204,8 +212,8 @@ class FieldSpec extends AnyWordSpec {
             "do a move in mud case" in {
                 val field = new Field(3, 3, Status.Empty)
 
-                field.doMid("downcase", 1, 1) should be(field)
-                field.putCell(1, 1, 1, true).putCell(1, 2, 1, true).putCell(2, 1, 1, true).putCell(2, 1, 2, true).doMid("downcase", 1, 1).toString should be(
+                field.checkSquare("downcase", 1, 1) should be(field)
+                field.putCell(1, 1, 1, true).putCell(1, 2, 1, true).putCell(2, 1, 1, true).putCell(2, 1, 2, true).checkSquare("downcase", 1, 1).toString should be(
                     "O-------O-------O-------O\n" +
                     "¦   -   ¦   -   ¦   -   ¦\n" +
                     "¦   -   ¦   -   ¦   -   ¦\n" +

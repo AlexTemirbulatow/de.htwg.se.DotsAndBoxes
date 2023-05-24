@@ -17,11 +17,6 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]]
   def rowSize(vecIndex: Int): Int = vector(vecIndex).size
   def colSize(vecIndex: Int, row: Int) = vector(vecIndex)(row).size
   def vector(vecIndex: Int) = this.productElement(vecIndex).asInstanceOf[Vector[Vector[Any]]]
-  def checkEdge(vecIndex: Int, x: Int, y: Int): Matrix[Any] = (vecIndex, x, y) match
-    case (1, 0, _) => checkSquare("downcase", x, y)
-    case (1, x, _) if x == maxPosX => checkSquare("upcase", x, y)
-    case (2, _, 0) => checkSquare("rightcase", x, y)
-    case (2, _, y) if y == maxPosY => checkSquare("leftcase", x, y)
   def checkSquare(thisCase: String, x: Int, y: Int): Matrix[Any] = thisCase match
     case "downcase" => if((cell(1, x + 1, y), cell(2, x, y), cell(2, x, y + 1)).toList.forall(_ == true))
       replaceCell(0, x, y, currentPlayer.status) else copy()
@@ -34,7 +29,7 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]]
   def isEdge(move: Move) = move.vec match
     case 1 => if(move.x == 0 || move.x == maxPosX) true else false
     case 2 => if(move.y == 0 || move.y == maxPosY) true else false
-  def playerIndex = list.indices.map(x => list(x).playerId).indexOf(currentPlayer.playerId)
   def updatePlayer: Matrix[Any] = copy(currentPlayer = list(playerIndex))
+  def playerIndex = list.indices.map(x => list(x).playerId).indexOf(currentPlayer.playerId)
   def addPoint: Matrix[Any] = copy(list = list.updated(playerIndex, list(playerIndex).copy(points = list(playerIndex).points + 1)))
   def changePlayer: Matrix[Any] = if(playerIndex == list.size - 1) copy(currentPlayer = list.head) else copy(currentPlayer = list(playerIndex + 1))

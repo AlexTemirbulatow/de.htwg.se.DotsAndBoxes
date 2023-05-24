@@ -3,49 +3,49 @@ package aview
 
 import scala.io.StdIn.readLine
 import controller.Controller
-import util.Observer
 import model.Move
+import util.{Observer, GameState}
 
-class TUI(controller: Controller) extends Observer:
-    controller.add(this)
+class TUI(controller: Controller) extends Template(controller):
     override def update = println("\n" + controller.toString)
 
-    def welcome =
-        "\n" +
-        "---------------------------------" + "\n" +
-        "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
-        "---------------------------------" + "\n" +
-        "\n"
+    override def gameLoop: Unit =
+        controller.stateHandler(checkState.handle(controller.gameEnd))
+        gameLoop
 
-    def finished =
-        "\n" +
-        "-----------------" + "\n" +
-        "| Game finished |" + "\n" +
-        "-----------------" + "\n" +
-        "\n"
-
-    def finalStats =
+    override def finalStats =
         controller.stats + "\n\n" +
         "_________________________" + "\n\n" +
         controller.winner +
         "\n"
 
-    def run =
-        println(welcome)
-        println(controller.toString)
-        gameLoop
+    override def aborted =
+        "\nAborted\n"
 
-    def gameLoop: Unit =
-        if(controller.gameEnd) println(finished + finalStats)
-        analyseInput(readLine) match
-            case None => print(finished)
-            case Some(move) => controller.publish(controller.put, move)
-        gameLoop
+    override def remove = 
+        controller.remove(this)
+        false
 
-    def analyseInput(input: String) = input match
-        case "q" => None
-        case _   => val chars = input.toCharArray
-            val line = chars(0).toString.toInt
-            val x    = chars(1).toString.toInt
-            val y    = chars(2).toString.toInt
-            Some(Move(line, x, y, true))
+
+    object checkState:
+        var state = GameState.Running
+        def handle(check: Boolean): GameState =
+            state = check match
+                case true  => finished
+                case false => analyseInput(readLine)
+            state
+        def finished: GameState =
+            remove 
+            println(finalStats)
+            GameState.Finished
+        def analyseInput(input: String): GameState = input match
+            case "q" =>
+                println(aborted)
+                remove
+                GameState.Aborted
+            case _   => val chars = input.toCharArray
+                val line = chars(0).toString.toInt
+                val x    = chars(1).toString.toInt
+                val y    = chars(2).toString.toInt
+                controller.publish(controller.put, Move(line, x, y, true))
+                GameState.Running

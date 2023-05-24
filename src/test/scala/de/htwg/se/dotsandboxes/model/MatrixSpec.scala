@@ -139,11 +139,11 @@ class MatrixSpec extends AnyWordSpec {
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)),
                     list.head)
 
-                matrix2.checkEdge(1, 0, 0) should be(matrixVector2)
-                matrix2.checkEdge(1, matrix2.maxPosX, 0) should be(matrixVector)
+                matrix2.checkSquare("downcase", 0, 0) should be(matrixVector2)
+                matrix2.checkSquare("upcase", matrix2.maxPosX, 0) should be(matrixVector)
 
-                matrix2.checkEdge(2, 0, 0) should be(matrixVector2)
-                matrix2.checkEdge(2, 0, matrix2.maxPosY) should be(matrixVector)
+                matrix2.checkSquare("rightcase", 0, 0) should be(matrixVector2)
+                matrix2.checkSquare("leftcase", 0, matrix2.maxPosY) should be(matrixVector)
             }
         }
         "checking for edge case" should {

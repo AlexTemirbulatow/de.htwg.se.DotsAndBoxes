@@ -7,18 +7,19 @@ class ConnectorsSpec extends AnyWordSpec {
     "Connectores" when {
         "accessing" should {
             "have the right string representation" in {
-                val dot = Connectors.Dot
-                dot.toString should be("O")
-                val emptyRow = Connectors.EmptyRow
-                emptyRow.toString should be("-")
-                val connectedRow = Connectors.ConnectedRow
-                connectedRow.toString should be("=")
-                val emptyColumn = Connectors.EmptyColumn
-                emptyColumn.toString should be("¦")
-                val connectedColumn = Connectors.ConnectedColumn
-                connectedColumn.toString should be("‖")
-                val empty = Connectors.Empty
-                empty.toString should be("")
+                Connectors("O") should be("O")
+                Connectors("-") should be("-")
+                Connectors("=") should be("=")
+                Connectors("¦") should be("¦")
+                Connectors("‖") should be("‖")
+                Connectors("")  should be("")
+
+                Connectors.apply("O") should be(new Dot().toString)
+                Connectors.apply("-") should be(new EmptyRow().toString)
+                Connectors.apply("=") should be(new ConnectedRow().toString)
+                Connectors.apply("¦") should be(new EmptyColumn().toString)
+                Connectors.apply("‖") should be(new ConnectedColumn().toString)
+                Connectors.apply("")  should be(new Empty().toString)
             }
         }
     }
