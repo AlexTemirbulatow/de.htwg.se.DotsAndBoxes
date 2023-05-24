@@ -9,13 +9,6 @@ import util.Observer
 class TUI(controller: Controller) extends Template(controller):
     override def update = println("\n" + controller.toString)
 
-    override def welcome =
-        "\n" +
-        "---------------------------------" + "\n" +
-        "¦ Welcome to Dots and Boxes TUI ¦" + "\n" +
-        "---------------------------------" + "\n" +
-        "\n"
-
     override def finalStats =
         controller.stats + "\n\n" +
         "_________________________" + "\n\n" +
