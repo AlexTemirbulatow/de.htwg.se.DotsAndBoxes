@@ -1,9 +1,10 @@
 package de.htwg.se.dotsandboxes
 package aview
 
-import util.{Observer, GameState}
+import util.Observer
 import controller.Controller
 import model.Move
+import scala.util.Try
 
 /* template pattern */
 abstract class Template(controller: Controller) extends Observer:
@@ -12,6 +13,7 @@ abstract class Template(controller: Controller) extends Observer:
         update
         gameLoop
     def gameLoop: Unit
+    def analyseInput(input: String): Option[Move]
     def finalStats: String
-    def aborted: String
-    def remove: Boolean
+    def checkSyntax(vec: Char, x: Char, y: Char): Try[(Int, Int, Int)]
+    def syntaxErr: String

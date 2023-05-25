@@ -1,14 +1,12 @@
 package de.htwg.se.dotsandboxes
 package controller
 
-import model.{Field, Status, Move}
 import util._
+import model.{Field, Status, Move}
+import java.io.StringReader
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
-import java.io.StringReader
-import java.io.ByteArrayInputStream
-import scala.io.StdIn
-import java.util.logging.ConsoleHandler
+import org.scalactic.exceptions.NullArgumentException
 
 class ControllerSpec extends AnyWordSpec {
     val controller = Controller(new Field(3, 3, Status.Empty, 3))
@@ -18,20 +16,15 @@ class ControllerSpec extends AnyWordSpec {
             fieldWithMove.getCell(1, 0, 0) shouldBe true
             fieldWithMove.getCell(1, 0, 1) shouldBe false
         }
-        "return correct field" in {
-            val controller = Controller(new Field(1, 1, Status.Empty, 2))
-            val field = controller.publish(controller.put, Move(1, 0, 0, true))
-            field should be(new Field(1, 1, Status.Empty, 2).putCell(1, 0, 0, true).nextPlayer)
-        }
         "notify its observers on change" in {
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
                 def update = bing = true
             val testObserver = TestObserver(controller)
+
             testObserver.bing shouldBe false
             controller.publish(controller.put, Move(1, 0, 0, true))
-            controller.stateHandler(GameState.Running)
             controller.gameEnd shouldBe false
             testObserver.bing shouldBe true
             controller.toString should be(
@@ -148,25 +141,62 @@ class ControllerSpec extends AnyWordSpec {
             
             controller.remove(testObserver)
         }
-        "create different fields based on player size input" in {
+        val controller2 = Controller(new Field(3, 3, Status.Empty, 2))
+            class TestObserver(controller2: Controller) extends Observer:
+                controller2.add(this)
+                var bing = false
+                def update = bing = true
+            val testObserver = TestObserver(controller2)
+        "be able to undo and redo" in {
+            controller2.publish(controller2.put, Move(1, 0, 0, true))
+            controller2.publish(controller2.put, Move(1, 1, 0, true))
+            controller2.publish(controller2.put, Move(2, 0, 0, true))
+            controller2.publish(controller2.put, Move(2, 0, 1, true))
 
+            controller2.field.getCell(0, 0, 0) should be(Status.Red)
+            controller2.field.getCell(2, 0, 1) shouldBe true
+
+            controller2.publish(controller2.undo)
+            controller2.field.getCell(0, 0, 0) should be(Status.Empty)
+            controller2.field.getCell(2, 0, 1) shouldBe false
+
+            controller2.publish(controller2.redo)
+            controller2.field.getCell(0, 0, 0) should be(Status.Red)
+            controller2.field.getCell(2, 0, 1) shouldBe true
+        }
+        "deny wrong input" in {
+            /* wrong inputs */
+            controller2.publish(controller2.put, Move(4, 0, 0, true))
+            controller2.publish(controller2.put, Move(1, 9, 0, true))
+            controller2.publish(controller2.put, Move(2, 0, 9, true))
+            /* no change */
+            controller2.toString should be(
+                "O=======O-------O-------O\n" +
+                "‖   R   ‖   -   ¦   -   ¦\n" +
+                "‖   R   ‖   -   ¦   -   ¦\n" +
+                "O=======O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n\n" +
+                "Reds turn\n" +
+                "[points: 1]\n")
+        }
+        "create different fields based on player size input" in {
             Console.withIn(StringReader("2")) {
                 PlayerMode.getInput should be(new Field(5, 4, Status.Empty, 2))
             }
-
             Console.withIn(StringReader("Default")) {
                 Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
             }
-
             Console.withIn(StringReader("2")) {
                 Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
-            }
-
-            /*
+            }/*
             Console.withIn(StringReader("3")) {
                 Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(8, 6, Status.Empty, 3)))
             }
-
             Console.withIn(StringReader("4")) {
                 Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(11, 9, Status.Empty, 4)))
             }*/
