@@ -30,14 +30,14 @@ case class Controller(var field: Field) extends Observable:
     field = doThis
     notifyObservers
   def publish(doThis: Move => Field, move: Move) = Try(moveCheck_Line.handle(move)) match
-    case Success(_) =>
+    case Success(value) =>
       field = doThis(move)
       val preStatus = field.currentStatus
       field = StrategyMove.decideMove(move)
       val postStatus = field.currentStatus
       field = StrategyPlayer.updatePlayer(preStatus, postStatus)
       notifyObservers
-    case Failure(exception) => println(exception.getMessage)
+    case Failure(exception) => println(exception.getMessage.dropRight(29))
 
   override def toString: String = 
     field.toString + "\n" + field.currentPlayer + "s turn\n[points: " + field.currentPoints + "]\n"
@@ -60,31 +60,31 @@ case class Controller(var field: Field) extends Observable:
 /* chain of responsibility */
   trait MoveHandler:
     val next: Option[MoveHandler]
-    def handle(move: Move): Unit
+    def handle(move: Move): Boolean
 
   class checkLine(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Unit =
+    override def handle(move: Move): Boolean =
       (move.vec > 0 && move.vec < 3) match
         case false => throw new MatchError("<Line> index failed the check. Try again: ")
         case true  => 
           next match
             case Some(h: MoveHandler) => h.handle(move)
-            case None =>
+            case None => false
 
   class checkX(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Unit =
+    override def handle(move: Move): Boolean =
       (move.x >= 0 && move.x <= field.maxPosX) match
         case false => throw new MatchError("<X> coordinate failed the check. Try again: ")
         case true  =>
           next match
             case Some(h: MoveHandler) => h.handle(move)
-            case None =>
+            case None => false
 
   class checkY(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Unit =
+    override def handle(move: Move): Boolean =
       (move.y >= 0 && move.y <= field.maxPosY) match
         case false => throw new MatchError("<Y> coordinate failed the check. Try again: ")
         case true  =>
           next match
             case Some(h: MoveHandler) => h.handle(move)
-            case None =>
+            case None => true
