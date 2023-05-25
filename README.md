@@ -25,8 +25,8 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
             <br><br>
             The game ends when all the boxes have been taken.
             <br><br>
-            The player with the most points wins. <br>
-            It's a draw if two players got the same amount of points. 
+            Winner is the player with the most points. <br>
+            It's a tie if two players got the same amount of points. 
             <br><br>
             2-4 players possible
     </td><td><p align="center">
