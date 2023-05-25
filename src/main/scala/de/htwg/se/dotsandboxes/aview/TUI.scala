@@ -5,7 +5,7 @@ import scala.io.StdIn.readLine
 import controller.Controller
 import model.Move
 import util.Observer
-import scala.util.{Failure, Success, Try}
+import scala.util.{Try, Success, Failure}
 
 class TUI(controller: Controller) extends Template(controller):
     override def update = println("\n" + controller.toString)
@@ -39,4 +39,4 @@ class TUI(controller: Controller) extends Template(controller):
         Try(vec.toString.toInt, x.toString.toInt, y.toString.toInt)
 
     override def syntaxErr: String =
-        "Incorrect syntax, try again:"
+        "Incorrect syntax. Try again:"

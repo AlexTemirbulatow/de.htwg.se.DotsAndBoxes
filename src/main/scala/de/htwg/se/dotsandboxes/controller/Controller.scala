@@ -5,27 +5,43 @@ import model._
 import model.MoveState._
 import model.PlayerState._
 import util.{Observable, Command, UndoManager}
+import scala.util.{Try, Success, Failure}
 
 case class Controller(var field: Field) extends Observable:
+
+  /* setup chain */
+  val moveCheck_Y = new checkY(None)
+  val moveCheck_X = new checkX(Some(moveCheck_Y))
+  val moveCheck_Line = new checkLine(Some(moveCheck_X))
+
+  /* setup undo manager */
   val undoManager = new UndoManager
-  override def toString: String = field.toString + "\n" + field.currentPlayer + "s turn\n[points: " + field.currentPoints + "]\n"
-  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move, field))
-  def undo: Field = undoManager.undoStep(field)
-  def redo: Field = undoManager.redoStep(field)
+
   def gameEnd: Boolean = field.isFinished
   def playerPoints: Int = field.currentPoints
   def winner: String = field.winner
   def stats: String = field.stats
-  def publish(doThis: Move => Field, move: Move) =
-    field = doThis(move)
-    val preStatus = field.currentStatus
-    field = StrategyMove.decideMove(move)
-    val postStatus = field.currentStatus
-    field = StrategyPlayer.updatePlayer(preStatus, postStatus)
-    notifyObservers
-  def publish(doThis: => Field) =
+
+  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move, field))
+  def undo: Field = undoManager.undoStep(field)
+  def redo: Field = undoManager.redoStep(field)
+
+  def publish(doThis: => Field) = 
     field = doThis
     notifyObservers
+  def publish(doThis: Move => Field, move: Move) = Try(moveCheck_Line.handle(move)) match
+    case Success(_) =>
+      field = doThis(move)
+      val preStatus = field.currentStatus
+      field = StrategyMove.decideMove(move)
+      val postStatus = field.currentStatus
+      field = StrategyPlayer.updatePlayer(preStatus, postStatus)
+      notifyObservers
+    case Failure(exception) => println(exception.getMessage)
+
+  override def toString: String = 
+    field.toString + "\n" + field.currentPlayer + "s turn\n[points: " + field.currentPoints + "]\n"
+
 
 
 /* strategy pattern */
@@ -36,4 +52,39 @@ case class Controller(var field: Field) extends Observable:
   object StrategyPlayer:
     def updatePlayer(preStatus: Vector[Vector[Any]], postStatus: Vector[Vector[Any]]): Field =
       val difference = preStatus.indices.map(x => preStatus(x).zip(postStatus(x)).count(x => x._1 != x._2)).sum
-      if(difference.equals(1)) AddOnePoint.handle(field) else if(difference.equals(2)) AddTwoPoints.handle(field) else NextPlayer.handle(field)
+      if(difference.equals(1)) AddOnePoint.handle(field)
+      else if(difference.equals(2)) AddTwoPoints.handle(field)
+      else NextPlayer.handle(field)
+
+
+/* chain of responsibility */
+  trait MoveHandler:
+    val next: Option[MoveHandler]
+    def handle(move: Move): Unit
+
+  class checkLine(val next: Option[MoveHandler]) extends MoveHandler:
+    override def handle(move: Move): Unit =
+      (move.vec > 0 && move.vec < 3) match
+        case false => throw new MatchError("<Line> index failed the check. Try again: ")
+        case true  => 
+          next match
+            case Some(h: MoveHandler) => h.handle(move)
+            case None =>
+
+  class checkX(val next: Option[MoveHandler]) extends MoveHandler:
+    override def handle(move: Move): Unit =
+      (move.x >= 0 && move.x <= field.maxPosX) match
+        case false => throw new MatchError("<X> coordinate failed the check. Try again: ")
+        case true  =>
+          next match
+            case Some(h: MoveHandler) => h.handle(move)
+            case None =>
+
+  class checkY(val next: Option[MoveHandler]) extends MoveHandler:
+    override def handle(move: Move): Unit =
+      (move.y >= 0 && move.y <= field.maxPosY) match
+        case false => throw new MatchError("<Y> coordinate failed the check. Try again: ")
+        case true  =>
+          next match
+            case Some(h: MoveHandler) => h.handle(move)
+            case None =>
