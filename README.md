@@ -28,7 +28,7 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
             Winner is the player with the most points. <br>
             It's a tie if two players got the same amount of points. 
             <br><br>
-            2-4 players possible
+            2-4 players possible.
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxes.png" width="390" height="340"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
