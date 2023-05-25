@@ -30,22 +30,11 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
             <br><br>
             2-4 players possible
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/dotsandboexs.png" width="390" height="340"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxes.png" width="390" height="340"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
-    <tr><td>You move by connecting two dots with a horizontal or <br>
-            vertical line. When you place the last 'wall' of a single <br>
-            box, the box and its contents are yours. The players <br>
-            move in turn but whenever a player takes a box they <br>
-            must move again. One finished box is one point. 
-            <br><br>
-            The game ends when all the boxes have been taken.
-            <br><br>
-            The player with the most points wins. <br>
-            It's a draw if two players got the same amount of points. 
-            <br><br>
-            2-4 players possible
+    <tr><td>Lorem ipsum
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/dotsandboexs.png" width="390" height="340"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="370"></a></td></tr>
 </table>
 
 ## Contributors
