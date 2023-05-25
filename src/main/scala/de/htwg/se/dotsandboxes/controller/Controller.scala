@@ -18,14 +18,14 @@ case class Controller(var field: Field) extends Observable:
   /* setup undo manager */
   val undoManager = new UndoManager
 
+  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move, field))
+  def undo: Field = undoManager.undoStep(field)
+  def redo: Field = undoManager.redoStep(field)
+
   def gameEnd: Boolean = field.isFinished
   def playerPoints: Int = field.currentPoints
   def winner: String = field.winner
   def stats: String = field.stats
-
-  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move, field))
-  def undo: Field = undoManager.undoStep(field)
-  def redo: Field = undoManager.redoStep(field)
 
   def publish(doThis: => Field) =
     field = doThis
