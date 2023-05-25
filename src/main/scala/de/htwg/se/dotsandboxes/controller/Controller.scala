@@ -89,7 +89,7 @@ case class Controller(var field: Field) extends Observable:
           next match
             case Some(h: MoveHandler) => h.handle(move)
             case None => false
-      
+
   class CheckAvailable(val next: Option[MoveHandler]) extends MoveHandler:
     override def handle(move: Move): Boolean =
       field.getCell(move.vec, move.x, move.y) match
