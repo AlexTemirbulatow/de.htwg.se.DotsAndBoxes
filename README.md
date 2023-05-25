@@ -34,7 +34,7 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
     <tr><th>Usage</th><th>TUI</th></tr>
     <tr><td>Lorem ipsum
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="370"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="360"></a></td></tr>
 </table>
 
 ## Contributors
