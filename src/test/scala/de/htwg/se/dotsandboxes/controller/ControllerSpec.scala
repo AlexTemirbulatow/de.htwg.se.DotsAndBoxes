@@ -6,6 +6,7 @@ import model.{Field, Status, Move}
 import java.io.StringReader
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalactic.exceptions.NullArgumentException
 
 class ControllerSpec extends AnyWordSpec {
     val controller = Controller(new Field(3, 3, Status.Empty, 3))
@@ -140,14 +141,13 @@ class ControllerSpec extends AnyWordSpec {
             
             controller.remove(testObserver)
         }
-        "be able to undo and redo" in {
-            val controller2 = Controller(new Field(3, 3, Status.Empty, 2))
+        val controller2 = Controller(new Field(3, 3, Status.Empty, 2))
             class TestObserver(controller2: Controller) extends Observer:
                 controller2.add(this)
                 var bing = false
                 def update = bing = true
             val testObserver = TestObserver(controller2)
-
+        "be able to undo and redo" in {
             controller2.publish(controller2.put, Move(1, 0, 0, true))
             controller2.publish(controller2.put, Move(1, 1, 0, true))
             controller2.publish(controller2.put, Move(2, 0, 0, true))
@@ -163,7 +163,26 @@ class ControllerSpec extends AnyWordSpec {
             controller2.publish(controller2.redo)
             controller2.field.getCell(0, 0, 0) should be(Status.Red)
             controller2.field.getCell(2, 0, 1) shouldBe true
-        } 
+        }
+        "deny wrong input" in {
+            controller2.publish(controller2.put, Move(1, 0, 0, true))
+            controller2.publish(controller2.put, Move(4, 0, 0, true))
+            controller2.publish(controller2.put, Move(1, 9, 0, true))
+            controller2.publish(controller2.put, Move(2, 0, 9, true))
+            controller2.toString should be(
+                "O=======O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n\n" +
+                "Reds turn\n" +
+                "[points: 0]\n")
+        }
         "create different fields based on player size input" in {
             Console.withIn(StringReader("2")) {
                 PlayerMode.getInput should be(new Field(5, 4, Status.Empty, 2))
