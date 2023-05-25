@@ -165,15 +165,16 @@ class ControllerSpec extends AnyWordSpec {
             controller2.field.getCell(2, 0, 1) shouldBe true
         }
         "deny wrong input" in {
-            controller2.publish(controller2.put, Move(1, 0, 0, true))
+            /* wrong inputs */
             controller2.publish(controller2.put, Move(4, 0, 0, true))
             controller2.publish(controller2.put, Move(1, 9, 0, true))
             controller2.publish(controller2.put, Move(2, 0, 9, true))
+            /* no change */
             controller2.toString should be(
                 "O=======O-------O-------O\n" +
-                "¦   -   ¦   -   ¦   -   ¦\n" +
-                "¦   -   ¦   -   ¦   -   ¦\n" +
-                "O-------O-------O-------O\n" +
+                "‖   R   ‖   -   ¦   -   ¦\n" +
+                "‖   R   ‖   -   ¦   -   ¦\n" +
+                "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n" +
@@ -181,7 +182,7 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Reds turn\n" +
-                "[points: 0]\n")
+                "[points: 1]\n")
         }
         "create different fields based on player size input" in {
             Console.withIn(StringReader("2")) {
