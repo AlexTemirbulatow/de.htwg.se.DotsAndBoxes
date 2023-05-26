@@ -22,31 +22,33 @@ To run the TUI the terminal must be set to `chcp 65001` and `Unicode UTF-8` must
     <tr><td>You move by connecting two dots with a horizontal or <br>
             vertical line. When you place the last 'wall' of a single <br>
             box, the box and its contents are yours. The players <br>
-            move in turn but whenever a player takes a box they <br>
+            move in turn, but whenever a player takes a box they <br>
             must move again. One finished box is one point. 
+            <br><br>
+            2-4 players are possible.
             <br><br>
             The game ends when all the boxes have been taken.
             <br><br>
             Winner is the player with the most points. <br>
             It's a tie if two players got the same amount of points. 
-            <br><br>
-            2-4 players possible.
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxes.png" width="390" height="340"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
-    <tr><td>To start the TUI game a player size must be choosen. <br>
+    <tr><td>To start the TUI game, a player size must be chosen. <br>
             The field size varies based on the player count.
             <br><br>
-            The field consists of two seperate 2d Vectors: <br>
-            -First 2d Vector for all horizontal lines <br>
-            -Second 2d Vector for all vertical lines 
-            <br><br>
-            Horizontal Vector can be accessed by 1 <br>
-            Vertical Vector can be accessed by 2 <br>
-            Lines within a Vector are accessed by<br>
-            X and Y coordinates.
-            <br><br>
-            Therefore, a move to occupy a line consits of: <br>
+            The field consists of two separate 2D vectors: <br>
+            <ul>
+                <li>The first vector represents all horizontal lines</li>
+                <li>The Second vector represents all vertical lines</li>
+            </ul>
+            Accessing in a move:
+            <ul>
+                <li>The horizontal vector can be accessed with (1)</li>
+                <li>The vertical vector can be accessed with (2)</li>
+                <li>Lines within a vector are accessed with<br>X and Y coordinates, beginning at (0,0)</li>
+            </ul>
+            Therefore, a move to occupy a line consists of: <br>
             &lt;Vector&gt;&lt;X&gt;&lt;Y&gt;
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="365"></a></td></tr>
