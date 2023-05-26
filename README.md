@@ -34,9 +34,8 @@ To run the TUI the terminal must be set to `chcp 65001` and `Unicode UTF-8` must
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxes.png" width="390" height="340"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
-    <tr><td>To start the game in TUI a player size must be choosen. <br>
-            The field size varies depending on how many players <br>
-            are choosen. 
+    <tr><td>To start the TUI game a player size must be choosen. <br>
+            The field size varies based on the player count.
             <br><br>
             The field consists of two seperate 2d Vectors: <br>
             -First 2d Vector for all horizontal lines <br>
@@ -44,7 +43,7 @@ To run the TUI the terminal must be set to `chcp 65001` and `Unicode UTF-8` must
             <br><br>
             Horizontal Vector can be accessed by 1 <br>
             Vertical Vector can be accessed by 2 <br>
-            Lines within a Vector can be accessed by<br>
+            Lines within a Vector are accessed by<br>
             X and Y coordinates.
             <br><br>
             Therefore, a move to occupy a line consits of: <br>
