@@ -29,7 +29,7 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
             You win if you got more points than Player 2. <br>
             It's a draw if both players got the same amount of points.
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/dotsandboexs.png" width="390" height="340"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/SE02-Github/dotsandboexs.png" width="390" height="340"></a></td></tr>
 </table>
 
 ## Contributors
