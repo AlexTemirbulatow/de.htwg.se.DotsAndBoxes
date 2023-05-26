@@ -18,7 +18,7 @@ case class Controller(var field: Field) extends Observable:
   /* setup undo manager */
   val undoManager = new UndoManager
 
-  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move, field))
+  def put(move: Move): Field = undoManager.doStep(field, PutCommand(move))
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)
 
@@ -30,7 +30,7 @@ case class Controller(var field: Field) extends Observable:
   def publish(doThis: => Field) =
     field = doThis
     notifyObservers
-  def publish(doThis: Move => Field, move: Move) = Try(moveCheck_Line.handle(move)) match
+  def publish(doThis: Move => Field, move: Move) = moveCheck_Line.handle(move) match
     case Failure(exception) => println(exception.getMessage.dropRight(28))
     case Success(value) =>
       field = doThis(move)
@@ -61,40 +61,40 @@ case class Controller(var field: Field) extends Observable:
 /* chain of responsibility */
   trait MoveHandler:
     val next: Option[MoveHandler]
-    def handle(move: Move): Boolean
+    def handle(move: Move): Try[Any]
 
   class CheckLine(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Boolean =
+    override def handle(move: Move): Try[Any] =
       (move.vec > 0 && move.vec < 3) match
-        case false => throw new MatchError("<Line> index failed the check. Try again:")
+        case false => Failure(new MatchError("<Line> index failed the check. Try again:"))
         case true  => 
           next match
             case Some(h: MoveHandler) => h.handle(move)
-            case None => false
+            case None => Failure(new Exception("could not handle."))
 
   class CheckX(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Boolean =
+    override def handle(move: Move): Try[Any] =
       (move.x >= 0 && move.x <= field.maxPosX) match
-        case false => throw new MatchError("<X> coordinate failed the check. Try again:")
+        case false => Failure(new MatchError("<X> coordinate failed the check. Try again:"))
         case true  =>
           next match
             case Some(h: MoveHandler) => h.handle(move)
-            case None => false
+            case None => Failure(new Exception("could not handle."))
 
   class CheckY(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Boolean =
+    override def handle(move: Move): Try[Any] =
       (move.y >= 0 && move.y <= field.maxPosY) match
-        case false => throw new MatchError("<Y> coordinate failed the check. Try again:")
+        case false => Failure(new MatchError("<Y> coordinate failed the check. Try again:"))
         case true  =>
           next match
             case Some(h: MoveHandler) => h.handle(move)
-            case None => false
+            case None => Failure(new Exception("could not handle."))
 
   class CheckAvailable(val next: Option[MoveHandler]) extends MoveHandler:
-    override def handle(move: Move): Boolean =
+    override def handle(move: Move): Try[Any] =
       field.getCell(move.vec, move.x, move.y) match
-        case true  => throw new MatchError("This line is already taken. Try again:")
+        case true  => Failure(new MatchError("This line is already taken. Try again:"))
         case false =>
           next match
-            case Some(h: MoveHandler) => h.handle(move)
-            case None => true
+            case Some(h: MoveHandler) => Success(h.handle(move))
+            case None => Success(true)
