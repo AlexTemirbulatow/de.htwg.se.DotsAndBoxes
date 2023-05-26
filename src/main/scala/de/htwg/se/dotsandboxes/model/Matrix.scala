@@ -31,5 +31,5 @@ case class Matrix[T](vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]]
     case 2 => if(move.y == 0 || move.y == maxPosY) true else false
   def updatePlayer: Matrix[Any] = copy(currentPlayer = list(playerIndex))
   def playerIndex = list.indices.map(x => list(x).playerId).indexOf(currentPlayer.playerId)
-  def addPoint: Matrix[Any] = copy(list = list.updated(playerIndex, list(playerIndex).copy(points = list(playerIndex).points + 1)))
+  def addPoints(points: Int): Matrix[Any] = copy(list = list.updated(playerIndex, list(playerIndex).copy(points = list(playerIndex).points + points)))
   def changePlayer: Matrix[Any] = if(playerIndex == list.size - 1) copy(currentPlayer = list.head) else copy(currentPlayer = list(playerIndex + 1))

@@ -153,13 +153,11 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 0, true))
             controller.publish(controller.put, Move(2, 0, 1, true))
 
-            //controller.field.getCell(0, 0, 0) should be(Status.Red)
             controller.field.getCell(0, 0, 0) should be(Status.Red)
             controller.field.getCell(2, 0, 1) shouldBe true
 
             controller.publish(controller.undo)
-            //controller.field.getCell(0, 0, 0) should be(Status.Empty)
-            controller.field.getCell(0, 0, 0) should be(Status.Red)
+            controller.field.getCell(0, 0, 0) should be(Status.Empty)
             controller.field.getCell(2, 0, 1) shouldBe false
 
             controller.publish(controller.redo)

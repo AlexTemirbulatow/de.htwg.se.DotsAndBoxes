@@ -30,7 +30,7 @@ case class Field(matrix: Matrix[Any]):
     def currentPoints = matrix.currentPlayer.points
     def nextPlayer: Field = copy(matrix.changePlayer)
     def updatePlayer: Field = copy(matrix.updatePlayer)
-    def addPoint: Field = copy(matrix.addPoint)
+    def addPoints(points: Int): Field = copy(matrix.addPoints(points))
     def playerList = matrix.list
     def getMatrix = matrix
     def rowSize(row: Int = 0) = matrix.rowSize(row)
