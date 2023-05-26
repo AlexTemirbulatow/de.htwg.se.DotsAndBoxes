@@ -14,7 +14,7 @@ You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console
 
 You can run tests with `sbt clean coverage test` and get a coverage report with `sbt coverageReport`
 
-To run the TUI, the terminal must be set to `chcp 65001` and `Unicode UTF-8` must be enabled.
+To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode UTF-8` must be enabled.
 <br><br>
 
 <table>
