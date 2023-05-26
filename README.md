@@ -12,7 +12,9 @@ Using fuctional programming as a paradigm for software development and agility b
 ## Usage
 You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
 
-You can run tests with `sbt clean coverage test` and get a coverage report with `sbt coverageReport` 
+You can run tests with `sbt clean coverage test` and get a coverage report with `sbt coverageReport`
+
+To run the TUI the terminal must be set to `chcp 65001` and `Unicode UTF-8` must be enabled.
 <br><br>
 
 <table>
@@ -32,9 +34,23 @@ You can run tests with `sbt clean coverage test` and get a coverage report with 
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxes.png" width="390" height="340"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
-    <tr><td>Lorem ipsum
+    <tr><td>To start the game in TUI a player size must be choosen. <br>
+            The field size varies depending on how many players <br>
+            are choosen. 
+            <br><br>
+            The field consists of two seperate 2d Vectors: <br>
+            -First 2d Vector for all horizontal lines <br>
+            -Second 2d Vector for all vertical lines 
+            <br><br>
+            Horizontal Vector can be accessed by 1 <br>
+            Vertical Vector can be accessed by 2 <br>
+            Lines within a Vector can be accessed by<br>
+            X and Y coordinates.
+            <br><br>
+            Therefore, a move to occupy a line consits of: <br>
+            &lt;Vector&gt;&lt;X&gt;&lt;Y&gt;
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="360"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="365"></a></td></tr>
 </table>
 
 ## Contributors
