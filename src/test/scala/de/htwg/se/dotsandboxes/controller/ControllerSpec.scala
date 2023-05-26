@@ -141,36 +141,46 @@ class ControllerSpec extends AnyWordSpec {
             
             controller.remove(testObserver)
         }
-        val controller2 = Controller(new Field(3, 3, Status.Empty, 2))
-            class TestObserver(controller2: Controller) extends Observer:
-                controller2.add(this)
+        "be able to undo and redo" in {
+            val controller = Controller(new Field(3, 3, Status.Empty, 2))
+            class TestObserver(controller: Controller) extends Observer:
+                controller.add(this)
                 var bing = false
                 def update = bing = true
-            val testObserver = TestObserver(controller2)
-        "be able to undo and redo" in {
-            controller2.publish(controller2.put, Move(1, 0, 0, true))
-            controller2.publish(controller2.put, Move(1, 1, 0, true))
-            controller2.publish(controller2.put, Move(2, 0, 0, true))
-            controller2.publish(controller2.put, Move(2, 0, 1, true))
+            val testObserver = TestObserver(controller)
+            controller.publish(controller.put, Move(1, 0, 0, true))
+            controller.publish(controller.put, Move(1, 1, 0, true))
+            controller.publish(controller.put, Move(2, 0, 0, true))
+            controller.publish(controller.put, Move(2, 0, 1, true))
 
-            controller2.field.getCell(0, 0, 0) should be(Status.Red)
-            controller2.field.getCell(2, 0, 1) shouldBe true
+            controller.field.getCell(0, 0, 0) should be(Status.Red)
+            controller.field.getCell(2, 0, 1) shouldBe true
 
-            controller2.publish(controller2.undo)
-            controller2.field.getCell(0, 0, 0) should be(Status.Empty)
-            controller2.field.getCell(2, 0, 1) shouldBe false
+            controller.publish(controller.undo)
+            controller.field.getCell(0, 0, 0) should be(Status.Empty)
+            controller.field.getCell(2, 0, 1) shouldBe false
 
-            controller2.publish(controller2.redo)
-            controller2.field.getCell(0, 0, 0) should be(Status.Red)
-            controller2.field.getCell(2, 0, 1) shouldBe true
+            controller.publish(controller.redo)
+            controller.field.getCell(0, 0, 0) should be(Status.Red)
+            controller.field.getCell(2, 0, 1) shouldBe true
         }
         "deny wrong input" in {
+            val controller = Controller(new Field(3, 3, Status.Empty, 2))
+            class TestObserver(controller: Controller) extends Observer:
+                controller.add(this)
+                var bing = false
+                def update = bing = true
+            val testObserver = TestObserver(controller)
+            controller.publish(controller.put, Move(1, 0, 0, true))
+            controller.publish(controller.put, Move(1, 1, 0, true))
+            controller.publish(controller.put, Move(2, 0, 0, true))
+            controller.publish(controller.put, Move(2, 0, 1, true))
             /* wrong inputs */
-            controller2.publish(controller2.put, Move(4, 0, 0, true))
-            controller2.publish(controller2.put, Move(1, 9, 0, true))
-            controller2.publish(controller2.put, Move(2, 0, 9, true))
+            controller.publish(controller.put, Move(4, 0, 0, true))
+            controller.publish(controller.put, Move(1, 9, 0, true))
+            controller.publish(controller.put, Move(2, 0, 9, true))
             /* no change */
-            controller2.toString should be(
+            controller.toString should be(
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +

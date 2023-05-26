@@ -14,4 +14,3 @@ object EdgeState extends MoveState:
         def rightCase(x: Int, y: Int) = field.checkSquare("rightcase", x, y)
         def leftCase(x: Int, y: Int) = field.checkSquare("leftcase", x, y)
         state
-

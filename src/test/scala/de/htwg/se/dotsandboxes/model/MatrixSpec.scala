@@ -193,9 +193,9 @@ class MatrixSpec extends AnyWordSpec {
                 matrix.updatePlayer should be(matrixVector2)
 
                 matrix.list should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
-                matrix.addPoint.updatePlayer.list should be(Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)))
+                matrix.addPoints(1).updatePlayer.list should be(Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)))
 
-                matrix.addPoint.updatePlayer should be(
+                matrix.addPoints(1).updatePlayer should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),
@@ -203,9 +203,9 @@ class MatrixSpec extends AnyWordSpec {
                     Player("Blue", 1, Status.Blue)))
                 
                 matrix.currentPlayer should be(Player("Blue", 0, Status.Blue))
-                matrix.changePlayer.addPoint.updatePlayer.currentPlayer should be(Player("Red", 1, Status.Red))
+                matrix.changePlayer.addPoints(1).updatePlayer.currentPlayer should be(Player("Red", 1, Status.Red))
 
-                matrix.changePlayer.addPoint.updatePlayer should be(
+                matrix.changePlayer.addPoints(1).updatePlayer should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),

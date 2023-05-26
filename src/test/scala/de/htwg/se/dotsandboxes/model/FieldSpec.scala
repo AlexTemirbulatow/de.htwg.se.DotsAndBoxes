@@ -262,7 +262,7 @@ class FieldSpec extends AnyWordSpec {
                 field.currentPlayer should be("Blue")
                 field.currentStatus should be(Vector(Vector(Status.Blue)))
 
-                field = field.addPoint.updatePlayer
+                field = field.addPoints(1).updatePlayer
                 field.getMatrix should be(matrixVector3)
                 field.currentPoints should be(1)
 
