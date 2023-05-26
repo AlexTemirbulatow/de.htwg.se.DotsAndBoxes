@@ -29,7 +29,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             <br><br>
             The game ends when all the boxes have been taken.
             <br><br>
-            Winner is the player with the most points. <br>
+            The winner is the player with the most points. <br>
             It's a tie if two players got the same amount of points. 
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxes.png" width="390" height="340"></a></td></tr>
