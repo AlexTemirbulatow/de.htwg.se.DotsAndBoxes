@@ -40,7 +40,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             The field consists of two separate 2D vectors: <br>
             <ul>
                 <li>The first vector represents all horizontal lines</li>
-                <li>The Second vector represents all vertical lines</li>
+                <li>The second vector represents all vertical lines</li>
             </ul>
             Accessing in a move:
             <ul>
