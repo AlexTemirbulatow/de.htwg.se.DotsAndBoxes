@@ -42,7 +42,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
                 <li>The first vector represents all horizontal lines</li>
                 <li>The second vector represents all vertical lines</li>
             </ul>
-            Accessing in a move:
+            Access in a move:
             <ul>
                 <li>The horizontal vector can be accessed with (1)</li>
                 <li>The vertical vector can be accessed with (2)</li>
