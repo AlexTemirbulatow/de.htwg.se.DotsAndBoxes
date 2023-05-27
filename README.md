@@ -50,6 +50,8 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             </ul>
             Therefore, a move to occupy a line consists of: <br>
             &lt;Vector&gt;&lt;X&gt;&lt;Y&gt;
+            <br><br>
+            You can press (q) to quit, (z) to undo and (y) to redo.
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesTUI.png" width="390" height="365"></a></td></tr>
 </table>
