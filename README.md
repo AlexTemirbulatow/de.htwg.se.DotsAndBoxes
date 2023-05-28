@@ -46,7 +46,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             <ul>
                 <li>The horizontal vector can be accessed with (1)</li>
                 <li>The vertical vector can be accessed with (2)</li>
-                <li>Lines within a vector are accessed with<br>X and Y coordinates, beginning at (0,0)</li>
+                <li>Lines within a vector are accessed with<br>X and Y coordinates, starting at (0,0)</li>
             </ul>
             Therefore, a move to occupy a line consists of: <br>
             &lt;Vector&gt;&lt;X&gt;&lt;Y&gt;
