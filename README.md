@@ -18,7 +18,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
 <br><br>
 
 <table>
-    <tr><th>Rules</th><th>Field</th></tr>
+    <tr><th>Rules</th><th>GUI</th></tr>
     <tr><td>You move by connecting two dots with a horizontal or <br>
             vertical line. When you place the last 'wall' of a single <br>
             box, the box and its contents are yours. The players <br>
