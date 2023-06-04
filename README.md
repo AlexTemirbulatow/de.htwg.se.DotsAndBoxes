@@ -19,8 +19,8 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
 
 <table>
     <tr><th>Rules</th><th>GUI</th></tr>
-    <tr><td>You move by connecting two dots with a horizontal or <br>
-            vertical line. When you place the last 'wall' of a single <br>
+    <tr><td>You move by taking a horizontal or vertical line <br>
+            between two dots. When you place the last line of a <br>
             box, the box and its contents are yours. The players <br>
             move in turn, but whenever a player takes a box they <br>
             must move again. One finished box is one point. 
@@ -32,7 +32,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             The winner is the player with the most points. <br>
             It's a tie if two players got the same amount of points. 
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/dotsandboxesGUI.png" width="390" height="340"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/src/main/scala/de/htwg/se/dotsandboxes/dotsandboxesGUI.png" width="390" height="340"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
     <tr><td>To start the TUI game, a player size must be chosen. <br>
             The field size varies based on the player count.
