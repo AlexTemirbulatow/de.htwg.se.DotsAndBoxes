@@ -1,8 +1,8 @@
 package de.htwg.se.dotsandboxes
 package controller
 
-import model._
 import util._
+import model._
 import model.MoveState._
 import model.PlayerState._
 import controllerComponent._

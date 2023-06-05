@@ -29,7 +29,6 @@ class GUI(controller: Controller) extends Frame with Observer:
     centerOnScreen
     open()
 
-
     override def update(event: Event): Unit = event match
         case Event.Abort => sys.exit
         case Event.End   => new Scoreboard
@@ -45,7 +44,7 @@ class GUI(controller: Controller) extends Frame with Observer:
             stats.border = Swing.EmptyBorder(0, 10, 0, 0)
             stats.editable = false
             add(stats, BorderPanel.Position.South)
-        }; repaint
+            }; repaint
 
     override def closeOperation = update(Event.Abort)
 
@@ -57,12 +56,15 @@ class GUI(controller: Controller) extends Frame with Observer:
         preferredSize = dim
         opaque = false
 
-        for (i <- 0 until y)
-            for (j <- 0 until x) bar(i, j)
+        fieldBuilder
+
+        private def fieldBuilder =
+            for (i <- 0 until y)
+                for (j <- 0 until x) bar(i, j)
+                contents += dot
+                for (j <- 0 until x + 1) cell(i, j)
+            for (j <- 0 until x) bar(y, j)
             contents += dot
-            for (j <- 0 until x + 1) cell(i, j)
-        for (j <- 0 until x) bar(y, j)
-        contents += dot
 
         private def bar(x: Int, y: Int) =
             contents += dot
@@ -76,11 +78,9 @@ class GUI(controller: Controller) extends Frame with Observer:
                     case "B" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_BlueTaken.png")))
                     case "R" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_RedTaken.png")))
                     case "G" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_GreenTaken.png")))
-                    case "Y" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_YellowTaken.png")))
-                }
+                    case "Y" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_YellowTaken.png")))}
 
-        private def dot = new Label {
-            icon = new ImageIcon(ImageIO.read(new File("src/resources/0_Dot.png")))}
+        private def dot = new Label { icon = new ImageIcon(ImageIO.read(new File("src/resources/0_Dot.png"))) }
 
 
     class CellButton(vec: Int, x: Int, y: Int, status: Boolean) extends Button:
