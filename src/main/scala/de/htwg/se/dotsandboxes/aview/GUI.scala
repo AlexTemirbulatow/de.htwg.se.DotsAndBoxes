@@ -8,9 +8,9 @@ import util.{Observer, Event}
 import scala.swing.*
 import scala.swing.event.*
 import javax.swing.ImageIcon
-import java.awt.Color
 import javax.imageio.ImageIO
 import java.io.File
+import java.awt.Color
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
@@ -18,7 +18,7 @@ class GUI(controller: Controller) extends Frame with Observer:
     title = "Dots And Boxes"
     iconImage = ImageIO.read(new File("src/resources/3_Ikon.png"))
     menuBar = new MenuBar {
-        contents += new Menu("File") {
+        contents += new Menu("Settings") {
             contents += new MenuItem(Action("Exit") { controller.abort })
             contents += new MenuItem(Action("Undo") { controller.publish(controller.undo) })
             contents += new MenuItem(Action("Redo") { controller.publish(controller.redo) })
@@ -36,17 +36,17 @@ class GUI(controller: Controller) extends Frame with Observer:
             background = Color.WHITE
             val label = new Label(s"${controller.currentPlayer}s turn [points: ${controller.currentPoints}]")
             label.font = new Font("Comic Sans MS", 0, 30)
-            add(label, BorderPanel.Position.North)
-            add(new CellPanel(controller.field.colSize(1, 0), controller.field.rowSize(2)), BorderPanel.Position.Center)
             val stats = new TextArea(controller.stats.replace("\n", "   |   "))
             stats.font = new Font("Comic Sans MS", 0, 18)
             stats.background = new Color(220, 220, 220)
             stats.border = Swing.EmptyBorder(0, 10, 0, 0)
             stats.editable = false
+            add(label, BorderPanel.Position.North)
+            add(new CellPanel(controller.field.colSize(1, 0), controller.field.rowSize(2)), BorderPanel.Position.Center)
             add(stats, BorderPanel.Position.South)
             }; repaint
 
-    override def closeOperation = update(Event.Abort)
+    override def closeOperation = controller.abort
 
 
     class CellPanel(x: Int, y: Int) extends GridPanel((y + y + 1), (x + x + 1)):
@@ -127,13 +127,12 @@ class GUI(controller: Controller) extends Frame with Observer:
         contents = new BorderPanel {
             val winner = new Label(s"${controller.winner}")
             winner.font = new Font("Comic Sans MS", 0, 30)
-            add(winner, BorderPanel.Position.Center)
-
             val stats = new TextArea(controller.stats)
             stats.font = new Font("Arial", 0, 15)
             stats.background = new Color(220, 220, 220)
             stats.border = Swing.EmptyBorder(0, 70, 0, 0)
             stats.editable = false
+            add(winner, BorderPanel.Position.Center)
             add(stats, BorderPanel.Position.South)}
         pack
         centerOnScreen
