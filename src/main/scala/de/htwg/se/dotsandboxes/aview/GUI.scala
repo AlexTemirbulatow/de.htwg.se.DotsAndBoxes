@@ -15,6 +15,9 @@ import java.awt.Color
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
 
+    val coord: (Int, Int) = (controller.field.colSize(1, 0), controller.field.rowSize(2))
+    val grid: (Int, Int) = ((coord._1 + coord._1 + 1), (coord._2 + coord._2 + 1))
+
     title = "Dots And Boxes"
     iconImage = ImageIO.read(new File("src/resources/3_Ikon.png"))
     menuBar = new MenuBar {
@@ -42,14 +45,14 @@ class GUI(controller: Controller) extends Frame with Observer:
             stats.border = Swing.EmptyBorder(0, 10, 0, 0)
             stats.editable = false
             add(label, BorderPanel.Position.North)
-            add(new CellPanel(controller.field.colSize(1, 0), controller.field.rowSize(2)), BorderPanel.Position.Center)
+            add(new CellPanel(coord._1, coord._2), BorderPanel.Position.Center)
             add(stats, BorderPanel.Position.South)
             }; repaint
 
     override def closeOperation = controller.abort
 
 
-    class CellPanel(x: Int, y: Int) extends GridPanel((y + y + 1), (x + x + 1)):
+    class CellPanel(x: Int, y: Int) extends GridPanel(grid._2, grid._1):
         val dim = new Dimension(850, 650)
         minimumSize = dim
         maximumSize = dim
@@ -74,7 +77,7 @@ class GUI(controller: Controller) extends Frame with Observer:
             contents += new CellButton(2, x, y, controller.get(2, x, y).toString.toBoolean)
             if(y != this.x) contents += new Label {
                 controller.get(0, x, y).toString match
-                    case "-" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_WhiteTaken.png")))
+                    case "-" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
                     case "B" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_BlueTaken.png")))
                     case "R" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_RedTaken.png")))
                     case "G" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_GreenTaken.png")))
@@ -92,10 +95,10 @@ class GUI(controller: Controller) extends Frame with Observer:
         vec match
             case 1 => status match
                 case true => icon = new ImageIcon(ImageIO.read(new File("src/resources/1_BarTaken.png")))
-                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_WhiteTaken.png")))
+                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
             case 2 => status match
                 case true => icon = new ImageIcon(ImageIO.read(new File("src/resources/1_ColTaken.png")))
-                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_WhiteTaken.png")))
+                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
 
         listenTo(mouse.moves, mouse.clicks)
         reactions += {
@@ -112,7 +115,7 @@ class GUI(controller: Controller) extends Frame with Observer:
 
             case MouseExited(source) => status match
                 case true =>
-                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_WhiteTaken.png")))
+                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
         }
 
 
