@@ -15,7 +15,7 @@ import java.awt.Color
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
 
-    val coord: (Int, Int) = (controller.field.colSize(1, 0), controller.field.rowSize(2))
+    val coord: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val grid: (Int, Int) = ((coord._1 + coord._1 + 1), (coord._2 + coord._2 + 1))
 
     title = "Dots And Boxes"
