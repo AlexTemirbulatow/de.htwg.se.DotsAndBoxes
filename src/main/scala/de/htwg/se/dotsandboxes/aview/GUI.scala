@@ -11,7 +11,9 @@ import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import java.awt.Color
+import java.awt.Font
 import javax.swing.UIManager
+import scala.swing.GridBagPanel.Anchor
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
@@ -20,14 +22,14 @@ class GUI(controller: Controller) extends Frame with Observer:
     val grid: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
     
     title = "Dots And Boxes"
-    iconImage = ImageIO.read(new File("src/resources/4_Ikon.png"))
+    iconImage = ImageIO.read(File("src/resources/4_Ikon.png"))
     menuBar = new MenuBar {
         contents += new Menu("") {
-            icon = new ImageIcon(ImageIO.read(new File("src/resources/3_Menu.png")))
+            icon = ImageIcon(ImageIO.read(File("src/resources/3_Menu.png")))
             borderPainted = false
-            contents += new MenuItem(Action("Exit") { controller.abort })
-            contents += new MenuItem(Action("Undo") { controller.publish(controller.undo) })
-            contents += new MenuItem(Action("Redo") { controller.publish(controller.redo) })
+            contents += MenuItem(Action("Exit") { controller.abort })
+            contents += MenuItem(Action("Undo") { controller.publish(controller.undo) })
+            contents += MenuItem(Action("Redo") { controller.publish(controller.redo) })
         }
     }
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
@@ -41,28 +43,33 @@ class GUI(controller: Controller) extends Frame with Observer:
     override def update(event: Event): Unit = event match
         case Event.Abort => sys.exit
         case Event.End   => new Scoreboard
-        case Event.Move  => contents = handle; repaint
+        case Event.Move  => contents = revise; repaint
 
     override def closeOperation = controller.abort
 
-    def handle = new BorderPanel {
+    def revise = new BorderPanel {
         val dim = new Dimension(900, 750)
+        val color = Color(220, 220, 220)
         minimumSize = dim
         maximumSize = dim
         preferredSize = dim
         resizable = false
         background = Color.WHITE
-        val label = new Label(s"${controller.currentPlayer}s turn [points: ${controller.currentPoints}]")
-        label.font = new Font("Comic Sans MS", 0, 30)
-        val stats = new TextArea(controller.stats.replace("\n", "   |   "))
-        stats.font = new Font("Comic Sans MS", 0, 17)
-        stats.background = Color(220, 220, 220)
-        stats.border = Swing.EmptyBorder(0, 35, 0, 0)
-        stats.editable = false
+        val label = Label(s"${controller.currentPlayer}s turn [points: ${controller.currentPoints}]")
+        label.font = Font("Comic Sans MS", 0, 30)
+        val stats = new GridBagPanel {
+            val score = TextArea(controller.stats.replace("\n", "   |   "))
+            val con = new Constraints
+            background = color
+            score.background = color
+            score.font = Font("Comic Sans MS", 0, 17)
+            score.editable = false
+            con.anchor = Anchor.Center
+            layout(score) = con}
         add(label, BorderPanel.Position.North)
-        add(new CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
+        add(CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
         add(stats, BorderPanel.Position.South)}
-
+        
 
     class CellPanel(x: Int, y: Int) extends GridPanel(grid._2, grid._1):
         opaque = false
@@ -78,19 +85,19 @@ class GUI(controller: Controller) extends Frame with Observer:
 
         private def bar(x: Int, y: Int) =
             contents += dot
-            contents += new CellButton(1, x, y, controller.get(1, x, y).toString.toBoolean)
+            contents += CellButton(1, x, y, controller.get(1, x, y).toString.toBoolean)
 
         private def cell(x: Int, y: Int) =
-            contents += new CellButton(2, x, y, controller.get(2, x, y).toString.toBoolean)
+            contents += CellButton(2, x, y, controller.get(2, x, y).toString.toBoolean)
             if(y != this.x) contents += new Label {
                 controller.get(0, x, y).toString match
-                    case "-" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
-                    case "B" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_BlueTaken.png")))
-                    case "R" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_RedTaken.png")))
-                    case "G" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_GreenTaken.png")))
-                    case "Y" => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_YellowTaken.png")))}
+                    case "-" => icon = ImageIcon(ImageIO.read(File("src/resources/2_White.png")))
+                    case "B" => icon = ImageIcon(ImageIO.read(File("src/resources/2_BlueTaken.png")))
+                    case "R" => icon = ImageIcon(ImageIO.read(File("src/resources/2_RedTaken.png")))
+                    case "G" => icon = ImageIcon(ImageIO.read(File("src/resources/2_GreenTaken.png")))
+                    case "Y" => icon = ImageIcon(ImageIO.read(File("src/resources/2_YellowTaken.png")))}
 
-        private def dot = new Label { icon = new ImageIcon(ImageIO.read(new File("src/resources/0_Dot.png"))) }
+        private def dot = new Label { icon = ImageIcon(ImageIO.read(File("src/resources/0_Dot.png"))) }
 
 
     class CellButton(vec: Int, x: Int, y: Int, status: Boolean) extends Button:
@@ -100,11 +107,11 @@ class GUI(controller: Controller) extends Frame with Observer:
 
         icon = vec match
             case 1 => status match
-                case true => new ImageIcon(ImageIO.read(new File("src/resources/1_BarTaken.png")))
-                case false => new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
+                case true => ImageIcon(ImageIO.read(File("src/resources/1_BarTaken.png")))
+                case false => ImageIcon(ImageIO.read(File("src/resources/2_White.png")))
             case 2 => status match
-                case true => new ImageIcon(ImageIO.read(new File("src/resources/1_ColTaken.png")))
-                case false => new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))
+                case true => ImageIcon(ImageIO.read(File("src/resources/1_ColTaken.png")))
+                case false => ImageIcon(ImageIO.read(File("src/resources/2_White.png")))
 
         listenTo(mouse.moves, mouse.clicks)
         reactions += {
@@ -114,30 +121,30 @@ class GUI(controller: Controller) extends Frame with Observer:
             case MouseEntered(source) => vec match
                 case 1 => status match
                     case true =>
-                    case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/1_BarUntaken.png")))
+                    case false => icon = ImageIcon(ImageIO.read(File("src/resources/1_BarUntaken.png")))
                 case 2 => status match
                     case true =>
-                    case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/1_ColUntaken.png")))
+                    case false => icon = ImageIcon(ImageIO.read(File("src/resources/1_ColUntaken.png")))
 
             case MouseExited(source) => status match
                 case true =>
-                case false => icon = new ImageIcon(ImageIO.read(new File("src/resources/2_White.png")))}
+                case false => icon = ImageIcon(ImageIO.read(File("src/resources/2_White.png")))}
 
 
     class Scoreboard extends Frame:
         title = "Scoreboard"
-        iconImage = ImageIO.read(new File("src/resources/4_Ikon.png"))
+        iconImage = ImageIO.read(File("src/resources/4_Ikon.png"))
         contents = new BorderPanel {
             val dim = new Dimension(300, 200)
             minimumSize = dim
             maximumSize = dim
             preferredSize = dim
             resizable = false
-            val winner = new Label(s"${controller.winner}")
-            winner.font = new Font("Comic Sans MS", 0, 30)
-            val stats = new TextArea(controller.stats)
-            stats.font = new Font("Arial", 0, 15)
-            stats.background = new Color(220, 220, 220)
+            val winner = Label(s"${controller.winner}")
+            winner.font = Font("Comic Sans MS", 0, 30)
+            val stats = TextArea(controller.stats)
+            stats.font = Font("Arial", 0, 15)
+            stats.background = Color(220, 220, 220)
             stats.border = Swing.EmptyBorder(0, 70, 0, 0)
             stats.editable = false
             add(winner, BorderPanel.Position.Center)
