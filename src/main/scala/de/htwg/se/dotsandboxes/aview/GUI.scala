@@ -11,13 +11,12 @@ import javax.swing.ImageIcon
 import javax.imageio.ImageIO
 import java.io.File
 import java.awt.Color
-import javax.swing.border.Border
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
 
-    val coord: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
-    val grid: (Int, Int) = ((coord._1 + coord._1 + 1), (coord._2 + coord._2 + 1))
+    val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
+    val grid: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
 
     title = "Dots And Boxes"
     iconImage = ImageIO.read(new File("src/resources/3_Ikon.png"))
@@ -55,7 +54,7 @@ class GUI(controller: Controller) extends Frame with Observer:
         stats.border = Swing.EmptyBorder(0, 10, 0, 0)
         stats.editable = false
         add(label, BorderPanel.Position.North)
-        add(new CellPanel(coord._1, coord._2), BorderPanel.Position.Center)
+        add(new CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
         add(stats, BorderPanel.Position.South)}
 
 
