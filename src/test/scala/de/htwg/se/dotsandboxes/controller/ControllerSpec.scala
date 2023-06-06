@@ -27,6 +27,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.gameEnded shouldBe false
             testObserver.bing shouldBe true
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -41,6 +42,7 @@ class ControllerSpec extends AnyWordSpec {
                 "[points: 0]\n")
             controller.publish(controller.put, Move(1, 1, 1, true))
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -55,6 +57,7 @@ class ControllerSpec extends AnyWordSpec {
                 "[points: 0]\n")
             controller.publish(controller.put, Move(2, 0, 1, true))
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ‖   -   ¦   -   ¦\n" +
                 "¦   -   ‖   -   ¦   -   ¦\n" +
@@ -71,6 +74,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(1, 1, 0, true))
             controller.currentPoints should be(1)
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
@@ -89,6 +93,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 3, true))
             controller.publish(controller.put, Move(2, 0, 2, true))
             controller.toString should be(
+                "\n" +
                 "O=======O=======O=======O\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
@@ -118,6 +123,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(1, 3, 2, true))
             controller.currentPoints should be(6)
             controller.toString should be(
+                "\n" +
                 "O=======O=======O=======O\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
@@ -180,6 +186,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 9, true))
             /* no change */
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
