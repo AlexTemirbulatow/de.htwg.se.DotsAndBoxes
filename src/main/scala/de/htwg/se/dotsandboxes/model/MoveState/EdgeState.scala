@@ -7,6 +7,7 @@ object EdgeState extends MoveState:
         def upCase(x: Int, y: Int) = field.checkSquare("upcase", x, y)
         def rightCase(x: Int, y: Int) = field.checkSquare("rightcase", x, y)
         def leftCase(x: Int, y: Int) = field.checkSquare("leftcase", x, y)
+
         (move.vec, move.x, move.y) match
             case (1, 0, _) => downCase(move.x, move.y)
             case (1, x, _) if x == field.maxPosX => upCase(move.x, move.y)

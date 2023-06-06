@@ -23,7 +23,7 @@ case class Controller(var field: Field) extends Observable:
   def get(vec: Int, x: Int, y: Int): Any = field.getCell(vec, x, y)
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)
-  def abort = notifyObservers(Event.Abort)
+  def abort: Unit = notifyObservers(Event.Abort)
 
   def colSize(row: Int = 0, col: Int = 0): Int = field.colSize(row, col)
   def rowSize(row: Int = 0): Int = field.rowSize(row)
@@ -47,4 +47,4 @@ case class Controller(var field: Field) extends Observable:
       notifyObservers(Event.Move)
       if gameEnded then notifyObservers(Event.End)
 
-  override def toString = s"${field.toString}\n${currentPlayer}s turn\n[points: ${currentPoints}]\n"
+  override def toString = s"\n${field.toString}\n${currentPlayer}s turn\n[points: ${currentPoints}]\n"

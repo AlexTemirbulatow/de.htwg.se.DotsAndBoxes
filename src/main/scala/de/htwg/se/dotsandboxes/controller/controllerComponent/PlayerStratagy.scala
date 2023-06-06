@@ -2,7 +2,7 @@ package de.htwg.se.dotsandboxes
 package controller.controllerComponent
 
 import model.Field
-import model.PlayerState.{AddOnePoint, AddTwoPoints, NextPlayer}
+import model.PlayerState._
 
 /* stratagy pattern */
 object StrategyPlayer:

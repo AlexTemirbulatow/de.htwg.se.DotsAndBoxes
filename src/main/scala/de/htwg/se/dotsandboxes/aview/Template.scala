@@ -6,7 +6,6 @@ import controller.Controller
 import model.Move
 import scala.util.{Try, Success, Failure}
 
-
 /* template pattern */
 trait Template(controller: Controller) extends Observer:
     controller.add(this)

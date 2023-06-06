@@ -7,12 +7,11 @@ import model.Move
 import util.{Observer, Event}
 import scala.util.{Try, Success, Failure}
 
-
 class TUI(controller: Controller) extends Template(controller):
     override def update(e: Event): Unit = e match
         case Event.Abort => sys.exit
         case Event.End   => println(finalStats)
-        case Event.Move  => println("\n" + controller.toString)
+        case Event.Move  => println(controller.toString)
 
     override def gameLoop: Unit =
         analyseInput(readLine) match

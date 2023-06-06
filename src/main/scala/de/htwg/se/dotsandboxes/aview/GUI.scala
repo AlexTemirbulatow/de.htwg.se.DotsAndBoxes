@@ -11,6 +11,7 @@ import javax.swing.ImageIcon
 import javax.imageio.ImageIO
 import java.io.File
 import java.awt.Color
+import javax.swing.border.Border
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
@@ -35,30 +36,31 @@ class GUI(controller: Controller) extends Frame with Observer:
     override def update(event: Event): Unit = event match
         case Event.Abort => sys.exit
         case Event.End   => new Scoreboard
-        case Event.Move  => contents = new BorderPanel {
-            background = Color.WHITE
-            val label = new Label(s"${controller.currentPlayer}s turn [points: ${controller.currentPoints}]")
-            label.font = new Font("Comic Sans MS", 0, 30)
-            val stats = new TextArea(controller.stats.replace("\n", "   |   "))
-            stats.font = new Font("Comic Sans MS", 0, 18)
-            stats.background = new Color(220, 220, 220)
-            stats.border = Swing.EmptyBorder(0, 10, 0, 0)
-            stats.editable = false
-            add(label, BorderPanel.Position.North)
-            add(new CellPanel(coord._1, coord._2), BorderPanel.Position.Center)
-            add(stats, BorderPanel.Position.South)
-            }; repaint
+        case Event.Move  => contents = handle; repaint
 
     override def closeOperation = controller.abort
 
-
-    class CellPanel(x: Int, y: Int) extends GridPanel(grid._2, grid._1):
+    def handle = new BorderPanel {
         val dim = new Dimension(850, 650)
         minimumSize = dim
         maximumSize = dim
         preferredSize = dim
-        opaque = false
+        resizable = false
+        background = Color.WHITE
+        val label = new Label(s"${controller.currentPlayer}s turn [points: ${controller.currentPoints}]")
+        label.font = new Font("Comic Sans MS", 0, 30)
+        val stats = new TextArea(controller.stats.replace("\n", "   |   "))
+        stats.font = new Font("Comic Sans MS", 0, 17)
+        stats.background = new Color(220, 220, 220)
+        stats.border = Swing.EmptyBorder(0, 10, 0, 0)
+        stats.editable = false
+        add(label, BorderPanel.Position.North)
+        add(new CellPanel(coord._1, coord._2), BorderPanel.Position.Center)
+        add(stats, BorderPanel.Position.South)}
 
+
+    class CellPanel(x: Int, y: Int) extends GridPanel(grid._2, grid._1):
+        opaque = false
         fieldBuilder
 
         private def fieldBuilder =
@@ -120,14 +122,14 @@ class GUI(controller: Controller) extends Frame with Observer:
 
 
     class Scoreboard extends Frame:
-        val dim = new Dimension(300, 200)
-        minimumSize = dim
-        maximumSize = dim
-        preferredSize = dim
-
         title = "Scoreboard"
         iconImage = ImageIO.read(new File("src/resources/3_Ikon.png"))
         contents = new BorderPanel {
+            val dim = new Dimension(300, 200)
+            minimumSize = dim
+            maximumSize = dim
+            preferredSize = dim
+            resizable = false
             val winner = new Label(s"${controller.winner}")
             winner.font = new Font("Comic Sans MS", 0, 30)
             val stats = new TextArea(controller.stats)
