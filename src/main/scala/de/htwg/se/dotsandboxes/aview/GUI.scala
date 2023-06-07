@@ -22,24 +22,28 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
+    val panalSize = new Dimension(850, 750)
+    val colorBackground = Color(245, 245, 245)
+    val colorFont = Color(60, 60, 60)
+    val colorStats = Color(220, 220, 220)
 
-    val dot = ImageIcon(ImageIO.read(File("src/resources/0_Dot.jpg")))
+    val dot = ImageIcon(ImageIO.read(File("src/resources/0_Dot.png")))
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
     val menu = ImageIcon(ImageIO.read(File("src/resources/0_Menu.png")))
     val takenBar = ImageIcon(ImageIO.read(File("src/resources/1_BarTaken.png")))
     val untakenBar = ImageIcon(ImageIO.read(File("src/resources/1_BarUntaken.png")))
     val takenCol = ImageIcon(ImageIO.read(File("src/resources/1_ColTaken.png")))
     val untakenCol = ImageIcon(ImageIO.read(File("src/resources/1_ColUntaken.png")))
-    val white = ImageIcon(ImageIO.read(File("src/resources/2_White.png")))
-    val takenBlue = ImageIcon(ImageIO.read(File("src/resources/2_BlueTaken.png")))
-    val takenRed = ImageIcon(ImageIO.read(File("src/resources/2_RedTaken.png")))
-    val takenGreen = ImageIcon(ImageIO.read(File("src/resources/2_GreenTaken.png")))
-    val takenYellow = ImageIcon(ImageIO.read(File("src/resources/2_YellowTaken.png")))
-    val playerBlue = ImageIcon(ImageIO.read(File("src/resources/3_PlayerBlue.jpg")))
-    val playerRed = ImageIcon(ImageIO.read(File("src/resources/3_PlayerRed.jpg")))
-    val playerGreen = ImageIcon(ImageIO.read(File("src/resources/3_PlayerGreen.jpg")))
-    val playerYellow = ImageIcon(ImageIO.read(File("src/resources/3_PlayerYellow.jpg")))
-    
+    val white = ImageIcon(ImageIO.read(File("src/resources/2_1TakenEmpty.png")))
+    val takenBlue = ImageIcon(ImageIO.read(File("src/resources/2_TakenBlue.png")))
+    val takenRed = ImageIcon(ImageIO.read(File("src/resources/2_TakenRed.png")))
+    val takenGreen = ImageIcon(ImageIO.read(File("src/resources/2_TakenGreen.png")))
+    val takenYellow = ImageIcon(ImageIO.read(File("src/resources/2_TakenYellow.png")))
+    val playerBlue = ImageIcon(ImageIO.read(File("src/resources/3_PlayerBlue.png")))
+    val playerRed = ImageIcon(ImageIO.read(File("src/resources/3_PlayerRed.png")))
+    val playerGreen = ImageIcon(ImageIO.read(File("src/resources/3_PlayerGreen.png")))
+    val playerYellow = ImageIcon(ImageIO.read(File("src/resources/3_PlayerYellow.png")))
+
     title = "Dots And Boxes"
     iconImage = logo
     menuBar = new MenuBar {
@@ -53,7 +57,7 @@ class GUI(controller: Controller) extends Frame with Observer:
     }
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
     menuBar.border = Swing.EmptyBorder(0, 1, 0, 0)
-    menuBar.background = Color.WHITE
+    menuBar.background = colorBackground
     update(Event.Move)
     centerOnScreen
     pack
@@ -67,12 +71,9 @@ class GUI(controller: Controller) extends Frame with Observer:
     override def closeOperation = controller.abort
 
     def revise(playerCondition: FlowPanel) = new BorderPanel {
-        val dim = new Dimension(850, 750)
-        minimumSize = dim
-        maximumSize = dim
-        preferredSize = dim
+        preferredSize = panalSize
         resizable = false
-        background = Color.WHITE
+        background = colorBackground
         val player = playerCondition
         val stats = playerStats
         add(player, BorderPanel.Position.North)
@@ -80,7 +81,7 @@ class GUI(controller: Controller) extends Frame with Observer:
         add(stats, BorderPanel.Position.South)}
 
     def playerTurn = new FlowPanel {
-        background = Color.WHITE
+        background = colorBackground
         contents += new Label {
             override def paintComponent(g: Graphics2D): Unit = {
                 g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
@@ -93,23 +94,25 @@ class GUI(controller: Controller) extends Frame with Observer:
                 case "Yellow"  => playerYellow
         }
         val label = Label(s" Turn [points: ${controller.currentPoints}]")
+        label.foreground = colorFont
         label.font = Font("Comic Sans MS", 0, 35)
         contents += label
     }
 
     def playerStats = new GridBagPanel {
-        val color = Color(220, 220, 220)
+        val color = colorStats
         val score = TextArea(controller.stats.replace("\n", "   |   "))
         val con = new Constraints
         background = color
         score.background = color
         score.font = Font("Comic Sans MS", 0, 17)
+        score.foreground = colorFont
         score.editable = false
         con.anchor = Anchor.Center
         layout(score) = con}
 
     def playerResult = new FlowPanel {
-        background = Color.WHITE
+        background = colorBackground
         override def paintComponent(g: Graphics2D): Unit = {
             g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
             super.paintComponent(g)}
@@ -119,7 +122,8 @@ class GUI(controller: Controller) extends Frame with Observer:
             contents += new Label {
                 val label = Label(controller.winner)
                 label.font = fontType
-                label.border = LineBorder(Color.WHITE, 10)
+                label.foreground = colorFont
+                label.border = LineBorder(colorBackground, 10)
                 contents += label}
         else 
             contents += new Label {
@@ -130,6 +134,7 @@ class GUI(controller: Controller) extends Frame with Observer:
                     case "Yellow wins!" => playerYellow}
             val label = Label(" wins!")
             label.font = fontType
+            label.foreground = colorFont
             contents += label}
 
 
