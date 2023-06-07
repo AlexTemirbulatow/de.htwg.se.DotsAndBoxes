@@ -4,27 +4,23 @@ package aview
 import scala.io.StdIn.readLine
 import controller.Controller
 import model.Move
-import util.Observer
+import util.{Observer, Event}
 import scala.util.{Try, Success, Failure}
 
 class TUI(controller: Controller) extends Template(controller):
-    override def update = println("\n" + controller.toString)
-
-    override def finalStats =
-        controller.stats + "\n\n" +
-        "_________________________" + "\n\n" +
-        controller.winner +
-        "\n"
+    override def update(e: Event): Unit = e match
+        case Event.Abort => sys.exit
+        case Event.End   => println(finalStats)
+        case Event.Move  => println(controller.toString)
 
     override def gameLoop: Unit =
-        if(controller.gameEnd) println(finalStats)
         analyseInput(readLine) match
             case Some(move) => controller.publish(controller.put, move)
             case None =>
         gameLoop
 
     override def analyseInput(input: String): Option[Move] = input match
-        case "q" => sys.exit
+        case "q" => controller.abort; None
         case "z" => controller.publish(controller.undo); None
         case "y" => controller.publish(controller.redo); None
         case _   =>
@@ -37,6 +33,12 @@ class TUI(controller: Controller) extends Template(controller):
 
     override def checkSyntax(vec: Char, x: Char, y: Char): Try[(Int, Int, Int)] =
         Try(vec.toString.toInt, x.toString.toInt, y.toString.toInt)
+
+    override def finalStats: String =
+        controller.winner + "\n" +
+        "_________________________" + "\n\n" +
+        controller.stats +
+        "\n"
 
     override def syntaxErr: String =
         "Incorrect syntax. Try again:"

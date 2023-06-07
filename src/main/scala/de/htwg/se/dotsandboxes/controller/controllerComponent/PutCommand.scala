@@ -1,5 +1,5 @@
 package de.htwg.se.dotsandboxes
-package controller
+package controller.controllerComponent
 
 import model.{Field, Move, Status}
 import util.{Command, UndoManager}

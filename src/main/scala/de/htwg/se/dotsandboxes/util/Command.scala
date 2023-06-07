@@ -1,6 +1,7 @@
-package de.htwg.se.dotsandboxes.util
+package de.htwg.se.dotsandboxes
+package util
 
-import de.htwg.se.dotsandboxes.model.Field
+import model.Field
 
 trait Command:
   def doStep(field: Field): Field

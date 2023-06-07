@@ -2,11 +2,10 @@ package de.htwg.se.dotsandboxes
 package controller
 
 import util._
-import model.{Field, Status, Move}
+import model._
 import java.io.StringReader
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalactic.exceptions.NullArgumentException
 
 class ControllerSpec extends AnyWordSpec {
     val controller = Controller(new Field(3, 3, Status.Empty, 3))
@@ -16,18 +15,23 @@ class ControllerSpec extends AnyWordSpec {
             fieldWithMove.getCell(1, 0, 0) shouldBe true
             fieldWithMove.getCell(1, 0, 1) shouldBe false
         }
-        "notify its observers on change" in {
+        "notify its observers on change and update the game" in {
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
-                def update = bing = true
+                def update(e: Event) = bing = true
             val testObserver = TestObserver(controller)
 
             testObserver.bing shouldBe false
             controller.publish(controller.put, Move(1, 0, 0, true))
-            controller.gameEnd shouldBe false
+            controller.gameEnded shouldBe false
             testObserver.bing shouldBe true
+
+            controller.rowSize(2) should be (3)
+            controller.colSize(1, 0) should be (3)
+
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -42,6 +46,7 @@ class ControllerSpec extends AnyWordSpec {
                 "[points: 0]\n")
             controller.publish(controller.put, Move(1, 1, 1, true))
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -56,6 +61,7 @@ class ControllerSpec extends AnyWordSpec {
                 "[points: 0]\n")
             controller.publish(controller.put, Move(2, 0, 1, true))
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ‖   -   ¦   -   ¦\n" +
                 "¦   -   ‖   -   ¦   -   ¦\n" +
@@ -68,10 +74,13 @@ class ControllerSpec extends AnyWordSpec {
                 "O-------O-------O-------O\n\n" +
                 "Blues turn\n" +
                 "[points: 0]\n")
+            controller.currentPlayer should be("Blue")
             controller.publish(controller.put, Move(2, 0, 0, true))
             controller.publish(controller.put, Move(1, 1, 0, true))
-            controller.playerPoints should be(1)
+            controller.currentPoints should be(1)
+            controller.currentPlayer should be("Red")
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
@@ -90,6 +99,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 3, true))
             controller.publish(controller.put, Move(2, 0, 2, true))
             controller.toString should be(
+                "\n" +
                 "O=======O=======O=======O\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
@@ -102,11 +112,12 @@ class ControllerSpec extends AnyWordSpec {
                 "O-------O-------O-------O\n\n" +
                 "Greens turn\n" +
                 "[points: 2]\n")
+            controller.currentPlayer should be("Green")
             controller.publish(controller.put, Move(2, 1, 0, true))
             controller.publish(controller.put, Move(2, 1, 1, true))
             controller.publish(controller.put, Move(2, 1, 2, true))
             controller.publish(controller.put, Move(1, 2, 0, true))
-            controller.playerPoints should be(3)
+            controller.currentPoints should be(3)
             controller.publish(controller.put, Move(2, 1, 3, true))
             controller.publish(controller.put, Move(2, 2, 0, true))
             controller.publish(controller.put, Move(2, 2, 1, true))
@@ -117,8 +128,9 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(1, 3, 0, true))
             controller.publish(controller.put, Move(1, 3, 1, true))
             controller.publish(controller.put, Move(1, 3, 2, true))
-            controller.playerPoints should be(6)
+            controller.currentPoints should be(6)
             controller.toString should be(
+                "\n" +
                 "O=======O=======O=======O\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
@@ -132,7 +144,7 @@ class ControllerSpec extends AnyWordSpec {
                 "Reds turn\n" +
                 "[points: 6]\n")
 
-            controller.gameEnd shouldBe true
+            controller.gameEnded shouldBe true
             controller.winner should be("Player Red wins!")
             controller.stats should be(
                 "Player Blue [points: 0]\n" +
@@ -146,7 +158,7 @@ class ControllerSpec extends AnyWordSpec {
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
-                def update = bing = true
+                def update(e: Event) = bing = true
             val testObserver = TestObserver(controller)
             controller.publish(controller.put, Move(1, 0, 0, true))
             controller.publish(controller.put, Move(1, 1, 0, true))
@@ -163,13 +175,25 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.redo)
             controller.field.getCell(0, 0, 0) should be(Status.Red)
             controller.field.getCell(2, 0, 1) shouldBe true
+
+
+            controller.publish(controller.undo)
+            controller.publish(controller.undo)
+            controller.field.getCell(2, 0, 0) shouldBe false
+            controller.field.getCell(2, 0, 1) shouldBe false
+
+            controller.publish(controller.redo)
+            controller.publish(controller.redo)
+            controller.field.getCell(0, 0, 0) should be(Status.Red)
+            controller.field.getCell(2, 0, 0) shouldBe true
+            controller.field.getCell(2, 0, 1) shouldBe true
         }
         "deny wrong input" in {
             val controller = Controller(new Field(3, 3, Status.Empty, 2))
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
-                def update = bing = true
+                def update(e: Event) = bing = true
             val testObserver = TestObserver(controller)
             controller.publish(controller.put, Move(1, 0, 0, true))
             controller.publish(controller.put, Move(1, 1, 0, true))
@@ -181,6 +205,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 9, true))
             /* no change */
             controller.toString should be(
+                "\n" +
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
