@@ -16,7 +16,6 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.UIManager
 import javax.swing.border.LineBorder
-import java.awt.GridBagConstraints
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
@@ -101,17 +100,13 @@ class GUI(controller: Controller) extends Frame with Observer:
     def playerStats = new GridBagPanel {
         val color = colorStats
         background = color
-        val score = TextArea(controller.stats.split("\\s+").drop(1).mkString(" "))
+        val score = TextArea(controller.stats.replace("\n", "   |   ").replace("Player", ""))
         score.background = color
         score.font = Font("Comic Sans MS", 0, 17)
         score.foreground = colorFont
         score.editable = false
         val con = new Constraints
         con.anchor = Anchor.Center
-        val la = new Label{icon = menu}
-        //layout(la) = con
-        con.gridwidth = GridBagConstraints.REMAINDER
-        
         layout(score) = con}
 
     def playerResult = new FlowPanel {
