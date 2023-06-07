@@ -16,6 +16,7 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.UIManager
 import javax.swing.border.LineBorder
+import java.awt.GridBagConstraints
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
@@ -27,25 +28,26 @@ class GUI(controller: Controller) extends Frame with Observer:
     val colorFont = Color(60, 60, 60)
     val colorStats = Color(220, 220, 220)
 
-    val dot = ImageIcon(ImageIO.read(File("src/resources/0_Dot.png")))
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
-    val menu = ImageIcon(ImageIO.read(File("src/resources/0_Menu.png")))
-    val takenBar = ImageIcon(ImageIO.read(File("src/resources/1_BarTaken.png")))
-    val untakenBar = ImageIcon(ImageIO.read(File("src/resources/1_BarUntaken.png")))
-    val takenCol = ImageIcon(ImageIO.read(File("src/resources/1_ColTaken.png")))
-    val untakenCol = ImageIcon(ImageIO.read(File("src/resources/1_ColUntaken.png")))
-    val white = ImageIcon(ImageIO.read(File("src/resources/2_1TakenEmpty.png")))
-    val takenBlue = ImageIcon(ImageIO.read(File("src/resources/2_TakenBlue.png")))
-    val takenRed = ImageIcon(ImageIO.read(File("src/resources/2_TakenRed.png")))
-    val takenGreen = ImageIcon(ImageIO.read(File("src/resources/2_TakenGreen.png")))
-    val takenYellow = ImageIcon(ImageIO.read(File("src/resources/2_TakenYellow.png")))
-    val playerBlue = ImageIcon(ImageIO.read(File("src/resources/3_PlayerBlue.png")))
-    val playerRed = ImageIcon(ImageIO.read(File("src/resources/3_PlayerRed.png")))
-    val playerGreen = ImageIcon(ImageIO.read(File("src/resources/3_PlayerGreen.png")))
-    val playerYellow = ImageIcon(ImageIO.read(File("src/resources/3_PlayerYellow.png")))
+    val dot = ImageIcon("src/resources/0_Dot.png")
+    val menu = ImageIcon("src/resources/0_Menu.png")
+    val takenBar = ImageIcon("src/resources/1_BarTaken.png")
+    val untakenBar = ImageIcon("src/resources/1_BarUntaken.png")
+    val takenCol = ImageIcon("src/resources/1_ColTaken.png")
+    val untakenCol = ImageIcon("src/resources/1_ColUntaken.png")
+    val takenNone = ImageIcon("src/resources/2_1TakenEmpty.png")
+    val takenBlue = ImageIcon("src/resources/2_TakenBlue.png")
+    val takenRed = ImageIcon("src/resources/2_TakenRed.png")
+    val takenGreen = ImageIcon("src/resources/2_TakenGreen.png")
+    val takenYellow = ImageIcon("src/resources/2_TakenYellow.png")
+    val playerBlue = ImageIcon("src/resources/3_PlayerBlue.png")
+    val playerRed = ImageIcon("src/resources/3_PlayerRed.png")
+    val playerGreen = ImageIcon("src/resources/3_PlayerGreen.png")
+    val playerYellow = ImageIcon("src/resources/3_PlayerYellow.png")
 
     title = "Dots And Boxes"
     iconImage = logo
+    resizable = false
     menuBar = new MenuBar {
         contents += new Menu("") {
             icon = menu
@@ -72,13 +74,10 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     def revise(playerCondition: FlowPanel) = new BorderPanel {
         preferredSize = panalSize
-        resizable = false
         background = colorBackground
-        val player = playerCondition
-        val stats = playerStats
-        add(player, BorderPanel.Position.North)
+        add(playerCondition, BorderPanel.Position.North)
         add(CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
-        add(stats, BorderPanel.Position.South)}
+        add(playerStats, BorderPanel.Position.South)}
 
     def playerTurn = new FlowPanel {
         background = colorBackground
@@ -101,14 +100,18 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     def playerStats = new GridBagPanel {
         val color = colorStats
-        val score = TextArea(controller.stats.replace("\n", "   |   "))
-        val con = new Constraints
         background = color
+        val score = TextArea(controller.stats.split("\\s+").drop(1).mkString(" "))
         score.background = color
         score.font = Font("Comic Sans MS", 0, 17)
         score.foreground = colorFont
         score.editable = false
+        val con = new Constraints
         con.anchor = Anchor.Center
+        val la = new Label{icon = menu}
+        //layout(la) = con
+        con.gridwidth = GridBagConstraints.REMAINDER
+        
         layout(score) = con}
 
     def playerResult = new FlowPanel {
@@ -143,11 +146,11 @@ class GUI(controller: Controller) extends Frame with Observer:
         fieldBuilder
 
         private def fieldBuilder =
-            for (i <- 0 until y)
-                for (j <- 0 until x) bar(i, j)
+            (0 until y).foreach { i =>
+                (0 until x).foreach(bar(i, _))
                 contents += dotImg
-                for (j <- 0 until x + 1) cell(i, j)
-            for (j <- 0 until x) bar(y, j)
+                (0 to x).foreach(cell(i, _))}
+            (0 until x).foreach(bar(y, _))
             contents += dotImg
 
         private def bar(x: Int, y: Int) =
@@ -158,7 +161,7 @@ class GUI(controller: Controller) extends Frame with Observer:
             contents += CellButton(2, x, y, controller.get(2, x, y).toString.toBoolean)
             if(y != this.x) contents += new Label {
                 icon = controller.get(0, x, y).toString match
-                    case "-" => white
+                    case "-" => takenNone
                     case "B" => takenBlue
                     case "R" => takenRed
                     case "G" => takenGreen
@@ -179,10 +182,10 @@ class GUI(controller: Controller) extends Frame with Observer:
         icon = vec match
             case 1 => status match
                 case true => takenBar
-                case false => white
+                case false => takenNone
             case 2 => status match
                 case true => takenCol
-                case false => white
+                case false => takenNone
 
         listenTo(mouse.moves, mouse.clicks)
         reactions += {
@@ -199,4 +202,4 @@ class GUI(controller: Controller) extends Frame with Observer:
 
             case MouseExited(source) => status match
                 case true =>
-                case false => icon = white}
+                case false => icon = takenNone}
