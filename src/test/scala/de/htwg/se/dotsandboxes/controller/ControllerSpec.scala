@@ -15,7 +15,7 @@ class ControllerSpec extends AnyWordSpec {
             fieldWithMove.getCell(1, 0, 0) shouldBe true
             fieldWithMove.getCell(1, 0, 1) shouldBe false
         }
-        "notify its observers on change" in {
+        "notify its observers on change and update the game" in {
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
@@ -26,6 +26,10 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(1, 0, 0, true))
             controller.gameEnded shouldBe false
             testObserver.bing shouldBe true
+
+            controller.rowSize(2) should be (3)
+            controller.colSize(1, 0) should be (3)
+
             controller.toString should be(
                 "\n" +
                 "O=======O-------O-------O\n" +
@@ -70,9 +74,11 @@ class ControllerSpec extends AnyWordSpec {
                 "O-------O-------O-------O\n\n" +
                 "Blues turn\n" +
                 "[points: 0]\n")
+            controller.currentPlayer should be("Blue")
             controller.publish(controller.put, Move(2, 0, 0, true))
             controller.publish(controller.put, Move(1, 1, 0, true))
             controller.currentPoints should be(1)
+            controller.currentPlayer should be("Red")
             controller.toString should be(
                 "\n" +
                 "O=======O-------O-------O\n" +
@@ -106,6 +112,7 @@ class ControllerSpec extends AnyWordSpec {
                 "O-------O-------O-------O\n\n" +
                 "Greens turn\n" +
                 "[points: 2]\n")
+            controller.currentPlayer should be("Green")
             controller.publish(controller.put, Move(2, 1, 0, true))
             controller.publish(controller.put, Move(2, 1, 1, true))
             controller.publish(controller.put, Move(2, 1, 2, true))
@@ -167,6 +174,18 @@ class ControllerSpec extends AnyWordSpec {
 
             controller.publish(controller.redo)
             controller.field.getCell(0, 0, 0) should be(Status.Red)
+            controller.field.getCell(2, 0, 1) shouldBe true
+
+
+            controller.publish(controller.undo)
+            controller.publish(controller.undo)
+            controller.field.getCell(2, 0, 0) shouldBe false
+            controller.field.getCell(2, 0, 1) shouldBe false
+
+            controller.publish(controller.redo)
+            controller.publish(controller.redo)
+            controller.field.getCell(0, 0, 0) should be(Status.Red)
+            controller.field.getCell(2, 0, 0) shouldBe true
             controller.field.getCell(2, 0, 1) shouldBe true
         }
         "deny wrong input" in {
