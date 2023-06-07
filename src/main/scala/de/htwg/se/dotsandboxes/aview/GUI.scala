@@ -22,7 +22,7 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
-    val panalSize = new Dimension(850, 750)
+    val panelSize = new Dimension(850, 750)
     val colorBackground = Color(245, 245, 245)
     val colorFont = Color(60, 60, 60)
     val colorStats = Color(220, 220, 220)
@@ -72,7 +72,7 @@ class GUI(controller: Controller) extends Frame with Observer:
     override def closeOperation = controller.abort
 
     def revise(playerCondition: FlowPanel) = new BorderPanel {
-        preferredSize = panalSize
+        preferredSize = panelSize
         background = colorBackground
         add(playerCondition, BorderPanel.Position.North)
         add(CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
@@ -96,18 +96,6 @@ class GUI(controller: Controller) extends Frame with Observer:
         label.font = Font("Comic Sans MS", 0, 35)
         contents += label
     }
-
-    def playerStats = new GridBagPanel {
-        val color = colorStats
-        background = color
-        val score = TextArea(controller.stats.replace("\n", "   |   ").replace("Player", ""))
-        score.background = color
-        score.font = Font("Comic Sans MS", 0, 17)
-        score.foreground = colorFont
-        score.editable = false
-        val con = new Constraints
-        con.anchor = Anchor.Center
-        layout(score) = con}
 
     def playerResult = new FlowPanel {
         background = colorBackground
@@ -135,27 +123,39 @@ class GUI(controller: Controller) extends Frame with Observer:
             label.foreground = colorFont
             contents += label}
 
+    def playerStats = new GridBagPanel {
+        val color = colorStats
+        background = color
+        val score = TextArea(controller.stats.replace("\n", "   |   ").replace("Player", ""))
+        score.background = color
+        score.font = Font("Comic Sans MS", 0, 17)
+        score.foreground = colorFont
+        score.editable = false
+        val con = new Constraints
+        con.anchor = Anchor.Center
+        layout(score) = con}
+
 
     class CellPanel(x: Int, y: Int) extends GridPanel(gridSize._2, gridSize._1):
         opaque = false
         fieldBuilder
 
         private def fieldBuilder =
-            (0 until y).foreach { i =>
-                (0 until x).foreach(bar(i, _))
+            (0 until y).foreach { row =>
+                (0 until x).foreach(col => bar(row, col))
                 contents += dotImg
-                (0 to x).foreach(cell(i, _))}
-            (0 until x).foreach(bar(y, _))
+                (0 to x).foreach(col => cell(row, col))}
+            (0 until x).foreach(col => bar(y, col))
             contents += dotImg
 
-        private def bar(x: Int, y: Int) =
+        private def bar(row: Int, col: Int) =
             contents += dotImg
-            contents += CellButton(1, x, y, controller.get(1, x, y).toString.toBoolean)
+            contents += CellButton(1, row, col, controller.get(1, row, col).toString.toBoolean)
 
-        private def cell(x: Int, y: Int) =
-            contents += CellButton(2, x, y, controller.get(2, x, y).toString.toBoolean)
-            if(y != this.x) contents += new Label {
-                icon = controller.get(0, x, y).toString match
+        private def cell(row: Int, col: Int) =
+            contents += CellButton(2, row, col, controller.get(2, row, col).toString.toBoolean)
+            if(col != this.x) contents += new Label {
+                icon = controller.get(0, row, col).toString match
                     case "-" => takenNone
                     case "B" => takenBlue
                     case "R" => takenRed
