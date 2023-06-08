@@ -81,7 +81,7 @@ class GUI(controller: Controller) extends Frame with Observer:
     def playerTurn = new FlowPanel {
         background = colorBackground
         contents += new Label {
-            override def paintComponent(g: Graphics2D): Unit = {
+            override def paintComponent(g: Graphics2D) = {
                 g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
                 super.paintComponent(g)}
 
@@ -89,17 +89,15 @@ class GUI(controller: Controller) extends Frame with Observer:
                 case "Blue" => playerBlue
                 case "Red"  => playerRed
                 case "Green" => playerGreen
-                case "Yellow"  => playerYellow
-        }
+                case "Yellow"  => playerYellow}
         val label = Label(s" Turn [points: ${controller.currentPoints}]")
         label.foreground = colorFont
         label.font = Font("Comic Sans MS", 0, 35)
-        contents += label
-    }
+        contents += label}
 
     def playerResult = new FlowPanel {
         background = colorBackground
-        override def paintComponent(g: Graphics2D): Unit = {
+        override def paintComponent(g: Graphics2D) = {
             g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
             super.paintComponent(g)}
 
@@ -154,7 +152,7 @@ class GUI(controller: Controller) extends Frame with Observer:
 
         private def cell(row: Int, col: Int) =
             contents += CellButton(2, row, col, controller.get(2, row, col).toString.toBoolean)
-            if(col != this.x) contents += new Label {
+            if(col != x) contents += new Label {
                 icon = controller.get(0, row, col).toString match
                     case "-" => takenNone
                     case "B" => takenBlue
@@ -163,7 +161,7 @@ class GUI(controller: Controller) extends Frame with Observer:
                     case "Y" => takenYellow}
 
         private def dotImg = new Label {
-            override def paintComponent(g: Graphics2D): Unit = {
+            override def paintComponent(g: Graphics2D) = {
                 g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
                 super.paintComponent(g)} 
             icon = dot}
@@ -173,8 +171,9 @@ class GUI(controller: Controller) extends Frame with Observer:
         borderPainted = false
         focusPainted = false
         opaque = false
+        lineBuilder
 
-        icon = vec match
+        private def lineBuilder = icon = vec match
             case 1 => status match
                 case true => takenBar
                 case false => takenNone
