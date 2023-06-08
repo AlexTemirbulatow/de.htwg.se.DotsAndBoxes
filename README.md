@@ -53,7 +53,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             <br><br>
             You can press (q) to quit, (z) to undo and (y) to redo.
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesTUI.png" width="390" height="380"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesTUI.png"</a></td></tr>
 </table>
 
 ## Contributors
