@@ -16,6 +16,7 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.UIManager
 import javax.swing.border.LineBorder
+import java.awt.Graphics
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
@@ -61,7 +62,6 @@ class GUI(controller: Controller) extends Frame with Observer:
     menuBar.background = colorBackground
     update(Event.Move)
     centerOnScreen
-    pack
     open()
 
     override def update(event: Event): Unit = event match
@@ -70,6 +70,9 @@ class GUI(controller: Controller) extends Frame with Observer:
         case Event.Move  => contents = revise(playerTurn); repaint
 
     override def closeOperation = controller.abort
+
+    def renderHints(g: Graphics2D) =
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
 
     def revise(playerCondition: FlowPanel) = new BorderPanel {
         preferredSize = panelSize
@@ -81,15 +84,15 @@ class GUI(controller: Controller) extends Frame with Observer:
     def playerTurn = new FlowPanel {
         background = colorBackground
         contents += new Label {
-            override def paintComponent(g: Graphics2D) = {
-                g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
-                super.paintComponent(g)}
-
             icon = controller.currentPlayer.toString match
                 case "Blue" => playerBlue
                 case "Red"  => playerRed
                 case "Green" => playerGreen
-                case "Yellow"  => playerYellow}
+                case "Yellow"  => playerYellow
+            override def paintComponent(g: Graphics2D) =
+                renderHints(g)
+                super.paintComponent(g)}
+
         val label = Label(s" Turn [points: ${controller.currentPoints}]")
         label.foreground = colorFont
         label.font = Font("Comic Sans MS", 0, 35)
@@ -97,29 +100,28 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     def playerResult = new FlowPanel {
         background = colorBackground
-        override def paintComponent(g: Graphics2D) = {
-            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
-            super.paintComponent(g)}
-
         val fontType = Font("Comic Sans MS", 0, 35)
-        if controller.winner == "It's a draw!" then
-            contents += new Label {
+        controller.winner match
+            case "It's a draw!" => contents += new Label {
                 val label = Label(controller.winner)
                 label.font = fontType
                 label.foreground = colorFont
                 label.border = LineBorder(colorBackground, 10)
                 contents += label}
-        else 
-            contents += new Label {
+            case _ => contents += new Label {
                 icon = controller.winner.substring(7) match
                     case "Blue wins!" => playerBlue
                     case "Red wins!" => playerRed
                     case "Green wins!" => playerGreen
                     case "Yellow wins!" => playerYellow}
-            val label = Label(" wins!")
-            label.font = fontType
-            label.foreground = colorFont
-            contents += label}
+                val label = Label(" wins!")
+                label.font = fontType
+                label.foreground = colorFont
+                contents += label
+
+            override def paintComponent(g: Graphics2D) =
+            renderHints(g)
+            super.paintComponent(g)}
 
     def playerStats = new GridBagPanel {
         val color = colorStats
@@ -152,7 +154,7 @@ class GUI(controller: Controller) extends Frame with Observer:
 
         private def cell(row: Int, col: Int) =
             contents += CellButton(2, row, col, controller.get(2, row, col).toString.toBoolean)
-            if(col != x) contents += new Label {
+            if col != x then contents += new Label {
                 icon = controller.get(0, row, col).toString match
                     case "-" => takenNone
                     case "B" => takenBlue
@@ -161,39 +163,26 @@ class GUI(controller: Controller) extends Frame with Observer:
                     case "Y" => takenYellow}
 
         private def dotImg = new Label {
-            override def paintComponent(g: Graphics2D) = {
-                g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
-                super.paintComponent(g)} 
-            icon = dot}
+            icon = dot
+            override def paintComponent(g: Graphics2D) =
+                renderHints(g)
+                super.paintComponent(g)}
 
 
     class CellButton(vec: Int, x: Int, y: Int, status: Boolean) extends Button:
         borderPainted = false
         focusPainted = false
         opaque = false
-        lineBuilder
 
-        private def lineBuilder = icon = vec match
-            case 1 => status match
-                case true => takenBar
-                case false => takenNone
-            case 2 => status match
-                case true => takenCol
-                case false => takenNone
+        icon = vec match
+            case 1 => if status then takenBar else takenNone
+            case 2 => if status then takenCol else takenNone
 
         listenTo(mouse.moves, mouse.clicks)
         reactions += {
-            case MouseClicked(src, pt, mod, clicks, props) =>
+            case MouseClicked(source) =>
                 controller.publish(controller.put, Move(vec, x, y, true))
-
             case MouseEntered(source) => vec match
-                case 1 => status match
-                    case true =>
-                    case false => icon = untakenBar
-                case 2 => status match
-                    case true =>
-                    case false => icon = untakenCol
-
-            case MouseExited(source) => status match
-                case true =>
-                case false => icon = takenNone}
+                case 1 => if !status then icon = untakenBar
+                case 2 => if !status then icon = untakenCol
+            case MouseExited(source) => if !status then icon = takenNone}
