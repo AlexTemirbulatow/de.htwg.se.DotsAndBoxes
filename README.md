@@ -32,7 +32,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             The winner is the player with the most points. <br>
             It's a tie if two players got the same amount of points. 
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesGUI.png" width="390" height="380"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesGUI2.jpg" width="390" height="380"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
     <tr><td>To start the TUI game, a player size must be chosen. <br>
             The field size varies based on the player count.
