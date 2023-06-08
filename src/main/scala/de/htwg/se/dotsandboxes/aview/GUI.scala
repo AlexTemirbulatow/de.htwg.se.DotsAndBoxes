@@ -88,6 +88,7 @@ class GUI(controller: Controller) extends Frame with Observer:
                 case "Red"  => playerRed
                 case "Green" => playerGreen
                 case "Yellow"  => playerYellow
+
             override def paintComponent(g: Graphics2D) =
                 renderHints(g)
                 super.paintComponent(g)}
@@ -172,10 +173,12 @@ class GUI(controller: Controller) extends Frame with Observer:
         borderPainted = false
         focusPainted = false
         opaque = false
+        lineBuilder
 
-        icon = vec match
-            case 1 => if status then takenBar else takenNone
-            case 2 => if status then takenCol else takenNone
+        private def lineBuilder =
+            icon = vec match
+                case 1 => if status then takenBar else takenNone
+                case 2 => if status then takenCol else takenNone
 
         listenTo(mouse.moves, mouse.clicks)
         reactions += {
