@@ -23,7 +23,6 @@ class GUI(controller: Controller) extends Frame with Observer:
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
     val panelSize = new Dimension(850, 755)
-    val statsSize: (Int, Int) = (51, 50)
     val colorBackground = Color(245, 245, 245)
     val colorFont = Color(60, 60, 60)
     val colorStats = Color(220, 220, 220)
@@ -44,11 +43,10 @@ class GUI(controller: Controller) extends Frame with Observer:
     val playerRed = ImageIcon("src/resources/3_PlayerRed.png")
     val playerGreen = ImageIcon("src/resources/3_PlayerGreen.png")
     val playerYellow = ImageIcon("src/resources/3_PlayerYellow.png")
-
-    val statsBlue = ImageIcon(playerBlue.getImage.getScaledInstance(statsSize._1, statsSize._2, 0))
-    val statsRed = ImageIcon(playerRed.getImage.getScaledInstance(statsSize._1, statsSize._2, 0))
-    val statsGreen = ImageIcon(playerGreen.getImage.getScaledInstance(statsSize._1, statsSize._2, 0))
-    val statsYellow = ImageIcon(playerYellow.getImage.getScaledInstance(statsSize._1, statsSize._2, 0))
+    val statsBlue = ImageIcon("src/resources/4_StatsBlue.png")
+    val statsRed = ImageIcon("src/resources/4_StatsRed.png")
+    val statsGreen = ImageIcon("src/resources/4_StatsGreen.png")
+    val statsYellow = ImageIcon("src/resources/4_StatsYellow.png")
     
     title = "Dots And Boxes"
     iconImage = logo
@@ -133,7 +131,6 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     def playerStats: FlowPanel = new FlowPanel {
         background = colorStats
-
         contents ++= controller.playerList.map { player =>
             val label = new Label {
                 icon = player.playerId match
@@ -141,10 +138,9 @@ class GUI(controller: Controller) extends Frame with Observer:
                     case "Red" => statsRed
                     case "Green" => statsGreen
                     case "Yellow" => statsYellow}
-            val score = new Label(s"[points: ${player.points}]")
+            val score = new Label(s"[points: ${player.points}]  ")
             score.font = Font("Comic Sans MS", 0, 18)
             score.foreground = colorFont
-
             new FlowPanel(label, score) {background = colorStats}}
 
         override def paintComponent(g: Graphics2D) =
