@@ -23,9 +23,16 @@ class GUI(controller: Controller) extends Frame with Observer:
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
     val panelSize = new Dimension(850, 755)
-    val colorBackground = Color(245, 245, 245)
-    val colorFont = Color(60, 60, 60)
-    val colorStats = Color(220, 220, 220)
+
+    //lightmode
+    //val colorBackground = Color(245, 245, 245)
+    //val colorFont = Color(60, 60, 60)
+    //val colorStats = Color(220, 220, 220)
+
+    //darkmode
+    val colorBackground = Color(70, 70, 70)
+    val colorStats = Color(100, 100, 100)
+    val colorFont = Color(210, 210, 210)
 
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
     val dot = ImageIcon("src/resources/0_Dot.png")
