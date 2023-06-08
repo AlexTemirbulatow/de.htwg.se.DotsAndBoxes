@@ -16,7 +16,6 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.UIManager
 import javax.swing.border.LineBorder
-import java.awt.Graphics
 
 class GUI(controller: Controller) extends Frame with Observer:
     controller.add(this)
