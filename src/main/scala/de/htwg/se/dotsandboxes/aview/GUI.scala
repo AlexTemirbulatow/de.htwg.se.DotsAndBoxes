@@ -22,7 +22,11 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
-    val panelSize: Dimension = new Dimension(850, 755)
+    val panelSize: Dimension = new Dimension(830, 750)
+
+    val theme = if false 
+    then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60))  /*lightmode*/
+    else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210))  /*darkmode*/
 
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
     val dot = ImageIcon("src/resources/0_Dot.png")
@@ -56,12 +60,12 @@ class GUI(controller: Controller) extends Frame with Observer:
             contents += MenuItem(Action("Undo") { controller.publish(controller.undo) })
             contents += MenuItem(Action("Redo") { controller.publish(controller.redo) })
         }
+        override def paintComponent(g: Graphics2D) =
+            renderHints(g)
+            super.paintComponent(g)
     }
-    val theme = if false 
-        then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60))  /*lightmode*/
-        else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210))  /*darkmode*/
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
-    menuBar.border = Swing.EmptyBorder(0, 1, 0, 0)
+    menuBar.border = Swing.EmptyBorder(5, 10, 0, 0)
     menuBar.background = theme._1
     update(Event.Move)
     centerOnScreen
