@@ -22,10 +22,11 @@ class GUI(controller: Controller) extends Frame with Observer:
 
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
-    val panalSize = new Dimension(850, 750)
-    val colorBackground = Color(245, 245, 245)
-    val colorFont = Color(60, 60, 60)
-    val colorStats = Color(220, 220, 220)
+    val panelSize: Dimension = new Dimension(830, 750)
+
+    val theme = if false 
+    then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60))  /*lightmode*/
+    else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210))  /*darkmode*/
 
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
     val dot = ImageIcon("src/resources/0_Dot.png")
@@ -43,7 +44,11 @@ class GUI(controller: Controller) extends Frame with Observer:
     val playerRed = ImageIcon("src/resources/3_PlayerRed.png")
     val playerGreen = ImageIcon("src/resources/3_PlayerGreen.png")
     val playerYellow = ImageIcon("src/resources/3_PlayerYellow.png")
-
+    val statsBlue = ImageIcon("src/resources/4_StatsBlue.png")
+    val statsRed = ImageIcon("src/resources/4_StatsRed.png")
+    val statsGreen = ImageIcon("src/resources/4_StatsGreen.png")
+    val statsYellow = ImageIcon("src/resources/4_StatsYellow.png")
+    
     title = "Dots And Boxes"
     iconImage = logo
     resizable = false
@@ -55,13 +60,15 @@ class GUI(controller: Controller) extends Frame with Observer:
             contents += MenuItem(Action("Undo") { controller.publish(controller.undo) })
             contents += MenuItem(Action("Redo") { controller.publish(controller.redo) })
         }
+        override def paintComponent(g: Graphics2D) =
+            renderHints(g)
+            super.paintComponent(g)
     }
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName)
-    menuBar.border = Swing.EmptyBorder(0, 1, 0, 0)
-    menuBar.background = colorBackground
+    menuBar.border = Swing.EmptyBorder(5, 10, 0, 0)
+    menuBar.background = theme._1
     update(Event.Move)
     centerOnScreen
-    pack
     open()
 
     override def update(event: Event): Unit = event match
@@ -69,71 +76,81 @@ class GUI(controller: Controller) extends Frame with Observer:
         case Event.End   => contents = revise(playerResult); repaint
         case Event.Move  => contents = revise(playerTurn); repaint
 
-    override def closeOperation = controller.abort
+    override def closeOperation: Unit = controller.abort
 
-    def revise(playerCondition: FlowPanel) = new BorderPanel {
-        preferredSize = panalSize
-        background = colorBackground
-        add(playerCondition, BorderPanel.Position.North)
+    def renderHints(g: Graphics2D): Unit =
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+
+    def revise(playerState: FlowPanel): BorderPanel = new BorderPanel {
+        preferredSize = panelSize
+        background = theme._1
+        add(playerState, BorderPanel.Position.North)
         add(CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
-        add(playerStats, BorderPanel.Position.South)}
+        add(playerScoreboard, BorderPanel.Position.South)}
 
-    def playerTurn = new FlowPanel {
-        background = colorBackground
+
+    def playerTurn: FlowPanel = new FlowPanel {
+        background = theme._1
         contents += new Label {
-            override def paintComponent(g: Graphics2D): Unit = {
-                g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
-                super.paintComponent(g)}
-
             icon = controller.currentPlayer.toString match
                 case "Blue" => playerBlue
-                case "Red"  => playerRed
+                case "Red" => playerRed
                 case "Green" => playerGreen
-                case "Yellow"  => playerYellow
-        }
+                case "Yellow" => playerYellow}
         val label = Label(s" Turn [points: ${controller.currentPoints}]")
-        label.foreground = colorFont
+        label.foreground = theme._3
         label.font = Font("Comic Sans MS", 0, 35)
         contents += label
-    }
 
-    def playerStats = new GridBagPanel {
-        val color = colorStats
-        background = color
-        val score = TextArea(controller.stats.replace("\n", "   |   ").replace("Player", ""))
-        score.background = color
-        score.font = Font("Comic Sans MS", 0, 17)
-        score.foreground = colorFont
-        score.editable = false
-        val con = new Constraints
-        con.anchor = Anchor.Center
-        layout(score) = con}
-
-    def playerResult = new FlowPanel {
-        background = colorBackground
-        override def paintComponent(g: Graphics2D): Unit = {
-            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+        override def paintComponent(g: Graphics2D) =
+            renderHints(g)
             super.paintComponent(g)}
 
+
+    def playerResult: FlowPanel = new FlowPanel {
+        background = theme._1
         val fontType = Font("Comic Sans MS", 0, 35)
-        if controller.winner == "It's a draw!" then
-            contents += new Label {
+        controller.winner match
+            case "It's a draw!" => contents += new Label {
                 val label = Label(controller.winner)
                 label.font = fontType
-                label.foreground = colorFont
-                label.border = LineBorder(colorBackground, 10)
+                label.foreground = theme._3
+                label.border = LineBorder(theme._1, 10)
                 contents += label}
-        else 
-            contents += new Label {
+            case _ => contents += new Label {
                 icon = controller.winner.substring(7) match
                     case "Blue wins!" => playerBlue
                     case "Red wins!" => playerRed
                     case "Green wins!" => playerGreen
                     case "Yellow wins!" => playerYellow}
-            val label = Label(" wins!")
-            label.font = fontType
-            label.foreground = colorFont
-            contents += label}
+                val label = Label(" wins!")
+                label.font = fontType
+                label.foreground = theme._3
+                contents += label
+
+        override def paintComponent(g: Graphics2D) =
+            renderHints(g)
+            super.paintComponent(g)}
+
+
+    def playerScoreboard: FlowPanel = new FlowPanel {
+        background = theme._2
+        contents ++= controller.playerList.map { player =>
+            val label = new Label {
+                icon = player.playerId match
+                    case "Blue" => statsBlue
+                    case "Red" => statsRed
+                    case "Green" => statsGreen
+                    case "Yellow" => statsYellow}
+            val score = new Label(s"[points: ${player.points}]  ")
+            score.font = Font("Comic Sans MS", 0, 18)
+            score.foreground = theme._3
+            new FlowPanel(label, score) {background = theme._2}}
+
+        override def paintComponent(g: Graphics2D) =
+            renderHints(g)
+            super.paintComponent(g)}
+
 
 
     class CellPanel(x: Int, y: Int) extends GridPanel(gridSize._2, gridSize._1):
@@ -141,21 +158,21 @@ class GUI(controller: Controller) extends Frame with Observer:
         fieldBuilder
 
         private def fieldBuilder =
-            (0 until y).foreach { i =>
-                (0 until x).foreach(bar(i, _))
+            (0 until y).foreach { row =>
+                (0 until x).foreach(col => bar(row, col))
                 contents += dotImg
-                (0 to x).foreach(cell(i, _))}
-            (0 until x).foreach(bar(y, _))
+                (0 to x).foreach(col => cell(row, col))}
+            (0 until x).foreach(col => bar(y, col))
             contents += dotImg
 
-        private def bar(x: Int, y: Int) =
+        private def bar(row: Int, col: Int) =
             contents += dotImg
-            contents += CellButton(1, x, y, controller.get(1, x, y).toString.toBoolean)
+            contents += CellButton(1, row, col, controller.get(1, row, col).toString.toBoolean)
 
-        private def cell(x: Int, y: Int) =
-            contents += CellButton(2, x, y, controller.get(2, x, y).toString.toBoolean)
-            if(y != this.x) contents += new Label {
-                icon = controller.get(0, x, y).toString match
+        private def cell(row: Int, col: Int) =
+            contents += CellButton(2, row, col, controller.get(2, row, col).toString.toBoolean)
+            if col != x then contents += new Label {
+                icon = controller.get(0, row, col).toString match
                     case "-" => takenNone
                     case "B" => takenBlue
                     case "R" => takenRed
@@ -163,38 +180,33 @@ class GUI(controller: Controller) extends Frame with Observer:
                     case "Y" => takenYellow}
 
         private def dotImg = new Label {
-            override def paintComponent(g: Graphics2D): Unit = {
-                g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
-                super.paintComponent(g)} 
-            icon = dot}
+            icon = dot
+            override def paintComponent(g: Graphics2D) =
+                renderHints(g)
+                super.paintComponent(g)}
+
 
 
     class CellButton(vec: Int, x: Int, y: Int, status: Boolean) extends Button:
+        listenTo(mouse.moves, mouse.clicks)
         borderPainted = false
         focusPainted = false
         opaque = false
+        lineBuilder
 
-        icon = vec match
-            case 1 => status match
-                case true => takenBar
-                case false => takenNone
-            case 2 => status match
-                case true => takenCol
-                case false => takenNone
+        private def lineBuilder =
+            icon = vec match
+                case 1 => if status then takenBar else takenNone
+                case 2 => if status then takenCol else takenNone
 
-        listenTo(mouse.moves, mouse.clicks)
+        override def paintComponent(g: Graphics2D) =
+                renderHints(g)
+                super.paintComponent(g)
+
         reactions += {
-            case MouseClicked(src, pt, mod, clicks, props) =>
+            case MouseClicked(source) =>
                 controller.publish(controller.put, Move(vec, x, y, true))
-
             case MouseEntered(source) => vec match
-                case 1 => status match
-                    case true =>
-                    case false => icon = untakenBar
-                case 2 => status match
-                    case true =>
-                    case false => icon = untakenCol
-
-            case MouseExited(source) => status match
-                case true =>
-                case false => icon = takenNone}
+                case 1 => if !status then icon = untakenBar
+                case 2 => if !status then icon = untakenCol
+            case MouseExited(source) => if !status then icon = takenNone}

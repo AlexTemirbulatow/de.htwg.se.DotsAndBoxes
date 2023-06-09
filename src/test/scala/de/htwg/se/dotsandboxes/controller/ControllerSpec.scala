@@ -27,6 +27,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.gameEnded shouldBe false
             testObserver.bing shouldBe true
 
+            controller.playerList should be (Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red), Player("Green", 0, Status.Green)))
             controller.rowSize(2) should be (3)
             controller.colSize(1, 0) should be (3)
 
@@ -144,6 +145,7 @@ class ControllerSpec extends AnyWordSpec {
                 "Reds turn\n" +
                 "[points: 6]\n")
 
+            controller.playerList should be (Vector(Player("Blue", 0, Status.Blue), Player("Red", 6, Status.Red), Player("Green", 3, Status.Green)))
             controller.gameEnded shouldBe true
             controller.winner should be("Player Red wins!")
             controller.stats should be(

@@ -27,6 +27,7 @@ case class Controller(var field: Field) extends Observable:
 
   def colSize(row: Int = 0, col: Int = 0): Int = field.colSize(row, col)
   def rowSize(row: Int = 0): Int = field.rowSize(row)
+  def playerList: Vector[Player] = field.playerList
   def currentPlayer: String = field.currentPlayer
   def currentPoints: Int = field.currentPoints
   def gameEnded: Boolean = field.isFinished
