@@ -81,12 +81,12 @@ class GUI(controller: Controller) extends Frame with Observer:
     def renderHints(g: Graphics2D): Unit =
         g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
 
-    def revise(playerStatus: FlowPanel): BorderPanel = new BorderPanel {
+    def revise(playerState: FlowPanel): BorderPanel = new BorderPanel {
         preferredSize = panelSize
         background = theme._1
-        add(playerStatus, BorderPanel.Position.North)
+        add(playerState, BorderPanel.Position.North)
         add(CellPanel(fieldSize._1, fieldSize._2), BorderPanel.Position.Center)
-        add(playerStats, BorderPanel.Position.South)}
+        add(playerScoreboard, BorderPanel.Position.South)}
 
 
     def playerTurn: FlowPanel = new FlowPanel {
@@ -133,7 +133,7 @@ class GUI(controller: Controller) extends Frame with Observer:
             super.paintComponent(g)}
 
 
-    def playerStats: FlowPanel = new FlowPanel {
+    def playerScoreboard: FlowPanel = new FlowPanel {
         background = theme._2
         contents ++= controller.playerList.map { player =>
             val label = new Label {
