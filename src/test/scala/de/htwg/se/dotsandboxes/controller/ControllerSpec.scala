@@ -32,7 +32,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.colSize(1, 0) should be (3)
 
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -44,10 +44,11 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Reds turn\n" +
-                "[points: 0]\n")
+                "[points: 0]\n\n" +
+                "Your Move <Line><X><Y>: ")
             controller.publish(controller.put, Move(1, 1, 1, true))
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "¦   -   ¦   -   ¦   -   ¦\n" +
@@ -59,10 +60,11 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Greens turn\n" +
-                "[points: 0]\n")
+                "[points: 0]\n\n" +
+                "Your Move <Line><X><Y>: ")
             controller.publish(controller.put, Move(2, 0, 1, true))
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O-------O-------O\n" +
                 "¦   -   ‖   -   ¦   -   ¦\n" +
                 "¦   -   ‖   -   ¦   -   ¦\n" +
@@ -74,14 +76,15 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Blues turn\n" +
-                "[points: 0]\n")
+                "[points: 0]\n\n" +
+                "Your Move <Line><X><Y>: ")
             controller.currentPlayer should be("Blue")
             controller.publish(controller.put, Move(2, 0, 0, true))
             controller.publish(controller.put, Move(1, 1, 0, true))
             controller.currentPoints should be(1)
             controller.currentPlayer should be("Red")
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
@@ -93,14 +96,15 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Reds turn\n" +
-                "[points: 1]\n")
+                "[points: 1]\n\n" +
+                "Your Move <Line><X><Y>: ")
             controller.publish(controller.put, Move(1, 0, 1, true))
             controller.publish(controller.put, Move(1, 0, 2, true))
             controller.publish(controller.put, Move(1, 1, 2, true))
             controller.publish(controller.put, Move(2, 0, 3, true))
             controller.publish(controller.put, Move(2, 0, 2, true))
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O=======O=======O\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
@@ -112,7 +116,8 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Greens turn\n" +
-                "[points: 2]\n")
+                "[points: 2]\n\n" +
+                "Your Move <Line><X><Y>: ")
             controller.currentPlayer should be("Green")
             controller.publish(controller.put, Move(2, 1, 0, true))
             controller.publish(controller.put, Move(2, 1, 1, true))
@@ -131,7 +136,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(1, 3, 2, true))
             controller.currentPoints should be(6)
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O=======O=======O\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
                 "‖   R   ‖   G   ‖   G   ‖\n" +
@@ -143,7 +148,7 @@ class ControllerSpec extends AnyWordSpec {
                 "‖   R   ‖   R   ‖   R   ‖\n" +
                 "O=======O=======O=======O\n\n" +
                 "Reds turn\n" +
-                "[points: 6]\n")
+                "[points: 6]\n\n")
 
             controller.playerList should be (Vector(Player("Blue", 0, Status.Blue), Player("Red", 6, Status.Red), Player("Green", 3, Status.Green)))
             controller.gameEnded shouldBe true
@@ -202,12 +207,12 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 0, true))
             controller.publish(controller.put, Move(2, 0, 1, true))
             /* wrong inputs */
-            controller.publish(controller.put, Move(4, 0, 0, true))
+            controller.publish(controller.put, Move(4, 0, 0, true)) 
             controller.publish(controller.put, Move(1, 9, 0, true))
             controller.publish(controller.put, Move(2, 0, 9, true))
             /* no change */
             controller.toString should be(
-                "\n" +
+                "\n\n" +
                 "O=======O-------O-------O\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
                 "‖   R   ‖   -   ¦   -   ¦\n" +
@@ -219,7 +224,8 @@ class ControllerSpec extends AnyWordSpec {
                 "¦   -   ¦   -   ¦   -   ¦\n" +
                 "O-------O-------O-------O\n\n" +
                 "Reds turn\n" +
-                "[points: 1]\n")
+                "[points: 1]\n\n" +
+                "Your Move <Line><X><Y>: ")
         }
         "create different fields based on player size input" in {
             Console.withIn(StringReader("2")) {
