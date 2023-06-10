@@ -38,7 +38,7 @@ case class Controller(var field: Field) extends Observable:
     field = doThis
     notifyObservers(Event.Move)
   def publish(doThis: Move => Field, move: Move): Unit = moveCheck_Line.handle(move, field) match
-    case Failure(exception) => println(exception.getMessage.dropRight(28))
+    case Failure(exception) => print(exception.getMessage.dropRight(28))
     case Success(value) =>
       field = doThis(move)
       val preStatus = field.currentStatus
@@ -48,4 +48,7 @@ case class Controller(var field: Field) extends Observable:
       notifyObservers(Event.Move)
       if gameEnded then notifyObservers(Event.End)
 
-  override def toString = s"\n${field.toString}\n${currentPlayer}s turn\n[points: ${currentPoints}]\n"
+  override def toString: String =
+    def moveString: String = if !gameEnded then "Your Move <Line><X><Y>: " else ""
+    s"\n\n${field.toString}\n${currentPlayer}s turn\n[points: ${currentPoints}]\n\n${moveString}"
+  

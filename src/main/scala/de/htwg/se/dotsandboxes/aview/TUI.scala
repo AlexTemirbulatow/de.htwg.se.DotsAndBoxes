@@ -7,11 +7,12 @@ import model.Move
 import util.{Observer, Event}
 import scala.util.{Try, Success, Failure}
 
+
 class TUI(controller: Controller) extends Template(controller):
     override def update(e: Event): Unit = e match
         case Event.Abort => sys.exit
-        case Event.End   => println(finalStats)
-        case Event.Move  => println(controller.toString)
+        case Event.End   => print(finalStats)
+        case Event.Move  => print(controller.toString)
 
     override def gameLoop: Unit =
         analyseInput(readLine) match
@@ -28,17 +29,18 @@ class TUI(controller: Controller) extends Template(controller):
             chars.size match
                 case 3 => checkSyntax(chars(0), chars(1), chars(2)) match
                     case Success(move) => Some(Move(move(0), move(1), move(2), true))
-                    case Failure(_)    => println(syntaxErr); None
-                case _ => println(syntaxErr); None
+                    case Failure(_)    => print(syntaxErr); None
+                case _ => print(syntaxErr); None
 
     override def checkSyntax(vec: Char, x: Char, y: Char): Try[(Int, Int, Int)] =
         Try(vec.toString.toInt, x.toString.toInt, y.toString.toInt)
 
     override def finalStats: String =
+        "\n" +
         controller.winner + "\n" +
         "_________________________" + "\n\n" +
         controller.stats +
         "\n"
 
     override def syntaxErr: String =
-        "Incorrect syntax. Try again:"
+        "\nIncorrect syntax. Try again: "
