@@ -10,6 +10,16 @@ import scala.util.{Try, Success, Failure}
 trait Template(controller: Controller) extends Observer:
     controller.add(this)
     def run: Unit =
+        println(
+            "----------------------------------\n" +
+            "| Welcome to Dots And Boxes TUI! |\n" +
+            "----------------------------------\n")
+        println(
+            "--Note\n" +
+            "A move consists of a:\n\n" +
+            "<Line> index: (1) for horizontally (2) for vertically\n" +
+            "<X> coordinate: starting at (0)\n" +
+            "<Y> coordinate: starting at (0)")
         update(Event.Move)
         gameLoop
     def gameLoop: Unit
