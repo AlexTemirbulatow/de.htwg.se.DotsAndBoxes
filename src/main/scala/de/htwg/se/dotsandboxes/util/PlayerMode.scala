@@ -1,9 +1,9 @@
 package de.htwg.se.dotsandboxes
 package util
 
-import controller.Controller
-import model.{Field, Status}
 import scala.io.StdIn.readLine
+
+import model.fieldComponent.fieldImpl.{Field, Move, Status}
 
 /* strategy pattern */
 object PlayerMode:

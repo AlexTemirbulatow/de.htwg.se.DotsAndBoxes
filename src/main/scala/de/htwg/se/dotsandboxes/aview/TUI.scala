@@ -2,14 +2,14 @@ package de.htwg.se.dotsandboxes
 package aview
 
 import scala.io.StdIn.readLine
-import controller.Controller
-import model.Move
-import util.{Observer, Event}
 import scala.util.{Try, Success, Failure}
 
+import util.Event
+import model.fieldComponent.fieldImpl.Move
+import controller.controllerComponent.ControllerInterface
 
-class TUI(controller: Controller) extends Template(controller):
-    override def update(e: Event): Unit = e match
+class TUI(controller: ControllerInterface) extends Template(controller):
+    override def update(event: Event): Unit = event match
         case Event.Abort => sys.exit
         case Event.End   => print(finalStats)
         case Event.Move  => print(controller.toString)

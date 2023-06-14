@@ -1,4 +1,4 @@
-package de.htwg.se.dotsandboxes.model
+package de.htwg.se.dotsandboxes.model.fieldComponent.fieldImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._

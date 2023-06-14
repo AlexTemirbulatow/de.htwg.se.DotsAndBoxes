@@ -1,11 +1,14 @@
 package de.htwg.se.dotsandboxes
-package controller
+package controller.controllerComponent.controllerImpl
+
+import java.io.StringReader
 
 import util._
-import model._
-import java.io.StringReader
+import model.fieldComponent.fieldImpl.{Field, Move, Status, Player}
+
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+
 
 class ControllerSpec extends AnyWordSpec {
     val controller = Controller(new Field(3, 3, Status.Empty, 3))
