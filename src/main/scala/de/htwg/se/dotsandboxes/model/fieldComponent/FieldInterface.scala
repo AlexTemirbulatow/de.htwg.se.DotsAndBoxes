@@ -3,7 +3,6 @@ package de.htwg.se.dotsandboxes.model.fieldComponent
 import fieldImpl.{Move, Player, Matrix}
 
 trait FieldInterface:
-    
     def bar(length: Int = 7, cellNum: Int = 5, rowIndex: Int): String
     def cells(rowSize: Int, length: Int = 7, height: Int = 2): String
     def mesh(length: Int = 7, height: Int = 2): String

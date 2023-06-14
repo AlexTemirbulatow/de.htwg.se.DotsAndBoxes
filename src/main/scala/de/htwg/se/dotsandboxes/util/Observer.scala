@@ -1,6 +1,6 @@
-package de.htwg.se.dotsandboxes
-package util
+package de.htwg.se.dotsandboxes.util
 
+/*observer pattern*/
 trait Observer { def update(event: Event): Unit }
 
 trait Observable:

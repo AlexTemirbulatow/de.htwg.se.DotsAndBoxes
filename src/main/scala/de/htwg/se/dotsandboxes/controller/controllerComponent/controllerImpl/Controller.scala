@@ -51,4 +51,3 @@ case class Controller(var field: FieldInterface) extends ControllerInterface:
   override def toString: String =
     def moveString: String = if !gameEnded then "Your Move <Line><X><Y>: " else ""
     s"\n\n${field.toString}\n${currentPlayer}s turn\n[points: ${currentPoints}]\n\n${moveString}"
-  
