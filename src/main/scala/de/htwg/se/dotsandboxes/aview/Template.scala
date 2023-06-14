@@ -17,7 +17,7 @@ trait Template(controller: ControllerInterface) extends Observer:
             "----------------------------------\n")
         println(
             "--Note\n" +
-            "A move consists of a:\n\n" +
+            "A move consists of:\n\n" +
             "<Line> index: (1) for horizontally (2) for vertically\n" +
             "<X> coordinate: starting at (0)\n" +
             "<Y> coordinate: starting at (0)")

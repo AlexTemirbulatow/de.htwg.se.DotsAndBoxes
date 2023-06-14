@@ -1,7 +1,7 @@
 package de.htwg.se.dotsandboxes
 package util
 
-import playerState._
+import playerState.{AddOnePoint, AddTwoPoints, NextPlayer}
 import model.fieldComponent.FieldInterface
 
 /* stratagy pattern */

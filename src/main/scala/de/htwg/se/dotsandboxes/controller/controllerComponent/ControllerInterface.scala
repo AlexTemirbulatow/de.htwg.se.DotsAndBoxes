@@ -1,9 +1,9 @@
 package de.htwg.se.dotsandboxes
 package controller.controllerComponent
 
-import util._
-import model.fieldComponent.fieldImpl.{Move, Player}
+import util.Observable
 import model.fieldComponent.FieldInterface
+import model.fieldComponent.fieldImpl.{Move, Player}
 
 trait ControllerInterface extends Observable:
     def put(move: Move): FieldInterface

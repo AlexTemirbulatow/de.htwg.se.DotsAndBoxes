@@ -1,8 +1,8 @@
 package de.htwg.se.dotsandboxes
 package util.moveState
 
-import model.fieldComponent.FieldInterface
 import model.fieldComponent.fieldImpl.Move
+import model.fieldComponent.FieldInterface
 
 object MidState extends MoveState:
     override def handle(move: Move, field: FieldInterface): FieldInterface =

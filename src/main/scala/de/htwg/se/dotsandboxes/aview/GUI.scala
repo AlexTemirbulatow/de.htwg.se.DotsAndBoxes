@@ -5,8 +5,8 @@ import util.{Observer, Event}
 import model.fieldComponent.fieldImpl.Move
 import controller.controllerComponent.ControllerInterface
 
-import scala.swing.*
-import scala.swing.event.*
+import scala.swing._
+import scala.swing.event._
 import scala.swing.GridBagPanel.Anchor
 import java.io.File
 import java.awt.Color

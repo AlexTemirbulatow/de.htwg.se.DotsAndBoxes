@@ -1,7 +1,7 @@
 package de.htwg.se.dotsandboxes
 package util
 
-import moveState._
+import moveState.{EdgeState, MidState}
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 

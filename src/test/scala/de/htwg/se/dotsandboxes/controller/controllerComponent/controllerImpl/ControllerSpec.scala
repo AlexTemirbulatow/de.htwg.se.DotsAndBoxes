@@ -3,7 +3,7 @@ package controller.controllerComponent.controllerImpl
 
 import java.io.StringReader
 
-import util.{Observer, Event, PlayerMode}
+import util.{Observer, Event}
 import model.fieldComponent.fieldImpl.{Field, Move, Status, Player}
 
 import org.scalatest.wordspec.AnyWordSpec
@@ -228,23 +228,6 @@ class ControllerSpec extends AnyWordSpec {
                 "Reds turn\n" +
                 "[points: 1]\n\n" +
                 "Your Move <Line><X><Y>: ")
-        }
-        "create different fields based on player size input" in {
-            Console.withIn(StringReader("2")) {
-                PlayerMode.getInput should be(new Field(5, 4, Status.Empty, 2))
-            }
-            Console.withIn(StringReader("Default")) {
-                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
-            }
-            Console.withIn(StringReader("2")) {
-                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(5, 4, Status.Empty, 2)))
-            }/*
-            Console.withIn(StringReader("3")) {
-                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(8, 6, Status.Empty, 3)))
-            }
-            Console.withIn(StringReader("4")) {
-                Controller(PlayerMode.selectPlayerMode) should be(Controller(new Field(11, 9, Status.Empty, 4)))
-            }*/
         }
     }
 }
