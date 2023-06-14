@@ -1,4 +1,5 @@
-package de.htwg.se.dotsandboxes.model.fieldComponent.fieldImpl
+package de.htwg.se.dotsandboxes.model.matrixComponent
+package matrixImpl
 
 case class PlayerList(playerList: Vector[Player]):
     def this(playerSize: Int = 2) = this(Vector.tabulate(playerSize)(x => list(x)))

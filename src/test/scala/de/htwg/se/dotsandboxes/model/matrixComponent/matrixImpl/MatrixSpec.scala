@@ -1,7 +1,10 @@
-package de.htwg.se.dotsandboxes.model.fieldComponent.fieldImpl
+package de.htwg.se.dotsandboxes.model
+package matrixComponent.matrixImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
+
+import fieldComponent.fieldImpl.Move
 
 class MatrixSpec extends AnyWordSpec {
     "A Matrix" when {

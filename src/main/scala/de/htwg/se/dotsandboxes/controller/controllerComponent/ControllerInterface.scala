@@ -3,7 +3,9 @@ package controller.controllerComponent
 
 import util.Observable
 import model.fieldComponent.FieldInterface
-import model.fieldComponent.fieldImpl.{Move, Player}
+import model.fieldComponent.fieldImpl.Move
+import model.matrixComponent.matrixImpl.Player
+
 
 trait ControllerInterface extends Observable:
     def put(move: Move): FieldInterface

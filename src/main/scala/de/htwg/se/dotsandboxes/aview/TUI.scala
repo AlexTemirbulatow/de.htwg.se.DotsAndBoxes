@@ -4,11 +4,13 @@ package aview
 import scala.io.StdIn.readLine
 import scala.util.{Try, Success, Failure}
 
+import Default.given
+
 import util.Event
 import model.fieldComponent.fieldImpl.Move
 import controller.controllerComponent.ControllerInterface
 
-class TUI(controller: ControllerInterface) extends Template(controller):
+class TUI(using controller: ControllerInterface) extends Template(controller):
     override def update(event: Event): Unit = event match
         case Event.Abort => sys.exit
         case Event.End   => print(finalStats)
