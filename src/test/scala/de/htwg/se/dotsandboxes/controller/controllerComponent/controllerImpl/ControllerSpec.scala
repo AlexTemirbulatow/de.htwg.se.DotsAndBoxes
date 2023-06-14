@@ -9,6 +9,7 @@ import model.fieldComponent.fieldImpl.{Field, Move, Status, Player}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
+
 class ControllerSpec extends AnyWordSpec {
     val controller = Controller(new Field(3, 3, Status.Empty, 3))
     "The Controller" should {
