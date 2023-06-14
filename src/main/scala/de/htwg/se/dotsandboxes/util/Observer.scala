@@ -1,13 +1,13 @@
-package de.htwg.se.dotsandboxes
-package util
+package de.htwg.se.dotsandboxes.util
 
-trait Observer { def update(e: Event): Unit }
+/*observer pattern*/
+trait Observer { def update(event: Event): Unit }
 
 trait Observable:
   var subscribers: Vector[Observer] = Vector()
-  def add(s: Observer) = subscribers = subscribers :+ s
-  def remove(s: Observer) = subscribers = subscribers.filterNot(o => o == s)
-  def notifyObservers(e: Event) = subscribers.foreach(o => o.update(e))
+  def add(newSub: Observer) = subscribers = subscribers :+ newSub
+  def remove(oldSub: Observer) = subscribers = subscribers.filterNot(o => o == oldSub)
+  def notifyObservers(event: Event) = subscribers.foreach(o => o.update(event))
 
 enum Event:
   case Abort

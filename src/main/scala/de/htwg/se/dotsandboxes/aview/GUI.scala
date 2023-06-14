@@ -1,12 +1,12 @@
 package de.htwg.se.dotsandboxes
 package aview
 
-import controller.Controller
-import model.Move
 import util.{Observer, Event}
+import model.fieldComponent.fieldImpl.Move
+import controller.controllerComponent.ControllerInterface
 
-import scala.swing.*
-import scala.swing.event.*
+import scala.swing._
+import scala.swing.event._
 import scala.swing.GridBagPanel.Anchor
 import java.io.File
 import java.awt.Color
@@ -17,7 +17,7 @@ import javax.swing.ImageIcon
 import javax.swing.UIManager
 import javax.swing.border.LineBorder
 
-class GUI(controller: Controller) extends Frame with Observer:
+class GUI(controller: ControllerInterface) extends Frame with Observer:
     controller.add(this)
 
     val fieldSize: (Int, Int) = (controller.colSize(1, 0), controller.rowSize(2))

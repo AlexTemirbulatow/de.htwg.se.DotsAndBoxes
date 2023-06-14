@@ -1,13 +1,14 @@
 package de.htwg.se.dotsandboxes
 package aview
 
+import scala.util.Try
+
 import util.{Observer, Event}
-import controller.Controller
-import model.Move
-import scala.util.{Try, Success, Failure}
+import model.fieldComponent.fieldImpl.Move
+import controller.controllerComponent.ControllerInterface
 
 /* template pattern */
-trait Template(controller: Controller) extends Observer:
+trait Template(controller: ControllerInterface) extends Observer:
     controller.add(this)
     def run: Unit =
         println(
@@ -16,7 +17,7 @@ trait Template(controller: Controller) extends Observer:
             "----------------------------------\n")
         println(
             "--Note\n" +
-            "A move consists of a:\n\n" +
+            "A move consists of:\n\n" +
             "<Line> index: (1) for horizontally (2) for vertically\n" +
             "<X> coordinate: starting at (0)\n" +
             "<Y> coordinate: starting at (0)")
