@@ -3,6 +3,7 @@ package util
 
 import model.fieldComponent.FieldInterface
 
+
 /*command pattern*/
 trait Command:
   def doStep(field: FieldInterface): FieldInterface
