@@ -1,12 +1,11 @@
 package de.htwg.se.dotsandboxes.model
 package matrixComponent.matrixImpl
 
-import com.google.inject.Inject
-
 import fieldComponent.fieldImpl.Move
 import matrixComponent.MatrixInterface
 
-case class Matrix[T] @Inject (vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]], vecCol: Vector[Vector[Any]], list: Vector[Player], currentPlayer: Player) extends MatrixInterface[T]:
+
+case class Matrix[T] (vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]], vecCol: Vector[Vector[Any]], list: Vector[Player], currentPlayer: Player) extends MatrixInterface[T]:
   def this(rowSize: Int, colSize: Int, status: Any, playerSize: Int = 2) =
     this(Vector.tabulate(colSize, rowSize) {(_, _) => status},
     Vector.tabulate (colSize + 1, rowSize) {(_, _) =>  false},
