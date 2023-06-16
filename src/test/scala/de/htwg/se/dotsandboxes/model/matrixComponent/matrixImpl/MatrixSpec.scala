@@ -6,6 +6,7 @@ import org.scalatest.matchers.should.Matchers._
 
 import fieldComponent.fieldImpl.Move
 
+
 class MatrixSpec extends AnyWordSpec {
     "A Matrix" when {
         "initialized" should {
