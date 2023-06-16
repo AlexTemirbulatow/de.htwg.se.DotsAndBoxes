@@ -4,6 +4,7 @@ package fieldComponent
 import matrixComponent.MatrixInterface
 import matrixComponent.matrixImpl.Player
 
+
 trait FieldInterface:
     def bar(length: Int = 7, cellNum: Int = 5, rowIndex: Int): String
     def cells(rowSize: Int, length: Int = 7, height: Int = 2): String
