@@ -6,6 +6,7 @@ import org.scalatest.matchers.should.Matchers._
 
 import matrixComponent.matrixImpl.{Matrix, Player, Status}
 
+
 class FieldSpec extends AnyWordSpec {
 
     "A Dots and Boxes Field" when {
