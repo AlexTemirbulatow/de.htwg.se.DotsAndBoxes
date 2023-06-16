@@ -8,5 +8,5 @@ import controller.controllerComponent.controllerImpl.Controller
 
 
 object Default:
-    given FieldInterface = new Field(5, 4, Status.Empty, 4)
+    given FieldInterface = new Field(5, 4, Status.Empty, 2)
     given ControllerInterface = Controller()
