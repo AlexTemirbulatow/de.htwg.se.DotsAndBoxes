@@ -11,8 +11,8 @@ import model.fieldComponent.FieldInterface
 import model.fieldComponent.fieldImpl.Move
 import model.matrixComponent.matrixImpl.Player
 
-class Controller(using var field: FieldInterface) extends ControllerInterface:
 
+class Controller(using var field: FieldInterface) extends ControllerInterface:
   /* setup chain */
   val moveCheck_Available = CheckAvailable(None)
   val moveCheck_Y = CheckY(Some(moveCheck_Available))
