@@ -4,6 +4,7 @@ package matrixComponent.matrixImpl
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
+
 class PlayerSpex extends AnyWordSpec {
     "Player" when {
         "accessing list" should {
