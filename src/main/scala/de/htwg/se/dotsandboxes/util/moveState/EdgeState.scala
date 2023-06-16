@@ -4,6 +4,7 @@ package util.moveState
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 
+
 object EdgeState extends MoveState:
     override def handle(move: Move, field: FieldInterface): FieldInterface =
         def downCase(x: Int, y: Int) = field.checkSquare("downcase", x, y)
