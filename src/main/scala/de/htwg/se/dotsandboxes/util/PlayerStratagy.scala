@@ -4,6 +4,7 @@ package util
 import playerState.{AddOnePoint, AddTwoPoints, NextPlayer}
 import model.fieldComponent.FieldInterface
 
+
 /* stratagy pattern */
 object PlayerStratagy:
   def updatePlayer(field: FieldInterface, preStatus: Vector[Vector[Any]], postStatus: Vector[Vector[Any]]): FieldInterface =
