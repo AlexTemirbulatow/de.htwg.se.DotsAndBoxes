@@ -3,6 +3,7 @@ package matrixComponent
 
 import fieldComponent.fieldImpl.Move
 
+
 trait MatrixInterface[T]:
   val maxPosX: Int
   val maxPosY: Int
