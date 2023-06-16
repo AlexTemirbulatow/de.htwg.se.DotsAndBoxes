@@ -1,8 +1,6 @@
 package de.htwg.se.dotsandboxes
 package controller.controllerComponent.controllerImpl
 
-import java.io.StringReader
-
 import util.{Observer, Event}
 import model.fieldComponent.fieldImpl.{Field, Move}
 import model.matrixComponent.matrixImpl.{Status, Player}
@@ -161,7 +159,7 @@ class ControllerSpec extends AnyWordSpec {
                 "Player Blue [points: 0]\n" +
                 "Player Red [points: 6]\n" +
                 "Player Green [points: 3]")
-            
+
             controller.remove(testObserver)
         }
         "be able to undo and redo" in {
