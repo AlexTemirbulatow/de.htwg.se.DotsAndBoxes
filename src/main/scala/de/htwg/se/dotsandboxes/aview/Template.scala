@@ -7,6 +7,7 @@ import util.{Observer, Event}
 import model.fieldComponent.fieldImpl.Move
 import controller.controllerComponent.ControllerInterface
 
+
 /* template pattern */
 trait Template(controller: ControllerInterface) extends Observer:
     controller.add(this)

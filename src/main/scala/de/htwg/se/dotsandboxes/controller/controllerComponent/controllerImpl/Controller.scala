@@ -4,12 +4,15 @@ package controllerImpl
 
 import scala.util.{Success, Failure}
 
+import Default.given
+
 import util._
 import model.fieldComponent.FieldInterface
-import model.fieldComponent.fieldImpl.{Move, Player}
+import model.fieldComponent.fieldImpl.Move
+import model.matrixComponent.matrixImpl.Player
 
-case class Controller(var field: FieldInterface) extends ControllerInterface:
 
+class Controller(using var field: FieldInterface) extends ControllerInterface:
   /* setup chain */
   val moveCheck_Available = CheckAvailable(None)
   val moveCheck_Y = CheckY(Some(moveCheck_Available))

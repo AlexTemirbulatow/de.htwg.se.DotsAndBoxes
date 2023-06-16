@@ -3,6 +3,7 @@ package de.htwg.se.dotsandboxes.model.fieldComponent.fieldImpl
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
+
 class ConnectorsSpec extends AnyWordSpec {
     "Connectores" when {
         "accessing" should {

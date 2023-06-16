@@ -3,6 +3,7 @@ package de.htwg.se.dotsandboxes.model.fieldComponent.fieldImpl
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
+
 class MoveSpec extends AnyWordSpec {
     "A Move" should {
         "have a vector index, x and y coordinate and a status" in {

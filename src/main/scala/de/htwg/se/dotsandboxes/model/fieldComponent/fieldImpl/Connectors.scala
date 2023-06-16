@@ -1,5 +1,6 @@
 package de.htwg.se.dotsandboxes.model.fieldComponent.fieldImpl
 
+
 /*factory pattern*/
 trait Connectors:
   val stringRepresentation: String

@@ -1,6 +1,9 @@
-package de.htwg.se.dotsandboxes.model.fieldComponent
+package de.htwg.se.dotsandboxes.model
+package fieldComponent
 
-import fieldImpl.{Move, Player, Matrix}
+import matrixComponent.MatrixInterface
+import matrixComponent.matrixImpl.Player
+
 
 trait FieldInterface:
     def bar(length: Int = 7, cellNum: Int = 5, rowIndex: Int): String
@@ -14,7 +17,7 @@ trait FieldInterface:
     def getCell(vecIndex: Int, x: Int, y: Int): Any
     def putCell(vecIndex: Int, x: Int, y: Int, status: Any): FieldInterface
     def isFinished: Boolean
-    def isEdge(move: Move): Boolean
+    def isEdge(move: fieldImpl.Move): Boolean
     def checkSquare(thisCase: String, x: Int, y: Int): FieldInterface
     def currentPlayer: String
     def currentStatus: Vector[Vector[Any]]
@@ -23,7 +26,7 @@ trait FieldInterface:
     def updatePlayer: FieldInterface
     def addPoints(points: Int): FieldInterface
     def playerList: Vector[Player]
-    def getMatrix: Matrix[Any]
+    def getMatrix: MatrixInterface[Any]
     def rowSize(row: Int = 0): Int
     def colSize(row: Int = 0, col: Int = 0): Int
     def space(length: Int): String

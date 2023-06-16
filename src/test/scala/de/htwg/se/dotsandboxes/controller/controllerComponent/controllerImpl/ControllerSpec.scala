@@ -1,17 +1,16 @@
 package de.htwg.se.dotsandboxes
 package controller.controllerComponent.controllerImpl
 
-import java.io.StringReader
-
 import util.{Observer, Event}
-import model.fieldComponent.fieldImpl.{Field, Move, Status, Player}
+import model.fieldComponent.fieldImpl.{Field, Move}
+import model.matrixComponent.matrixImpl.{Status, Player}
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
 
 class ControllerSpec extends AnyWordSpec {
-    val controller = Controller(new Field(3, 3, Status.Empty, 3))
+    val controller = Controller(using new Field(3, 3, Status.Empty, 3))
     "The Controller" should {
         "put a connected line on the field when a move is made" in {
             val fieldWithMove = controller.put(Move(1, 0, 0, true))
@@ -160,11 +159,11 @@ class ControllerSpec extends AnyWordSpec {
                 "Player Blue [points: 0]\n" +
                 "Player Red [points: 6]\n" +
                 "Player Green [points: 3]")
-            
+
             controller.remove(testObserver)
         }
         "be able to undo and redo" in {
-            val controller = Controller(new Field(3, 3, Status.Empty, 2))
+            val controller = Controller(using new Field(3, 3, Status.Empty, 2))
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
@@ -199,7 +198,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.field.getCell(2, 0, 1) shouldBe true
         }
         "deny wrong input" in {
-            val controller = Controller(new Field(3, 3, Status.Empty, 2))
+            val controller = Controller(using new Field(3, 3, Status.Empty, 2))
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
@@ -210,7 +209,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.publish(controller.put, Move(2, 0, 0, true))
             controller.publish(controller.put, Move(2, 0, 1, true))
             /* wrong inputs */
-            controller.publish(controller.put, Move(4, 0, 0, true)) 
+            controller.publish(controller.put, Move(4, 0, 0, true))
             controller.publish(controller.put, Move(1, 9, 0, true))
             controller.publish(controller.put, Move(2, 0, 9, true))
             /* no change */
