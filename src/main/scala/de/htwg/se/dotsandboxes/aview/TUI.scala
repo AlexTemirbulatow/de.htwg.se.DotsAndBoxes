@@ -10,6 +10,7 @@ import util.Event
 import model.fieldComponent.fieldImpl.Move
 import controller.controllerComponent.ControllerInterface
 
+
 class TUI(using controller: ControllerInterface) extends Template(controller):
     override def update(event: Event): Unit = event match
         case Event.Abort => sys.exit
