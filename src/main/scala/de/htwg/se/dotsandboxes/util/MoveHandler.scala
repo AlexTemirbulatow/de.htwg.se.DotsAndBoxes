@@ -6,6 +6,7 @@ import scala.util.{Try, Success, Failure}
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 
+
 /* chain of responsibility */
 trait MoveHandler:
   val next: Option[MoveHandler]
