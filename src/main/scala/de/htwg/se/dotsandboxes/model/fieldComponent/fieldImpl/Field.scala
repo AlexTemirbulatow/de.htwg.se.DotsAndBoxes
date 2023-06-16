@@ -1,13 +1,12 @@
 package de.htwg.se.dotsandboxes.model
 package fieldComponent.fieldImpl
 
-import com.google.inject.Inject
-
 import fieldComponent.FieldInterface
 import matrixComponent.MatrixInterface
 import matrixComponent.matrixImpl.{Matrix, Player}
 
-case class Field @Inject (matrix: MatrixInterface[Any]) extends FieldInterface:
+
+case class Field (matrix: MatrixInterface[Any]) extends FieldInterface:
     def this(rowSize: Int, colSize: Int, status: Any, playerSize: Int = 2) = this(new Matrix(rowSize, colSize, status, playerSize))
     override def bar(length: Int = 7, cellNum: Int = 5, rowIndex: Int): String = (0 until cellNum).map(rows(rowIndex,_,length)).mkString(
         Connectors("O"), Connectors("O"), Connectors("O")) + "\n"
