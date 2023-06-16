@@ -19,6 +19,7 @@ import util.{Observer, Event}
 import model.fieldComponent.fieldImpl.Move
 import controller.controllerComponent.ControllerInterface
 
+
 class GUI(using controller: ControllerInterface) extends Frame with Observer:
     controller.add(this)
 
