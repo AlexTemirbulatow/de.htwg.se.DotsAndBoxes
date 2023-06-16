@@ -5,6 +5,7 @@ import moveState.{EdgeState, MidState}
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 
+
 /* strategy pattern */
 object MoveStratagy:
   def decideMove(move: Move, field: FieldInterface): FieldInterface =
