@@ -1,5 +1,5 @@
-package de.htwg.se.dotsandboxes.model.matrixComponent
-package matrixImpl
+package de.htwg.se.dotsandboxes.model.matrixComponent.matrixImpl
+
 
 enum Status(StringRepresentation: String):
   override def toString = StringRepresentation
