@@ -4,6 +4,7 @@ package util.moveState
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 
+
 object MidState extends MoveState:
     override def handle(move: Move, field: FieldInterface): FieldInterface =
         def horizontalState(move: Move): FieldInterface = field.checkSquare("downcase", move.x, move.y).checkSquare("upcase", move.x, move.y)
