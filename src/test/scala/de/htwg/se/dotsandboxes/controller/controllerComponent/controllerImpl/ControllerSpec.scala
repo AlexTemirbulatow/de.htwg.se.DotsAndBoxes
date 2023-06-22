@@ -4,13 +4,14 @@ package controller.controllerComponent.controllerImpl
 import util.{Observer, Event}
 import model.fieldComponent.fieldImpl.{Field, Move}
 import model.matrixComponent.matrixImpl.{Status, Player}
+import de.htwg.se.dotsandboxes.model.fileIoComponent._
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 
 
 class ControllerSpec extends AnyWordSpec {
-    val controller = Controller(using new Field(3, 3, Status.Empty, 3))
+    val controller = Controller(using new Field(3, 3, Status.Empty, 3), new xmlImpl.FileIO())
     "The Controller" should {
         "put a connected line on the field when a move is made" in {
             val fieldWithMove = controller.put(Move(1, 0, 0, true))
@@ -163,7 +164,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.remove(testObserver)
         }
         "be able to undo and redo" in {
-            val controller = Controller(using new Field(3, 3, Status.Empty, 2))
+            val controller = Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
@@ -198,7 +199,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.field.getCell(2, 0, 1) shouldBe true
         }
         "deny wrong input" in {
-            val controller = Controller(using new Field(3, 3, Status.Empty, 2))
+            val controller = Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
