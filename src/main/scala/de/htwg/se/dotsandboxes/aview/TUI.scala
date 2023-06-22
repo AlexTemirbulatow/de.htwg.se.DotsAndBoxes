@@ -27,6 +27,8 @@ class TUI(using controller: ControllerInterface) extends Template(controller):
         case "q" => controller.abort; None
         case "z" => controller.publish(controller.undo); None
         case "y" => controller.publish(controller.redo); None
+        case "s" => controller.save; None
+        case "l" => controller.load; None
         case _   =>
             val chars = input.toCharArray
             chars.size match
