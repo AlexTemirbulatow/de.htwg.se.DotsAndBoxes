@@ -31,13 +31,16 @@ case class Field (matrix: MatrixInterface[Any]) extends FieldInterface:
     override def isFinished: Boolean = (matrix.vector(1) ++ matrix.vector(2)).forall(_.forall(_.equals(true)))
     override def isEdge(move: Move): Boolean = matrix.isEdge(move)
     override def checkSquare(thisCase: String, x: Int, y: Int): Field = copy(matrix.checkSquare(thisCase, x, y))
-    override def currentPlayer: String = matrix.currentPlayerId
+    override def currentPlayerId: String = matrix.currentPlayerInfo._1
+    override def currentPlayerIndex: Int = matrix.currentPlayerInfo._2
     override def currentStatus: Vector[Vector[Any]] = matrix.vector(0)
     override def currentPoints: Int = matrix.currentPoints
     override def nextPlayer: Field = copy(matrix.changePlayer)
-    override def updatePlayer: Field = copy(matrix.updatePlayer)
-    override def addPoints(points: Int): Field = copy(matrix.addPoints(points))
+    override def updatePlayer(curPlayerIndex: Int = playerIndex): Field = copy(matrix.updatePlayer(curPlayerIndex))
+    override def playerIndex: Int = matrix.playerIndex
+    override def addPoints(curPlayerIndex: Int = playerIndex, points: Int): Field = copy(matrix.addPoints(curPlayerIndex, points))
     override def playerList: Vector[Player] = matrix.playerList
+    override def getPoints(index: Int): Int = matrix.getPoints(index)
     override def getMatrix: MatrixInterface[Any] = matrix.getMatrix
     override def rowSize(row: Int = 0): Int = matrix.rowSize(row)
     override def colSize(row: Int = 0, col: Int = 0): Int = matrix.colSize(row, col)
