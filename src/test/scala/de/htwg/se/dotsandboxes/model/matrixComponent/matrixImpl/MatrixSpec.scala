@@ -166,12 +166,13 @@ class MatrixSpec extends AnyWordSpec {
             }
         }
         "manipulating a player" should {
-            "return the correct player index" in {
+            "return the correct player" in {
                 val matrix = new Matrix(1, 1, Status.Empty)
 
-                matrix.playerIndex should be(0)
-                matrix.updatePlayer.playerIndex should be(0)
-                matrix.updatePlayer.changePlayer.playerIndex should be(1)
+                matrix.currentPlayerInfo._1 should be("Blue")
+                matrix.currentPlayerInfo._2 should be(0)
+                matrix.updatePlayer().currentPlayerInfo._2 should be(0)
+                matrix.updatePlayer().changePlayer.currentPlayerInfo._2 should be(1)
             }
             "return a matrix with correct player" in {
                 val matrix = new Matrix(1, 1, Status.Empty)
@@ -191,15 +192,17 @@ class MatrixSpec extends AnyWordSpec {
                     Player("Blue", 0, Status.Blue))
 
                 matrix.changePlayer should be(matrixVector)
-                matrix.updatePlayer should be(matrixVector2)
+                matrix.updatePlayer() should be(matrixVector2)
 
                 matrix.changePlayer.changePlayer should be(matrixVector2)
-                matrix.updatePlayer should be(matrixVector2)
+                matrix.updatePlayer() should be(matrixVector2)
+
+                matrix.updatePlayer(1) should be(matrixVector)
 
                 matrix.list should be(Vector(Player("Blue", 0, Status.Blue), Player("Red", 0, Status.Red)))
-                matrix.addPoints(1).updatePlayer.list should be(Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)))
+                matrix.addPoints(points = 1).updatePlayer().list should be(Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)))
 
-                matrix.addPoints(1).updatePlayer should be(
+                matrix.addPoints(points = 1).updatePlayer() should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),
@@ -207,14 +210,23 @@ class MatrixSpec extends AnyWordSpec {
                     Player("Blue", 1, Status.Blue)))
                 
                 matrix.currentPlayer should be(Player("Blue", 0, Status.Blue))
-                matrix.changePlayer.addPoints(1).updatePlayer.currentPlayer should be(Player("Red", 1, Status.Red))
+                matrix.changePlayer.addPoints(points = 1).updatePlayer().currentPlayer should be(Player("Red", 1, Status.Red))
 
-                matrix.changePlayer.addPoints(1).updatePlayer should be(
+                matrix.changePlayer.addPoints(points = 1).updatePlayer() should be(
                     Matrix(Vector(Vector(Status.Empty)),
                     Vector(Vector(false), Vector(false)),
                     Vector(Vector(false, false)),
                     Vector(Player("Blue", 0, Status.Blue), Player("Red", 1, Status.Red)),
                     Player("Red", 1, Status.Red)))
+
+                matrix.addPoints(0, 3).updatePlayer(0) should be(
+                    Matrix(Vector(Vector(Status.Empty)),
+                    Vector(Vector(false), Vector(false)),
+                    Vector(Vector(false, false)),
+                    Vector(Player("Blue", 3, Status.Blue), Player("Red", 0, Status.Red)),
+                    Player("Blue", 3, Status.Blue)))
+
+                matrix.addPoints(1, 5).updatePlayer(1).getPoints(1) should be(5)
 
                 matrix.list should not be(list)
 
