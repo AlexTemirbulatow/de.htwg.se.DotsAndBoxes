@@ -5,4 +5,4 @@ import model.fieldComponent.FieldInterface
 
 
 object AddOnePoint extends PlayerState:
-    override def handle(field: FieldInterface): FieldInterface = field.addPoints(1).updatePlayer
+    override def handle(field: FieldInterface): FieldInterface = field.addPoints(points = 1).updatePlayer()
