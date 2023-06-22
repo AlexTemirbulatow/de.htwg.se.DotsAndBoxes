@@ -253,7 +253,16 @@ class FieldSpec extends AnyWordSpec {
                     Vector(Player("Blue", 1, Status.Blue), Player("Red", 0, Status.Red)),
                     Player("Blue", 1, Status.Blue))
 
-                field.currentPlayer should be("Blue")
+                val matrixVector4 =
+                    Matrix(Vector(Vector(Status.Blue)),
+                    Vector(Vector(true), Vector(true)),
+                    Vector(Vector(true, true)),
+                    Vector(Player("Blue", 1, Status.Blue), Player("Red", 5, Status.Red)),
+                    Player("Red", 5, Status.Red))
+
+                field.currentPlayerId should be("Blue")
+                field.currentPlayerIndex should be(0)
+                field.playerIndex should be(0)
                 field.currentStatus should be(Vector(Vector(Status.Empty)))
                 field.currentPoints should be(0)
 
@@ -263,20 +272,27 @@ class FieldSpec extends AnyWordSpec {
                 field.nextPlayer.nextPlayer.getMatrix should be(matrixVector1)
 
                 field = field.putCell(0, 0, 0, Status.Blue).putCell(1, 0, 0, true).putCell(2, 0, 0, true).putCell(1, 1, 0, true).putCell(2, 0, 1, true)
-                field.currentPlayer should be("Blue")
+                field.currentPlayerId should be("Blue")
                 field.currentStatus should be(Vector(Vector(Status.Blue)))
 
-                field = field.addPoints(1).updatePlayer
+                field = field.addPoints(points = 1).updatePlayer()
                 field.getMatrix should be(matrixVector3)
                 field.currentPoints should be(1)
 
+                field = field.addPoints(1, 5).updatePlayer(1)
+                field.getMatrix should be(matrixVector4)
+                field.currentPoints should be(5)
+
+                field.getPoints(0) should be(1)
+                field.getPoints(1) should be(5)
+
                 field.isFinished shouldBe true
 
-                field.winner should be("Player Blue wins!")
+                field.winner should be("Player Red wins!")
 
                 field.stats should be(
                     "Player Blue [points: 1]\n" +
-                    "Player Red [points: 0]")
+                    "Player Red [points: 5]")
 
                 val field2 = new Field(
                     Matrix(Vector(Vector(Status.Blue, Status.Blue), Vector(Status.Red, Status.Red)),

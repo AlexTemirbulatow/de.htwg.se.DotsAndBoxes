@@ -19,14 +19,17 @@ trait FieldInterface:
     def isFinished: Boolean
     def isEdge(move: fieldImpl.Move): Boolean
     def checkSquare(thisCase: String, x: Int, y: Int): FieldInterface
-    def currentPlayer: String
+    def currentPlayerId: String
+    def currentPlayerIndex: Int
     def currentStatus: Vector[Vector[Any]]
     def currentPoints: Int
     def nextPlayer: FieldInterface
-    def updatePlayer: FieldInterface
-    def addPoints(points: Int): FieldInterface
+    def updatePlayer(curPlayerIndex: Int = playerIndex): FieldInterface
+    def playerIndex: Int
+    def addPoints(curPlayerIndex: Int = playerIndex, points: Int): FieldInterface
     def playerList: Vector[Player]
     def getMatrix: MatrixInterface[Any]
+    def getPoints(index: Int): Int
     def rowSize(row: Int = 0): Int
     def colSize(row: Int = 0, col: Int = 0): Int
     def space(length: Int): String

@@ -29,7 +29,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
 
     val theme = if false 
     then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60))  /*lightmode*/
-    else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210))  /*darkmode*/
+    else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210)) /*darkmode*/
 
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
     val dot = ImageIcon("src/resources/0_Dot.png")
@@ -62,6 +62,8 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
             contents += MenuItem(Action("Exit") { controller.abort })
             contents += MenuItem(Action("Undo") { controller.publish(controller.undo) })
             contents += MenuItem(Action("Redo") { controller.publish(controller.redo) })
+            contents += MenuItem(Action("Save") { controller.save })
+            contents += MenuItem(Action("Load") { controller.load })
         }
         override def paintComponent(g: Graphics2D) =
             renderHints(g)

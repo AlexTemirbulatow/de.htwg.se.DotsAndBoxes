@@ -10,7 +10,8 @@ case class Matrix[T] (vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]
     this(Vector.tabulate(colSize, rowSize) {(_, _) => status},
     Vector.tabulate (colSize + 1, rowSize) {(_, _) =>  false},
     Vector.tabulate (colSize, rowSize + 1) {(_, _) =>  false},
-    new PlayerList(playerSize).playerList, list.head)
+    new PlayerList(playerSize).playerList,
+    list.head)
   override val maxPosX = rowSize(1) - 1
   override val maxPosY = colSize(2, 0) - 1
   override def rowSize(vecIndex: Int): Int = vector(vecIndex).size
@@ -34,11 +35,12 @@ case class Matrix[T] (vecStatus: Vector[Vector[Any]], vecRow: Vector[Vector[Any]
   override def isEdge(move: Move): Boolean = move.vec match
     case 1 => if(move.x == 0 || move.x == maxPosX) true else false
     case 2 => if(move.y == 0 || move.y == maxPosY) true else false
-  override def currentPlayerId: String = currentPlayer.playerId
+  override def currentPlayerInfo: (String, Int) = (currentPlayer.playerId, list.indexOf(currentPlayer))
   override def currentPoints: Int = currentPlayer.points
-  override def updatePlayer: Matrix[Any] = copy(currentPlayer = list(playerIndex))
+  override def updatePlayer(curPlayerIndex: Int = playerIndex): Matrix[Any] = copy(currentPlayer = list(curPlayerIndex))
   override def playerIndex: Int = list.indices.map(x => list(x).playerId).indexOf(currentPlayer.playerId)
   override def playerList: Vector[Player] = list
   override def getMatrix: MatrixInterface[Any] = this.asInstanceOf[MatrixInterface[Any]]
-  override def addPoints(points: Int): Matrix[Any] = copy(list = list.updated(playerIndex, list(playerIndex).copy(points = list(playerIndex).points + points)))
+  override def getPoints(index: Int): Int = list(index).points
+  override def addPoints(curPlayerIndex: Int = currentPlayerInfo._2, points: Int): Matrix[Any] = copy(list = list.updated(curPlayerIndex, list(curPlayerIndex).copy(points = list(curPlayerIndex).points + points)))
   override def changePlayer: Matrix[Any] = if(playerIndex == list.size - 1) copy(currentPlayer = list.head) else copy(currentPlayer = list(playerIndex + 1))

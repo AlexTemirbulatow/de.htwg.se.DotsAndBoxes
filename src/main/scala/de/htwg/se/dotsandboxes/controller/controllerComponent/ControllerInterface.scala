@@ -12,6 +12,8 @@ trait ControllerInterface extends Observable:
     def get(vec: Int, x: Int, y: Int): Any
     def undo: FieldInterface
     def redo: FieldInterface
+    def save: Unit
+    def load: Unit
     def abort: Unit
     def colSize(row: Int = 0, col: Int = 0): Int
     def rowSize(row: Int = 0): Int
