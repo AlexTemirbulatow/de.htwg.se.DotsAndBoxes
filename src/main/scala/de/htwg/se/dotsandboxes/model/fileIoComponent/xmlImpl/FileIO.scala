@@ -44,14 +44,14 @@ class FileIO extends FileIOInterface:
         </field>
 
     def cellToXml(field: FieldInterface, vec: Int, row: Int, col: Int): Elem = 
-        <data row={row.toString} col={col.toString}>
+        <value row={row.toString} col={col.toString}>
             {field.getCell(vec, row, col)}
-        </data>
+        </value>
 
     def playerToXml(field: FieldInterface, index: Int): Elem =
-        <data index={index.toString}>
+        <value index={index.toString}>
             {field.getPoints(index)}
-        </data>
+        </value>
 
 
     override def load: FieldInterface =
@@ -61,7 +61,7 @@ class FileIO extends FileIOInterface:
         val playerSize: Int = (file \\ "field" \ "playerList" \ "@playerSize").text.toInt
         var field: FieldInterface = new Field(rowSize, colSize, Status.Empty, playerSize)
 
-        val statusSeq: NodeSeq = (file \\ "field" \ "status" \ "data")
+        val statusSeq: NodeSeq = (file \\ "field" \ "status" \ "value")
         for (rowNode <- statusSeq)
             val row = (rowNode \ "@row").text.toInt
             val col = (rowNode \ "@col").text.toInt
@@ -74,21 +74,21 @@ class FileIO extends FileIOInterface:
                 case _ => Status.Empty
             field = field.putCell(0, row, col, status)
 
-        val rowSeq: NodeSeq = (file \\ "field" \ "rows" \ "data")
+        val rowSeq: NodeSeq = (file \\ "field" \ "rows" \ "value")
         for (rowNode <- rowSeq)
             val row = (rowNode \ "@row").text.toInt
             val col = (rowNode \ "@col").text.toInt
             val value = rowNode.text.trim.toBoolean
             field = field.putCell(1, row, col, value)
 
-        val colSeq: NodeSeq = (file \\ "field" \ "cols" \ "data")
+        val colSeq: NodeSeq = (file \\ "field" \ "cols" \ "value")
         for (rowNode <- colSeq)
             val row = (rowNode \ "@row").text.toInt
             val col = (rowNode \ "@col").text.toInt
             val value = rowNode.text.trim.toBoolean
             field = field.putCell(2, row, col, value)
 
-        val scoreSeq: NodeSeq = (file \\ "field" \ "playerList" \ "data")
+        val scoreSeq: NodeSeq = (file \\ "field" \ "playerList" \ "value")
         for (player <- scoreSeq)
                 val index = (player \ "@index").text.toInt
                 val score = player.text.trim.toInt
@@ -96,5 +96,4 @@ class FileIO extends FileIOInterface:
 
         val curPlayerIndex: Int = (file \\ "field" \ "playerList" \ "@currentPlayer").text.toInt
         field = field.updatePlayer(curPlayerIndex)
-
         field

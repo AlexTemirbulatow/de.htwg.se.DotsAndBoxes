@@ -7,4 +7,3 @@ import fieldComponent.FieldInterface
 trait FileIOInterface:
     def save(field: FieldInterface): Unit
     def load: FieldInterface
-  

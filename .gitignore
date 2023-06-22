@@ -45,5 +45,5 @@ metals.sbt
 .history
 .scala_dependencies
 .cache-main
-.xml
-.json
+field.xml
+field.json
