@@ -72,11 +72,11 @@ class FileIO extends FileIOInterface:
         val playerSize = (json \ "field" \ "playerSize").as[Int]
         var field: FieldInterface = new Field(rowSize, colSize, Status.Empty, playerSize)
 
-        val status: JsLookupResult = (json \ "field" \ "status")
+        val statusResult: JsLookupResult = (json \ "field" \ "status")
         for (index <- 0 until rowSize * colSize)
-            val row = (status \\ "row")(index).as[Int]
-            val col = (status \\ "col")(index).as[Int]
-            val value = (status \\ "value")(index).as[String]
+            val row = (statusResult \\ "row")(index).as[Int]
+            val col = (statusResult \\ "col")(index).as[Int]
+            val value = (statusResult \\ "value")(index).as[String]
             val player = value match
                 case "B" => Status.Blue
                 case "R" => Status.Red
@@ -85,27 +85,26 @@ class FileIO extends FileIOInterface:
                 case _ => Status.Empty
             field = field.putCell(0, row, col, player)
 
-        val rows: JsLookupResult = (json \ "field" \ "rows")
+        val rowResult: JsLookupResult = (json \ "field" \ "rows")
         for (index <- 0 until rowSize * (colSize + 1))
-            val row = (rows \\ "row")(index).as[Int]
-            val col = (rows \\ "col")(index).as[Int]
-            val value = (rows \\ "value")(index).as[Boolean]
+            val row = (rowResult \\ "row")(index).as[Int]
+            val col = (rowResult \\ "col")(index).as[Int]
+            val value = (rowResult \\ "value")(index).as[Boolean]
             field = field.putCell(1, row, col, value)
 
-        val cols: JsLookupResult = (json \ "field" \ "cols")
+        val colResult: JsLookupResult = (json \ "field" \ "cols")
         for (index <- 0 until (rowSize + 1) * colSize)
-            val row = (cols \\ "row")(index).as[Int]
-            val col = (cols \\ "col")(index).as[Int]
-            val value = (cols \\ "value")(index).as[Boolean]
+            val row = (colResult \\ "row")(index).as[Int]
+            val col = (colResult \\ "col")(index).as[Int]
+            val value = (colResult \\ "value")(index).as[Boolean]
             field = field.putCell(2, row, col, value)
 
-        val points: JsLookupResult = (json \ "field" \ "playerList")
+        val scoreResult: JsLookupResult = (json \ "field" \ "playerList")
         for (player <- 0 until playerSize)
-                val index = (points \\ "index")(player).as[Int]
-                val score = (points \\ "points")(player).as[Int]
+                val index = (scoreResult \\ "index")(player).as[Int]
+                val score = (scoreResult \\ "points")(player).as[Int]
                 field = field.addPoints(index, score)
 
         val curPlayerIndex: Int = (json \ "field" \ "currentPlayer").as[Int]
         field = field.updatePlayer(curPlayerIndex)
-
         field
