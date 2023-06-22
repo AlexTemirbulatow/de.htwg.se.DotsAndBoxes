@@ -15,11 +15,12 @@ trait MatrixInterface[T]:
   def vector(vecIndex: Int): Vector[Vector[Any]]
   def checkSquare(thisCase: String, x: Int, y: Int): MatrixInterface[Any]
   def isEdge(move: Move): Boolean
-  def currentPlayerId: String
+  def currentPlayerInfo: (String, Int)
   def currentPoints: Int
-  def updatePlayer: MatrixInterface[Any]
+  def updatePlayer(curPlayerIndex: Int = currentPlayerInfo._2): MatrixInterface[Any]
   def playerIndex: Int
   def playerList: Vector[matrixImpl.Player]
   def getMatrix: MatrixInterface[Any]
-  def addPoints(points: Int): MatrixInterface[Any]
+  def getPoints(index: Int): Int
+  def addPoints(curPlayerIndex: Int = currentPlayerInfo._2, points: Int): MatrixInterface[Any]
   def changePlayer: MatrixInterface[Any]
