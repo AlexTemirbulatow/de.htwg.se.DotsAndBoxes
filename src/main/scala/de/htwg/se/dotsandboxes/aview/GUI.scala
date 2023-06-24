@@ -28,7 +28,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
     val panelSize: Dimension = new Dimension(830, 750)
 
     val theme = if false 
-    then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60))  /*lightmode*/
+    then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60)) /*lightmode*/
     else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210)) /*darkmode*/
 
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))

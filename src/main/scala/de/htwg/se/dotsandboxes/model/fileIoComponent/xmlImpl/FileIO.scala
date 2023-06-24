@@ -53,7 +53,6 @@ class FileIO extends FileIOInterface:
             {field.getPoints(index)}
         </value>
 
-
     override def load: FieldInterface =
         val file: Elem = scala.xml.XML.loadFile("field.xml")
         val rowSize: Int = (file \\ "field" \ "@rowSize").text.toInt

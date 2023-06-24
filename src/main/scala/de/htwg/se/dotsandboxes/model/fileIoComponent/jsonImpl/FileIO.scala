@@ -63,7 +63,6 @@ class FileIO extends FileIOInterface:
                 "playerSize" -> Json.toJson(field.playerList.size),
                 "currentPlayer" -> Json.toJson(field.currentPlayerIndex)))
 
-
     override def load: FieldInterface =
         val source: String = Source.fromFile("field.json").getLines.mkString
         val json: JsValue = Json.parse(source)
