@@ -23,18 +23,18 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
 <table>
     <tr><th>Rules</th><th>GUI</th></tr>
     <tr><td>You move by taking a horizontal or vertical line <br>
-            between two dots. When you place the last line of a <br>
-            box, the box and its contents are yours. The players <br>
-            move in turn, but whenever a player takes a box they <br>
-            must move again. One finished box is one point. 
+            between two dots. When you place the last line that <br>
+            forms a box, the box and its content are yours. The <br>
+            players move in turn, but whenever a player takes a <br>
+            box, they must move again. One box is one point. 
             <br><br>
-            The game ends when all the boxes have been taken.
+            The game ends when all boxes have been taken.
             <br><br>
-            The winner is the player with the most points. <br>
-            It's a tie if two players got the same score. 
+            The player with the highest score wins. <br>
+            It's a tie if two players got the same highest score. 
             <br><br>
-            The UI supports light and dark mode, 2-4 players <br>
-            and a customizable field size.
+            The UIs support 2-4 players, a customizable field <br>
+            size and a GUI only light and dark mode.
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesGUI_Dark.jpg" width="390" height="380"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
@@ -51,7 +51,7 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
                 <li>Lines within a vector are accessed with<br>X and Y coordinates, starting at (0,0)</li>
             </ul>
             Therefore, a move to occupy a line consists of: <br>
-            &lt;Vector&gt;&lt;X&gt;&lt;Y&gt;
+            &lt;Line&gt;&lt;X&gt;&lt;Y&gt;
             <br><br>
             You can type (q) to quit, (z) to undo, (y) to redo, <br>
             (s) to save the current game state and (l) to load it.
