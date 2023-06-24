@@ -28,18 +28,17 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             move in turn, but whenever a player takes a box they <br>
             must move again. One finished box is one point. 
             <br><br>
-            2-4 players are possible.
-            <br><br>
             The game ends when all the boxes have been taken.
             <br><br>
             The winner is the player with the most points. <br>
-            It's a tie if two players got the same amount of points. 
+            It's a tie if two players got the same score. 
+            <br><br>
+            The UI supports light and dark mode, 2-4 players <br>
+            and a customizable field size.
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesGUI_Dark.jpg" width="390" height="380"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
-    <tr><td>To start the TUI game, a player size must be chosen. <br>
-            The field size varies based on the player count.
-            <br><br>
+    <tr><td>
             The field consists of two separate 2D vectors: <br>
             <ul>
                 <li>The first vector represents all horizontal lines</li>
@@ -54,7 +53,8 @@ To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode U
             Therefore, a move to occupy a line consists of: <br>
             &lt;Vector&gt;&lt;X&gt;&lt;Y&gt;
             <br><br>
-            You can press (q) to quit, (z) to undo and (y) to redo.
+            You can type (q) to quit, (z) to undo, (y) to redo, <br>
+            (s) to save the current game state and (l) to load it.
     </td><td><p align="center">
              <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesTUI.png" width="390" height="370"></a></td></tr>
 </table>
