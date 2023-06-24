@@ -1,5 +1,6 @@
 package de.htwg.se.dotsandboxes
-package controller.controllerComponent
+package controller
+package controllerComponent
 package controllerImpl
 
 import scala.util.{Success, Failure}
