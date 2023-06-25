@@ -21,7 +21,9 @@ trait Template(controller: ControllerInterface) extends Observer:
             "A move consists of:\n\n" +
             "<Line> index: (1) for horizontally (2) for vertically\n" +
             "<X> coordinate: starting at (0)\n" +
-            "<Y> coordinate: starting at (0)")
+            "<Y> coordinate: starting at (0)\n\n" +
+            "You can type (q) to quit, (z) to undo (y) to redo,\n" +
+            "(s) to save the current game state and (l) to load it.")
         update(Event.Move)
         gameLoop
     def gameLoop: Unit

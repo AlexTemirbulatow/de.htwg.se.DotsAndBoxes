@@ -29,13 +29,15 @@ class Controller(using var field: FieldInterface, val fileIO: FileIOInterface) e
   override def abort: Unit = notifyObservers(Event.Abort)
   override def undo: FieldInterface = undoManager.undoStep(field)
   override def redo: FieldInterface = undoManager.redoStep(field)
-  override def save: Unit =
+  override def save: FieldInterface =
     fileIO.save(field)
     if !gameEnded then notifyObservers(Event.Move)
-  override def load: Unit = 
+    field
+  override def load: FieldInterface = 
     field = fileIO.load
     notifyObservers(Event.Move)
     if gameEnded then notifyObservers(Event.End)
+    field
 
   override def colSize(row: Int = 0, col: Int = 0): Int = field.colSize(row, col)
   override def rowSize(row: Int = 0): Int = field.rowSize(row)
