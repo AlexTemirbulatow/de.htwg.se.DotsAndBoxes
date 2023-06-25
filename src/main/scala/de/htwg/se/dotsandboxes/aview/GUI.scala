@@ -59,7 +59,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
         contents += new Menu("") {
             icon = menu
             borderPainted = false
-            contents += MenuItem(Action("Exit") { controller.abort })
+            contents += MenuItem(Action("Exit") { update(Event.Abort) })
             contents += MenuItem(Action("Undo") { controller.publish(controller.undo) })
             contents += MenuItem(Action("Redo") { controller.publish(controller.redo) })
             contents += MenuItem(Action("Save") { controller.save })
@@ -81,7 +81,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
         case Event.End   => contents = revise(playerResult); repaint
         case Event.Move  => contents = revise(playerTurn); repaint
 
-    override def closeOperation: Unit = controller.abort
+    override def closeOperation: Unit = update(Event.Abort)
 
     def renderHints(g: Graphics2D): Unit =
         g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
