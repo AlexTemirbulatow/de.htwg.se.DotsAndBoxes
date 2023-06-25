@@ -1,9 +1,9 @@
-case class test(a: Int, b: Int)
+case class Test(a: Int, b: Int)
 
-    val c = test(10, 10)
-    val d = c.a
-    val e = c.b
-
+val c = Test(10, 10)
+val d = c.a
+val e = c.b
+val f = c.copy(a = 15)
 
 
 def bar(lenght: Int = 6, cellNum: Int = 6) =
@@ -13,10 +13,10 @@ def cells(lenght: Int = 6, cellNum: Int = 6, height: Int = 2) =
 def mesh(lenght: Int = 6, cellNum: Int = 3, height: Int = 2) =
     (bar(lenght, cellNum) + cells(lenght, cellNum, height)) * cellNum + bar(lenght, cellNum)
 
-
 bar()
 cells()
 mesh()
 
-1+2
-3*3
+
+1 + 2
+3 + 3 * 3

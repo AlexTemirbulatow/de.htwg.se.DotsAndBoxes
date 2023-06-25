@@ -41,9 +41,11 @@ metals.sbt
 # mac
 .DS_Store
 
+# fileIO
+*.xml
+*.json
+
 # other
 .history
 .scala_dependencies
 .cache-main
-field.xml
-field.json
