@@ -14,7 +14,6 @@ trait ControllerInterface extends Observable:
     def redo: FieldInterface
     def save: FieldInterface
     def load: FieldInterface
-    def abort: Unit
     def colSize(row: Int = 0, col: Int = 0): Int
     def rowSize(row: Int = 0): Int
     def playerList: Vector[Player]

@@ -26,7 +26,6 @@ class Controller(using var field: FieldInterface, val fileIO: FileIOInterface) e
 
   override def put(move: Move): FieldInterface = undoManager.doStep(field, PutCommand(move, field))
   override def get(vec: Int, x: Int, y: Int): Any = field.getCell(vec, x, y)
-  override def abort: Unit = notifyObservers(Event.Abort)
   override def undo: FieldInterface = undoManager.undoStep(field)
   override def redo: FieldInterface = undoManager.redoStep(field)
   override def save: FieldInterface =

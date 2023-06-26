@@ -226,7 +226,7 @@ class ControllerSpec extends AnyWordSpec {
             controller2.redo should be(redoField)
         }
         "deny wrong input" in {
-            val controller = Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
+            val controller = new Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
