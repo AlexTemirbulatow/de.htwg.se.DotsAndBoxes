@@ -1,10 +1,12 @@
 #
 # --Note
 #
+# Docker needs to be installed
+#
 # build image with: docker build -t dotsandboxes-image .
 # run docker container with: docker run -t dotsandboxes-image
 #
-# To emulate the GUI properly make sure XMing(X Server) is installed and running.
+# To emulate the GUI properly make sure XMing(X Server) is installed and running (Windows only).
 #
 
 
