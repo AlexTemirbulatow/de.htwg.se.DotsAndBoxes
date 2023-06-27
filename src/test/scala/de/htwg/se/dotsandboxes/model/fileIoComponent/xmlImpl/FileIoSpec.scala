@@ -22,7 +22,7 @@ class FileIoSpec extends AnyWordSpec {
                 fileIO.load should be(field)
             }
             "return the correct game state" in {
-                val controller = Controller(using new Field(5, 4, Status.Empty, 3), new FileIO())
+                val controller = Controller(using new Field(5, 4, Status.Empty, 2), new FileIO())
                 controller.publish(controller.put, Move(1, 0, 0, true))
                 controller.save should be(controller.field)
                 controller.load should be(controller.field)

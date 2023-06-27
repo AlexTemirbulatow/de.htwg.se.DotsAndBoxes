@@ -3,15 +3,11 @@ package aview
 
 import scala.swing._
 import scala.swing.event._
-import scala.swing.GridBagPanel.Anchor
 import java.io.File
-import java.awt.Color
-import java.awt.Font
-import java.awt.RenderingHints
+import java.awt.{RenderingHints, Color, Font}
 import javax.imageio.ImageIO
-import javax.swing.ImageIcon
-import javax.swing.UIManager
 import javax.swing.border.LineBorder
+import javax.swing.{ImageIcon, UIManager}
 
 import Default.given
 
