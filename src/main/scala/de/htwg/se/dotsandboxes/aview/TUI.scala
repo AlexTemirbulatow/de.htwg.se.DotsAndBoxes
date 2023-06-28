@@ -24,7 +24,7 @@ class TUI(using controller: ControllerInterface) extends Template(controller):
         gameLoop
 
     override def analyseInput(input: String): Option[Move] = input match
-        case "q" => controller.abort; None
+        case "q" => update(Event.Abort); None
         case "z" => controller.publish(controller.undo); None
         case "y" => controller.publish(controller.redo); None
         case "s" => controller.save; None

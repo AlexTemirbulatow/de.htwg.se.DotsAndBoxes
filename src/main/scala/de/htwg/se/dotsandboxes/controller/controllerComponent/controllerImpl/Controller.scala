@@ -1,5 +1,6 @@
 package de.htwg.se.dotsandboxes
-package controller.controllerComponent
+package controller
+package controllerComponent
 package controllerImpl
 
 import scala.util.{Success, Failure}
@@ -25,16 +26,17 @@ class Controller(using var field: FieldInterface, val fileIO: FileIOInterface) e
 
   override def put(move: Move): FieldInterface = undoManager.doStep(field, PutCommand(move, field))
   override def get(vec: Int, x: Int, y: Int): Any = field.getCell(vec, x, y)
-  override def abort: Unit = notifyObservers(Event.Abort)
   override def undo: FieldInterface = undoManager.undoStep(field)
   override def redo: FieldInterface = undoManager.redoStep(field)
-  override def save: Unit =
+  override def save: FieldInterface =
     fileIO.save(field)
     if !gameEnded then notifyObservers(Event.Move)
-  override def load: Unit = 
+    field
+  override def load: FieldInterface = 
     field = fileIO.load
     notifyObservers(Event.Move)
     if gameEnded then notifyObservers(Event.End)
+    field
 
   override def colSize(row: Int = 0, col: Int = 0): Int = field.colSize(row, col)
   override def rowSize(row: Int = 0): Int = field.rowSize(row)

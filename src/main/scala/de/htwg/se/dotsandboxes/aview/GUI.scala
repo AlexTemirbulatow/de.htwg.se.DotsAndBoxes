@@ -3,15 +3,11 @@ package aview
 
 import scala.swing._
 import scala.swing.event._
-import scala.swing.GridBagPanel.Anchor
 import java.io.File
-import java.awt.Color
-import java.awt.Font
-import java.awt.RenderingHints
+import java.awt.{RenderingHints, Color, Font}
 import javax.imageio.ImageIO
-import javax.swing.ImageIcon
-import javax.swing.UIManager
 import javax.swing.border.LineBorder
+import javax.swing.{ImageIcon, UIManager}
 
 import Default.given
 
@@ -28,7 +24,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
     val panelSize: Dimension = new Dimension(830, 750)
 
     val theme = if false 
-    then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60))  /*lightmode*/
+    then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60)) /*lightmode*/
     else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210)) /*darkmode*/
 
     val logo = ImageIO.read(File("src/resources/0_Logo.png"))
@@ -59,7 +55,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
         contents += new Menu("") {
             icon = menu
             borderPainted = false
-            contents += MenuItem(Action("Exit") { controller.abort })
+            contents += MenuItem(Action("Exit") { update(Event.Abort) })
             contents += MenuItem(Action("Undo") { controller.publish(controller.undo) })
             contents += MenuItem(Action("Redo") { controller.publish(controller.redo) })
             contents += MenuItem(Action("Save") { controller.save })
@@ -81,7 +77,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
         case Event.End   => contents = revise(playerResult); repaint
         case Event.Move  => contents = revise(playerTurn); repaint
 
-    override def closeOperation: Unit = controller.abort
+    override def closeOperation: Unit = update(Event.Abort)
 
     def renderHints(g: Graphics2D): Unit =
         g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)

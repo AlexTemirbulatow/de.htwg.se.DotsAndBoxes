@@ -25,6 +25,22 @@ class ControllerSpec extends AnyWordSpec {
                 def update(e: Event) = bing = true
             val testObserver = TestObserver(controller)
 
+            controller.toString should be(
+                "\n\n" +
+                "O-------O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "¦   -   ¦   -   ¦   -   ¦\n" +
+                "O-------O-------O-------O\n\n" +
+                "Blues turn\n" +
+                "[points: 0]\n\n" +
+                "Your Move <Line><X><Y>: ")
+
             testObserver.bing shouldBe false
             controller.publish(controller.put, Move(1, 0, 0, true))
             controller.gameEnded shouldBe false
@@ -165,11 +181,13 @@ class ControllerSpec extends AnyWordSpec {
         }
         "be able to undo and redo" in {
             val controller = Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
+            val controller2 = Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
                 def update(e: Event) = bing = true
             val testObserver = TestObserver(controller)
+
             controller.publish(controller.put, Move(1, 0, 0, true))
             controller.publish(controller.put, Move(1, 1, 0, true))
             controller.publish(controller.put, Move(2, 0, 0, true))
@@ -186,7 +204,6 @@ class ControllerSpec extends AnyWordSpec {
             controller.field.getCell(0, 0, 0) should be(Status.Red)
             controller.field.getCell(2, 0, 1) shouldBe true
 
-
             controller.publish(controller.undo)
             controller.publish(controller.undo)
             controller.field.getCell(2, 0, 0) shouldBe false
@@ -197,9 +214,19 @@ class ControllerSpec extends AnyWordSpec {
             controller.field.getCell(0, 0, 0) should be(Status.Red)
             controller.field.getCell(2, 0, 0) shouldBe true
             controller.field.getCell(2, 0, 1) shouldBe true
+
+
+            controller2.publish(controller2.put, Move(1, 0, 0, true))
+            controller2.publish(controller2.put, Move(2, 0, 0, true))
+
+            val undoField = new Field(3, 3, Status.Empty, 2).putCell(1, 0, 0, true).nextPlayer
+            val redoField = new Field(3, 3, Status.Empty, 2).putCell(1, 0, 0, true).putCell(2, 0, 0, true)
+
+            controller2.undo should be(undoField)
+            controller2.redo should be(redoField)
         }
         "deny wrong input" in {
-            val controller = Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
+            val controller = new Controller(using new Field(3, 3, Status.Empty, 2), new xmlImpl.FileIO())
             class TestObserver(controller: Controller) extends Observer:
                 controller.add(this)
                 var bing = false
