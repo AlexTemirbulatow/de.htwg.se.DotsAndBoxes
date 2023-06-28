@@ -23,7 +23,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
     val gridSize: (Int, Int) = ((fieldSize._1 + fieldSize._1 + 1), (fieldSize._2 + fieldSize._2 + 1))
     val panelSize: Dimension = new Dimension(830, 750)
 
-    val theme = if false 
+    val theme = if false
     then (Color(245, 245, 245), Color(220, 220, 220), Color(60, 60, 60)) /*lightmode*/
     else (Color(70, 70, 70), Color(100, 100, 100), Color(210, 210, 210)) /*darkmode*/
 
@@ -190,6 +190,7 @@ class GUI(using controller: ControllerInterface) extends Frame with Observer:
 
     class CellButton(vec: Int, x: Int, y: Int, status: Boolean) extends Button:
         listenTo(mouse.moves, mouse.clicks)
+        background = theme._1
         borderPainted = false
         focusPainted = false
         opaque = false
