@@ -1,12 +1,13 @@
 package de.htwg.se.dotsandboxes
 package util
 
-import moveState.{EdgeState, MidState}
+import moveState.MoveState
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 
 
 /* strategy pattern */
 object MoveStratagy:
-  def decideMove(move: Move, field: FieldInterface): FieldInterface =
-    if(field.isEdge(move)) EdgeState.handle(move, field) else MidState.handle(move, field)
+  def executeStrategy(position: MoveState, move: Move, field: FieldInterface): FieldInterface =
+    position.handle(move, field)
+
