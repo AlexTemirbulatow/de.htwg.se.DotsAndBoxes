@@ -8,6 +8,7 @@ import scala.util.{Success, Failure}
 import Default.given
 
 import util._
+import util.moveState.{EdgeState, MidState}
 import model.fieldComponent.FieldInterface
 import model.fieldComponent.fieldImpl.Move
 import model.matrixComponent.matrixImpl.Player
@@ -56,7 +57,8 @@ class Controller(using var field: FieldInterface, val fileIO: FileIOInterface) e
     case Success(value) =>
       field = doThis(move)
       val preStatus = field.currentStatus
-      field = MoveStratagy.decideMove(move, field)
+      val movePosition = if field.isEdge(move) then EdgeState else MidState
+      field = MoveStratagy.executeStrategy(movePosition, move, field)
       val postStatus = field.currentStatus
       field = PlayerStratagy.updatePlayer(field, preStatus, postStatus)
       notifyObservers(Event.Move)

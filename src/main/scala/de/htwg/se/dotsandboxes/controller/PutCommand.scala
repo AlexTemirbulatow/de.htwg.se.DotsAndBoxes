@@ -1,10 +1,15 @@
 package de.htwg.se.dotsandboxes
 package controller
 
-import util.Command
 import model.fieldComponent.fieldImpl.Move
 import model.fieldComponent.FieldInterface
 
+
+/*command pattern*/
+trait Command:
+  def doStep(field: FieldInterface): FieldInterface
+  def undoStep(field: FieldInterface): FieldInterface
+  def redoStep(field: FieldInterface): FieldInterface
 
 class PutCommand(move: Move, var field: FieldInterface) extends Command:
   override def doStep(field: FieldInterface): FieldInterface = field.putCell(move.vec, move.x, move.y, move.status)
