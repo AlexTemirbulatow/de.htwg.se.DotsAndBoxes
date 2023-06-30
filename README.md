@@ -1,7 +1,8 @@
 # Dots And Boxes
 
 A project at HTWG Konstanz for the class Software Engineering to create a game 'Dots and Boxes' in scala. <br>
-Using fuctional programming as a paradigm for software development and agility by testing code. <br>
+Using fuctional programming as a paradigm for software development and agility by testing code. <br><br>
+Click here to view the <a href="https://docs.google.com/presentation/d/15wLZfl3zXVfde_VmGHMUGKwv8NFT9vJNmobpuDwV2Hc/edit#slide=id.p">project presentation</a>
 
 
 [![Scala CI](https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/actions/workflows/scala.yml/badge.svg?branch=developer)](https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/actions/workflows/scala.yml)
