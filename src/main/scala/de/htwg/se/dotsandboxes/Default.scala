@@ -10,5 +10,5 @@ import model.matrixComponent.matrixImpl.Status
 
 object Default:
     given FieldInterface = new Field(5, 4, Status.Empty, 2)
-    given ControllerInterface = Controller()
     given FileIOInterface = xmlImpl.FileIO()
+    given ControllerInterface = Controller()
