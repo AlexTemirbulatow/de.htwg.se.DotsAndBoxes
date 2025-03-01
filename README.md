@@ -1,7 +1,7 @@
 # Dots And Boxes
 
-A project at HTWG Konstanz for the class Software Engineering to create a game 'Dots and Boxes' in scala. <br>
-Using fuctional programming as a paradigm for software development and agility by testing code. <br><br>
+A project at HTWG Konstanz for the Software Engineering class, creating the game 'Dots and Boxes' in Scala. <br>
+Using functional programming as a paradigm for software development and applying agile principles through test-driven development. <br><br>
 Click here to view the <a href="https://docs.google.com/presentation/d/15wLZfl3zXVfde_VmGHMUGKwv8NFT9vJNmobpuDwV2Hc/edit#slide=id.p">project presentation</a>
 
 
@@ -18,7 +18,7 @@ You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console
 
 You can run tests with `sbt clean coverage test` and get a coverage report with `sbt coverageReport`
 
-To run the TUI properly, the terminal must be set to `chcp 65001` and `Unicode UTF-8` must be enabled.
+To run the TUI properly, set the terminal to `chcp 65001` and enable `Unicode UTF-8`
 <br><br>
 
 <table>
