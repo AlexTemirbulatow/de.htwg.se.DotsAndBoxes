@@ -37,7 +37,7 @@ To run the TUI properly, set the terminal to `chcp 65001` and enable `Unicode UT
             The UIs support 2-4 players, a customizable field <br>
             size and a GUI only light and dark mode.
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesGUI_Dark.jpg" width="390" height="380"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/.github/resources/GUI.jpg" width="390" height="380"></a></td></tr>
     <tr><th>Usage</th><th>TUI</th></tr>
     <tr><td>
             The field consists of two separate 2D vectors: <br>
@@ -57,7 +57,7 @@ To run the TUI properly, set the terminal to `chcp 65001` and enable `Unicode UT
             You can type (q) to quit, (z) to undo, (y) to redo, <br>
             (s) to save the current game state and (l) to load it.
     </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/developer/src/resources/5_DotsAndBoxesTUI.png" width="390" height="370"></a></td></tr>
+             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/.github/resources/TUI.png" width="390" height="370"></a></td></tr>
 </table>
 
 
