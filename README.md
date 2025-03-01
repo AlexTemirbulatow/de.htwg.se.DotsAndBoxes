@@ -22,42 +22,60 @@ To run the TUI properly, set the terminal to `chcp 65001` and enable `Unicode UT
 <br><br>
 
 <table>
-    <tr><th>Rules</th><th>GUI</th></tr>
-    <tr><td>You move by taking a horizontal or vertical line <br>
-            between two dots. When you place the last line that <br>
-            forms a box, the box and its content are yours. The <br>
-            players move in turn, but whenever a player takes a <br>
-            box, they must move again. One box is one point. 
+    <tr>
+        <th>Rules</th>
+        <th>GUI</th>
+    </tr>
+    <tr>
+        <td>
+            The game is played by drawing horizontal or vertical <br>
+            lines between two dots. When you place the final line <br>
+            that completes a box, the box and its contents <br>
+            are yours. Players take turns, but whenever a player <br>
+            completes a box, they get another turn. Each box <br>
+            is worth one point.
             <br><br>
-            The game ends when all boxes have been taken.
+            The game ends when all boxes have been claimed.
             <br><br>
-            The player with the highest score wins. <br>
-            It's a tie if two players got the same highest score. 
+            The player with the most points wins. If two players <br>
+            tie for the highest score, the game ends in a draw.
             <br><br>
-            The UIs support 2-4 players, a customizable field <br>
-            size and a GUI only light and dark mode.
-    </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/.github/resources/GUI.jpg" width="390" height="380"></a></td></tr>
-    <tr><th>Usage</th><th>TUI</th></tr>
-    <tr><td>
-            The field consists of two separate 2D vectors: <br>
+            The game supports 2-4 players, varying board sizes <br>
+            and a light and dark mode.
+        </td>
+        <td>
+            <p align="center"><img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/.github/resources/GUI.jpg" width="390" height="380"></a>
+        </td>
+    </tr>
+    <tr>
+        <th>Usage</th>
+        <th>TUI</th>
+    </tr>
+    <tr>
+        <td>
+            The field consists of three separate 2D vectors: <br>
             <ul>
-                <li>The first vector represents all horizontal lines</li>
-                <li>The second vector represents all vertical lines</li>
+              <li>The first vector represents all horizontal lines</li>
+              <li>The second vector represents all vertical lines</li>
+              <li>The third vector represents all cell states</li>
             </ul>
-            Access in a move:
+            Accessing a move:
             <ul>
-                <li>The horizontal vector can be accessed with (1)</li>
-                <li>The vertical vector can be accessed with (2)</li>
-                <li>Lines within a vector are accessed with<br>X and Y coordinates, starting at (0,0)</li>
+              <li>The horizontal vector can be accessed with (1)</li>
+              <li>The vertical vector can be accessed with (2)</li>
+              <li>Lines within a vector are accessed with<br>
+              X and Y coordinates, starting at (0,0)</li>
             </ul>
             Therefore, a move to occupy a line consists of: <br>
-            &lt;Line&gt;&lt;X&gt;&lt;Y&gt;
+            &lt;Line&gt;&lt;X&gt;&lt;Y&gt; &nbsp;&nbsp;&nbsp; e.g., 132
             <br><br>
             You can type (q) to quit, (z) to undo, (y) to redo, <br>
             (s) to save the current game state and (l) to load it.
-    </td><td><p align="center">
-             <img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/.github/resources/TUI.png" width="390" height="370"></a></td></tr>
+        </td>
+        <td>
+            <p align="center"><img src="https://github.com/AlexTemirbulatow/de.htwg.se.DotsAndBoxes/blob/main/.github/resources/TUI.png" width="390" height="370"></a>
+        </td>
+    </tr>
 </table>
 
 
